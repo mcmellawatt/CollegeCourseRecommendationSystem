@@ -1,0 +1,8 @@
+{
+  "comment": "A sample JSON file",
+  "eventType": "foo",
+  "payload": {
+    "arg1": 123,
+    "arg2": "cool"
+  }
+}
