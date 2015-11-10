@@ -1,0 +1,92 @@
+
+# Users
+
+courses:
+
+    - !!models.Course
+        id:         6476
+        name:       "CS 6476 Computer Vision"
+
+    - !!models.Course
+        id:         6035
+        name:       "CS 6035 Introduction to Information Security"
+
+    - !!models.Course
+        id:         6210
+        name:       "CS 6210 Advanced Operating Systems"
+
+    - !!models.Course
+        id:         6220
+        name:       "CS 6220 Intro to High-Performance Computing"
+
+    - !!models.Course
+        id:         6250
+        name:       "CS 6250 Computer Networks"
+
+    - !!models.Course
+        id:         6290
+        name:       "CS 6290 High Performance Computer Architecture"
+
+    - !!models.Course
+        id:         6300
+        name:       "CS 6300 Software Development Practice"
+
+    - !!models.Course
+        id:         6310
+        name:       "CS 6310 Software Architecture and Design"
+
+    - !!models.Course
+        id:         6440
+        name:       "CS 6440 Intro to Health Informatics"
+
+    - !!models.Course
+        id:         6460
+        name:       "CS 6460 Educational Technology"
+
+    - !!models.Course
+        id:         6475
+        name:       "CS 6475 Computational Photography"
+
+    - !!models.Course
+        id:         6505
+        name:       "CS 6505 Computability, Complexity and Algorithms"
+
+    - !!models.Course
+        id:         7637
+        name:       "CS 7637 Knowledge-based Artificial Intelligence: Cognitive Systems"
+
+    - !!models.Course
+        id:         7641
+        name:       "CS 7641 Machine Learning"
+
+    - !!models.Course
+        id:         7646
+        name:       "CS 7646 Machine Learning for Trading"
+
+    - !!models.Course
+        id:         88031
+        name:       "CS 8803-001 Artificial Intelligence for Robots"
+
+    - !!models.Course
+        id:         88032
+        name:       "CS 8803-002 Introduction to Operating Systems"
+
+    - !!models.Course
+        id:         88033
+        name:       "CS 8803-003 Special Topics: Reinforcement Learning"
+
+    - !!models.Course
+        id:         6340
+        name:       "CS 6340 Software Analysis and Test"
+
+    - !!models.Course
+        id:         6400
+        name:       "CS 6400 Database Systems Concepts and Design"
+
+    - !!models.Course
+        id:         8803
+        name:       "CS 8803 Special Topics: Embedded Software"
+
+    - !!models.Course
+        id:         88034
+        name:       "CSE 8803 Special Topics: Reinforcement Learning"
