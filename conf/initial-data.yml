@@ -5,88 +5,154 @@ courses:
 
     - !!models.Course
         id:         6476
-        name:       "CS 6476 Computer Vision"
+        tag:        "CS 6476"
+        name:       "Computer Vision"
+        abbrev:     "CV"
+        core:       Yes
 
     - !!models.Course
         id:         6035
-        name:       "CS 6035 Introduction to Information Security"
+        tag:        "CS 6035"
+        name:       "Introduction to Information Security"
+        abbrev:     "IIS"
+        core:       No
 
     - !!models.Course
         id:         6210
-        name:       "CS 6210 Advanced Operating Systems"
+        tag:        "CS 6210"
+        name:       "Advanced Operating Systems"
+        abbrev:     "AOS"
+        core:       Yes
 
     - !!models.Course
         id:         6220
-        name:       "CS 6220 Intro to High-Performance Computing"
+        tag:        "CSE 6220"
+        name:       "Intro to High-Performance Computing"
+        abbrev:     "IHPC"
+        core:       Yes
 
     - !!models.Course
         id:         6250
-        name:       "CS 6250 Computer Networks"
+        tag:        "CS 6250"
+        name:       "Computer Networks"
+        abbrev:     "CN"
+        core:       Yes
 
     - !!models.Course
         id:         6290
-        name:       "CS 6290 High Performance Computer Architecture"
+        tag:        "CS 6290"
+        name:       "High Performance Computer Architecture"
+        abbrev:     "HPCA"
+        core:       Yes
 
     - !!models.Course
         id:         6300
-        name:       "CS 6300 Software Development Practice"
+        tag:        "CS 6300"
+        name:       "Software Development Process"
+        abbrev:     "SDP"
+        core:       Yes
 
     - !!models.Course
         id:         6310
-        name:       "CS 6310 Software Architecture and Design"
+        tag:        "CS 6310"
+        name:       "Software Architecture and Design"
+        abbrev:     "SAD"
+        core:       Yes
 
     - !!models.Course
         id:         6440
-        name:       "CS 6440 Intro to Health Informatics"
+        tag:        "CS 6440"
+        name:       "Intro to Health Informatics"
+        abbrev:     "IHI"
+        core:       No
 
     - !!models.Course
         id:         6460
-        name:       "CS 6460 Educational Technology"
+        tag:        "CS 6460"
+        name:       "Educational Technology"
+        abbrev:     "ET"
+        core:       No
 
     - !!models.Course
         id:         6475
-        name:       "CS 6475 Computational Photography"
+        tag:        "CS 6475"
+        name:       "Computational Photography"
+        abbrev:     "CP"
+        core:       No
 
     - !!models.Course
         id:         6505
-        name:       "CS 6505 Computability, Complexity and Algorithms"
+        tag:        "CS 6505"
+        name:       "Computability, Complexity and Algorithms"
+        abbrev:     "CCA"
+        core:       Yes
 
     - !!models.Course
         id:         7637
-        name:       "CS 7637 Knowledge-based Artificial Intelligence: Cognitive Systems"
+        tag:        "CS 7637"
+        name:       "Knowledge-Based Artificial Intelligence: Cognitive Systems"
+        abbrev:     "KBAI"
+        core:       Yes
 
     - !!models.Course
         id:         7641
-        name:       "CS 7641 Machine Learning"
+        tag:        "CS 7641"
+        name:       "Machine Learning"
+        abbrev:     "ML"
+        core:       Yes
 
     - !!models.Course
         id:         7646
-        name:       "CS 7646 Machine Learning for Trading"
+        tag:        "CS 7646"
+        name:       "Machine Learning for Trading"
+        abbrev:     "MLT"
+        core:       No
 
     - !!models.Course
-        id:         88031
-        name:       "CS 8803-001 Artificial Intelligence for Robots"
+        id:         8803001
+        tag:        "CS 8803-001"
+        name:       "Artificial Intelligence for Robotics"
+        abbrev:     "AIR"
+        core:       No
 
     - !!models.Course
-        id:         88032
-        name:       "CS 8803-002 Introduction to Operating Systems"
+        id:         8803002
+        tag:        "CS 8803-002"
+        name:       "Introduction to Operating Systems"
+        abbrev:     "IOS"
+        core:       Yes
 
     - !!models.Course
-        id:         88033
-        name:       "CS 8803-003 Special Topics: Reinforcement Learning"
+        id:         8803003
+        tag:        "CS 8803-003"
+        name:       "Special Topics: Reinforcement Learning"
+        abbrev:     "RL"
+        core:       No
 
     - !!models.Course
         id:         6340
-        name:       "CS 6340 Software Analysis and Test"
+        tag:        "CS 6340"
+        name:       "Software Analysis and Test"
+        abbrev:     "SAT"
+        core:       No
 
     - !!models.Course
         id:         6400
-        name:       "CS 6400 Database Systems Concepts and Design"
+        tag:        "CS 6400"
+        name:       "Database Systems Concepts and Design"
+        abbrev:     "DSCD"
+        core:       Yes
 
     - !!models.Course
-        id:         8803
-        name:       "CS 8803 Special Topics: Embedded Software"
+        id:         8803901
+        tag:        "CS 8803"
+        name:       "Special Topics: Embedded Software"
+        abbrev:     "ES"
+        core:       No
 
     - !!models.Course
-        id:         88034
-        name:       "CSE 8803 Special Topics: Reinforcement Learning"
+        id:         8803902
+        tag:        "CSE 8803"
+        name:       "Special Topics: Big Data for Health Informatics"
+        abbrev:     "BDHI"
+        core:       No

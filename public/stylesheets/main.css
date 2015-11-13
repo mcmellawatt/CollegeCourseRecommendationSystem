@@ -6,3 +6,9 @@ body {
 h2 {
     color: #227;
 }
+
+.abbrev {
+    font-style: italic;
+    font-size: 80%;
+    color: #b2c;
+}
