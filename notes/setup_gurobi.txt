@@ -8,7 +8,7 @@ Step 2: extract gurobi and set env variables.
 	export PATH="${PATH}:${GUROBI_HOME}/bin"
 	export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
 
-	(in $GUROBI_HOME/docs there is a quickstart.pdf for each OS if you 		are not using linux and need to check which env variables should be 		set on you system.)
+	(in $GUROBI_HOME/docs there is a quickstart.pdf for each OS if you are not using linux and need to check which env variables should be set on you system.)
 
 Step 3: connect to GATech VPN
 
@@ -18,7 +18,7 @@ Step 4: Request Univeristy License from gurobi
 
 	http://www.gurobi.com/downloads/licenses/license-center
 
-Step 5: Gurobi's website should give a command like this to run to generate 		your license file.
+Step 5: Gurobi's website should give a command like this to run to generate your license file.
 
 	grbgetkey xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
@@ -26,5 +26,5 @@ Step 6: Set Gurobi license env variable to point to your license file.
 
 	export GRB_LICENSE_FILE="/home/jesse/gurobi.lic"
 
-Step 7: I have pushed the gurobi.jar to our github project, it can be found 		in the lib folder. In IntelliJ I had to right click the jar file and 		"Add as library" to get it working.
+Step 7: I have pushed the gurobi.jar to our github project, it can be found in the lib folder. In IntelliJ I had to right click the jar file and "Add as library" to get it working.
 
