@@ -1,0 +1,32 @@
+@import java.util
+@(student: Student)
+
+@import helper._
+
+@main("Student Summary") {
+
+    <table>
+    <tr>
+        <td> Student ID: </td>
+        <td> @student.id </td>
+    </tr>
+    <tr>
+        <td> Username: </td>
+        <td> @student.username </td>
+    </tr>
+    <tr>
+        <td> Student Name: </td>
+        <td> @student.fullname </td>
+    </tr>
+    <tr>
+        <td> Courses Taken: </td>
+    </tr>
+    @for(course <- student.coursesTaken) {
+        <tr>
+            <td>course.name</td>
+        </tr>
+    }
+
+    </table>
+
+}

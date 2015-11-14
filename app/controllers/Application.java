@@ -1,6 +1,6 @@
 package controllers;
 
-import models.Course;
+import models.*;
 import play.*;
 import play.mvc.*;
 
@@ -15,6 +15,12 @@ public class Application extends Controller {
     public static Result courses() {
         return ok(
                 index.render(Course.findAll())
+        );
+    }
+
+    public static Result getStudent(String id) {
+        return ok(
+                student.render(Student.findById(id))
         );
     }
 }

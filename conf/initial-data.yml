@@ -1,158 +1,170 @@
-
-# Users
+# Courses
 
 courses:
 
-    - !!models.Course
+    - &course6476 !!models.Course
         id:         6476
         tag:        "CS 6476"
         name:       "Computer Vision"
         abbrev:     "CV"
         core:       Yes
 
-    - !!models.Course
+    - &course6035 !!models.Course
         id:         6035
         tag:        "CS 6035"
         name:       "Introduction to Information Security"
         abbrev:     "IIS"
         core:       No
 
-    - !!models.Course
+    - &course6210 !!models.Course
         id:         6210
         tag:        "CS 6210"
         name:       "Advanced Operating Systems"
         abbrev:     "AOS"
         core:       Yes
 
-    - !!models.Course
+    - &course6220 !!models.Course
         id:         6220
         tag:        "CSE 6220"
         name:       "Intro to High-Performance Computing"
         abbrev:     "IHPC"
         core:       Yes
 
-    - !!models.Course
+    - &course6250 !!models.Course
         id:         6250
         tag:        "CS 6250"
         name:       "Computer Networks"
         abbrev:     "CN"
         core:       Yes
 
-    - !!models.Course
+    - &course6290 !!models.Course
         id:         6290
         tag:        "CS 6290"
         name:       "High Performance Computer Architecture"
         abbrev:     "HPCA"
         core:       Yes
 
-    - !!models.Course
+    - &course6300 !!models.Course
         id:         6300
         tag:        "CS 6300"
         name:       "Software Development Process"
         abbrev:     "SDP"
         core:       Yes
 
-    - !!models.Course
+    - &course6310 !!models.Course
         id:         6310
         tag:        "CS 6310"
         name:       "Software Architecture and Design"
         abbrev:     "SAD"
         core:       Yes
 
-    - !!models.Course
+    - &course6440 !!models.Course
         id:         6440
         tag:        "CS 6440"
         name:       "Intro to Health Informatics"
         abbrev:     "IHI"
         core:       No
 
-    - !!models.Course
+    - &course6460 !!models.Course
         id:         6460
         tag:        "CS 6460"
         name:       "Educational Technology"
         abbrev:     "ET"
         core:       No
 
-    - !!models.Course
+    - &course6475 !!models.Course
         id:         6475
         tag:        "CS 6475"
         name:       "Computational Photography"
         abbrev:     "CP"
         core:       No
 
-    - !!models.Course
+    - &course6505 !!models.Course
         id:         6505
         tag:        "CS 6505"
         name:       "Computability, Complexity and Algorithms"
         abbrev:     "CCA"
         core:       Yes
 
-    - !!models.Course
+    - &course7637 !!models.Course
         id:         7637
         tag:        "CS 7637"
         name:       "Knowledge-Based Artificial Intelligence: Cognitive Systems"
         abbrev:     "KBAI"
         core:       Yes
 
-    - !!models.Course
+    - &course7641 !!models.Course
         id:         7641
         tag:        "CS 7641"
         name:       "Machine Learning"
         abbrev:     "ML"
         core:       Yes
 
-    - !!models.Course
+    - &course7646 !!models.Course
         id:         7646
         tag:        "CS 7646"
         name:       "Machine Learning for Trading"
         abbrev:     "MLT"
         core:       No
 
-    - !!models.Course
+    - &course8803001 !!models.Course
         id:         8803001
         tag:        "CS 8803-001"
         name:       "Artificial Intelligence for Robotics"
         abbrev:     "AIR"
         core:       No
 
-    - !!models.Course
+    - &course8803002 !!models.Course
         id:         8803002
         tag:        "CS 8803-002"
         name:       "Introduction to Operating Systems"
         abbrev:     "IOS"
         core:       Yes
 
-    - !!models.Course
+    - &course8803003 !!models.Course
         id:         8803003
         tag:        "CS 8803-003"
         name:       "Special Topics: Reinforcement Learning"
         abbrev:     "RL"
         core:       No
 
-    - !!models.Course
+    - &course6340 !!models.Course
         id:         6340
         tag:        "CS 6340"
         name:       "Software Analysis and Test"
         abbrev:     "SAT"
         core:       No
 
-    - !!models.Course
+    - &course6400 !!models.Course
         id:         6400
         tag:        "CS 6400"
         name:       "Database Systems Concepts and Design"
         abbrev:     "DSCD"
         core:       Yes
 
-    - !!models.Course
+    - &course8803901 !!models.Course
         id:         8803901
         tag:        "CS 8803"
         name:       "Special Topics: Embedded Software"
         abbrev:     "ES"
         core:       No
 
-    - !!models.Course
+    - &course8803902 !!models.Course
         id:         8803902
         tag:        "CSE 8803"
         name:       "Special Topics: Big Data for Health Informatics"
         abbrev:     "BDHI"
         core:       No
+
+# Students
+
+students:
+
+    - !!models.Student
+        id:         0001
+        username:   "joeschmoe"
+        password:   "password1234"
+        fullname:   "Joe Schmoe"
+        coursesTaken:
+            - *course6300
+            - *course6310

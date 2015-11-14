@@ -16,10 +16,11 @@ public class Global extends GlobalSettings {
     static class InitialData {
 
         public static void insert(Application app) {
-                Map<String,List<Object>> all = (Map<String,List<Object>>)Yaml.load("initial-data.yml");
+                Map<String,List<?>> all = (Map<String,List<?>>)Yaml.load("initial-data.yml");
 
-                // Insert users first
                 Ebean.save(all.get("courses"));
+                Ebean.save(all.get("students"));
+
+            }
         }
-    }
 }

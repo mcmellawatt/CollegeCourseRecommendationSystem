@@ -8,13 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
- * Course entity managed by Ebean
+ * Student entity managed by Ebean
  */
 @Entity
-@Table(name="courses")
-public class Course extends Model {
+@Table(name="students")
+public class Student extends Model {
 
     @Id
     @Constraints.Required
@@ -22,44 +23,40 @@ public class Course extends Model {
     public String id;
 
     @Constraints.Required
-    public String tag;
+    public String username;
 
     @Constraints.Required
-    public String name;
+    public String password;
 
     @Constraints.Required
-    public String abbrev;
+    public String fullname = "test";
 
     @Constraints.Required
-    public boolean core;
+    public List<Course> coursesTaken = new ArrayList<Course>();
 
     // -- Queries
 
-    private static final Model.Finder<String, Course> FIND =
-            new Model.Finder<>(String.class, Course.class);
+    private static final Model.Finder<String, Student> FIND =
+            new Model.Finder<>(String.class, Student.class);
 
     /**
-     * Retrieve all courses.
+     * Retrieve all users.
      */
-    public static List<Course> findAll() {
+    public static List<Student> findAll() {
         return FIND.all();
     }
 
     /**
      * Retrieve a Course from id.
      */
-    public static Course findById(String id) {
+    public static Student findById(String id) {
         return FIND.where().eq("id", id).findUnique();
     }
 
     // --
 
     public String toString() {
-        return "Course{" + tag + "}";
-    }
-
-    public String title() {
-        return tag + " " + name;
+        return "Student{" + fullname + "}";
     }
 
 }
