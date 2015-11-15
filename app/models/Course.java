@@ -1,13 +1,12 @@
 package models;
 
-import play.data.format.Formats;
-import play.data.validation.Constraints;
-import play.db.ebean.Model;
+import play.data.format.*;
+import play.data.validation.*;
+import play.db.ebean.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.List;
+import javax.persistence.*;
+
+import java.util.*;
 
 /**
  * Course entity managed by Ebean.

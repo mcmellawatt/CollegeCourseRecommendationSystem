@@ -1,14 +1,12 @@
 package models;
 
-import play.data.format.Formats;
-import play.data.validation.Constraints;
-import play.db.ebean.Model;
+import play.data.format.*;
+import play.data.validation.*;
+import play.db.ebean.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.List;
-import java.util.ArrayList;
+import javax.persistence.*;
+
+import java.util.*;
 
 /**
  * Student entity managed by Ebean.
@@ -33,6 +31,7 @@ public class Student extends Model {
     @Constraints.Required
     public String fullname = "test";
 
+    @ManyToMany
     @Constraints.Required
     public List<Course> coursesTaken = new ArrayList<>();
 
