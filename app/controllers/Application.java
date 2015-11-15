@@ -2,6 +2,7 @@ package controllers;
 
 import models.Course;
 import models.Student;
+import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
@@ -19,6 +20,7 @@ public class Application extends Controller {
      * @return login page response
      */
     public static Result login() {
+        Logger.debug("login page accessed");
         return ok(
                 login.render()
         );
@@ -30,6 +32,7 @@ public class Application extends Controller {
      * @return index page response
      */
     public static Result index() {
+        Logger.debug("index page accessed");
         return redirect(routes.Application.courses());
     }
 
@@ -39,6 +42,7 @@ public class Application extends Controller {
      * @return courses page response
      */
     public static Result courses() {
+        Logger.debug("courses page accessed");
         return ok(
                 index.render(Course.findAll())
         );
@@ -51,6 +55,7 @@ public class Application extends Controller {
      * @return student information page
      */
     public static Result getStudent(String id) {
+        Logger.debug("student page accessed, for student '{}'", id);
         return ok(
                 student.render(Student.findById(id))
         );
