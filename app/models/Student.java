@@ -11,11 +11,13 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * Student entity managed by Ebean
+ * Student entity managed by Ebean.
  */
 @Entity
 @Table(name="students")
 public class Student extends Model {
+
+    private static final String ID = "id";
 
     @Id
     @Constraints.Required
@@ -32,7 +34,7 @@ public class Student extends Model {
     public String fullname = "test";
 
     @Constraints.Required
-    public List<Course> coursesTaken = new ArrayList<Course>();
+    public List<Course> coursesTaken = new ArrayList<>();
 
     // -- Queries
 
@@ -40,17 +42,19 @@ public class Student extends Model {
             new Model.Finder<>(String.class, Student.class);
 
     /**
-     * Retrieve all users.
+     * Returns all students.
      */
     public static List<Student> findAll() {
         return FIND.all();
     }
 
     /**
-     * Retrieve a Course from id.
+     * Returns the student with the given ID.
+     *
+     * @param id student ID
      */
     public static Student findById(String id) {
-        return FIND.where().eq("id", id).findUnique();
+        return FIND.where().eq(ID, id).findUnique();
     }
 
     // --

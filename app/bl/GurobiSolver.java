@@ -7,75 +7,65 @@ import models.Student;
 import java.util.List;
 
 /**
- * Created by Jesse on 11/12/15.
+ * Our ILP Solver implementation, using the Gurobi library.
  */
 public class GurobiSolver implements Solver {
-    private GRBModel model;
 
     // Currently '100' is just a place holder, the actual value for
     // maxClassSize will come from some business logic class. Ideally each
     // class would have a max class size, this can be addressed later.
-    private int maxClaseSize = 100;
+    private static final int MAX_CLASS_SIZE = 100;
 
-    // List of Student objects.
+    private static final String FMT_SC = "si_%s_ci_%s";
+
+
+    private GRBModel model;
     private List<Student> students;
-
-    //List of available Courses objects.
     private List<Course> courses;
 
 
     /**
-     * Initialize the Gurobi model.
-     * Initialize List of Student objects.
-     * Initialize CourseCatalog.
+     * Constructs the Gurobi solver, initializing the model,
+     * and retrieving the student and course lists.
      */
     public GurobiSolver() {
 
-        // Init model.
+        // Initialize ILP model
         GRBEnv env;
         try {
             env = new GRBEnv();
-            GRBModel model = new GRBModel(env);
+            model = new GRBModel(env);
         } catch (GRBException e) {
             e.printStackTrace();
         }
 
-        // Init Student List.
+        // Retrieve model data
         students = Student.findAll();
-
-        //Init Course List.
         courses = Course.findAll();
     }
 
 
     @Override
     public void optimize() {
-
-        // Number of students
-        int studentTotal = students.size();
-
-        // Number of courses
-        int courseTotal = courses.size();
+        final int studentCount = students.size();
+        final int courseCount = courses.size();
 
         try {
             // Gurobi matrix for students and courses for next semester.
             // This will be the solution.
-            GRBVar[][] sc = new GRBVar[studentTotal][courseTotal];
+            GRBVar[][] sc = new GRBVar[studentCount][courseCount];
 
             // Create GRBVar[][] sc variables;
-            for (int i = 0; i < studentTotal; i++) {
-                for (int j = 0; j < courseTotal; j++) {
-                    String st = "si_%s_ci_%s";
-                    st = String.format(st, students.get(i).id,
-                            courses.get(i).id);
-
-                    sc[i][j] = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, st);
+            String s;
+            for (int i = 0; i < studentCount; i++) {
+                for (int j = 0; j < courseCount; j++) {
+                    s = String.format(FMT_SC, students.get(i).id, courses.get(i).id);
+                    sc[i][j] = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, s);
                 }
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }

@@ -1,6 +1,7 @@
 body {
     font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
     font-size: 12pt;
+    background-color: #dde;
 }
 
 h2 {
@@ -11,4 +12,36 @@ h2 {
     font-style: italic;
     font-size: 80%;
     color: #b2c;
+}
+
+#login-box {
+    margin: 100px auto auto;
+    width: 340px;
+    height: 160px;
+    background-color: #bbf;
+    border: 2px solid #88d;
+}
+
+#login-box h3 {
+    font-style: italic;
+    width: 100%;
+    text-align: center;
+}
+
+#login-box table {
+    margin: auto;
+}
+
+#login-box .label {
+    font-style: italic;
+    font-size: 10pt;
+    color: blue;
+}
+
+#login-box .field {
+}
+
+#login-box .control {
+    text-align: center;
+    padding-top: 12px;
 }

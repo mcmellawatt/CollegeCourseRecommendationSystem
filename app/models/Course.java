@@ -10,11 +10,13 @@ import javax.persistence.Table;
 import java.util.List;
 
 /**
- * Course entity managed by Ebean
+ * Course entity managed by Ebean.
  */
 @Entity
 @Table(name="courses")
 public class Course extends Model {
+
+    private static final String ID = "id";
 
     @Id
     @Constraints.Required
@@ -39,25 +41,34 @@ public class Course extends Model {
             new Model.Finder<>(String.class, Course.class);
 
     /**
-     * Retrieve all courses.
+     * Returns all available courses.
      */
     public static List<Course> findAll() {
         return FIND.all();
     }
 
     /**
-     * Retrieve a Course from id.
+     * Returns the course with the given ID.
+     *
+     * @param id course ID
      */
     public static Course findById(String id) {
-        return FIND.where().eq("id", id).findUnique();
+        return FIND.where().eq(ID, id).findUnique();
     }
 
     // --
 
+    @Override
     public String toString() {
         return "Course{" + tag + "}";
     }
 
+    /**
+     * Returns the course title, a concatenation of the course tag and the
+     * course name.
+     *
+     * @return course title
+     */
     public String title() {
         return tag + " " + name;
     }
