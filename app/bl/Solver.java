@@ -1,9 +1,8 @@
 package bl;
-import gurobi.*;
 
 /**
- * Created by Jesse on 11/12/15.
+ * Created by Jesse 11/14/15.
  */
-public class Solver {
-
+public interface Solver {
+    void optimize();
 }
