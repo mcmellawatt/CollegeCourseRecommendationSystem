@@ -21,6 +21,7 @@ GET     /app                        controllers.Application.app()
 
 # Courses
 GET     /courses                    controllers.Application.courses()
+GET     /courses/:id                controllers.Application.getCourse(id: String)
 
 # Students
 GET     /students/:id               controllers.Application.getStudent(id: String)

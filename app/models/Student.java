@@ -29,11 +29,19 @@ public class Student extends Model {
     public String password;
 
     @Constraints.Required
-    public String fullname = "test";
+    public String fullname;
 
-    @ManyToMany
+    /*Since we can only have a single ManyToMany relationship, we will store
+    * courses taken as a list of course IDs*/
     @Constraints.Required
-    public List<Course> coursesTaken = new ArrayList<>();
+    public Set<String> coursesTaken = new HashSet<String>();
+
+    @Constraints.Required
+    @ManyToMany
+    public List<Course> coursesPreferred = new ArrayList<Course>();
+
+    @Constraints.Required
+    public int numCoursesPreferred;
 
     // -- Queries
 

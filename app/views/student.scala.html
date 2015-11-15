@@ -1,37 +1,39 @@
+@import java.util
 @(student: Student)
 
-@main("Student Information") {
-    <div id="student-info" class="frame">
+@import helper._
 
-        <table>
-            <tr>
-                <td colspan="2" class="heading">
-                    Student Information
-                </td>
-            </tr>
-            <tr>
-                <td class="label"> Student ID: </td>
-                <td> @student.id </td>
-            </tr>
-            <tr>
-                <td class="label"> Username: </td>
-                <td> @student.username </td>
-            </tr>
-            <tr>
-                <td class="label"> Student Name: </td>
-                <td> @student.fullname </td>
-            </tr>
+@main("Student Summary") {
 
-            <tr>
-                <td colspan="2" class="heading"> Courses Taken </td>
-            </tr>
+    <table>
+    <tr>
+        <td> Student ID: </td>
+        <td> @student.id </td>
+    </tr>
+    <tr>
+        <td> Username: </td>
+        <td> @student.username </td>
+    </tr>
+    <tr>
+        <td> Student Name: </td>
+        <td> @student.fullname </td>
+    </tr>
+    <tr>
+        <td> Courses Taken: </td>
+    </tr>
+    @for(course <- student.coursesTaken) {
+        <tr>
+            <td>Acourse</td>
+        </tr>
+    }
+    <tr>
+        <td> Courses Preferred (@student.numCoursesPreferred): </td>
+    </tr>
+    @for(course <- student.coursesPreferred) {
+        <tr>
+            <td>@course.name</td>
+        </tr>
+    }
+    </table>
 
-            @for(course <- student.coursesTaken) {
-                <tr>
-                    <td colspan="2" class="course-item"> @course.title() </td>
-                </tr>
-            }
-
-        </table>
-    </div>
 }

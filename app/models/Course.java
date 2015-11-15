@@ -34,6 +34,10 @@ public class Course extends Model {
     @Constraints.Required
     public boolean core;
 
+    @Constraints.Required
+    @ManyToMany(mappedBy="coursesPreferred")
+    public List<Student> studentsInterested = new ArrayList<Student>();
+
     // -- Queries
 
     private static final Model.Finder<String, Course> FIND =

@@ -160,11 +160,17 @@ courses:
 
 students:
 
-    - !!models.Student
+    - &student0001 !!models.Student
         id:         0001
         username:   "joeschmoe"
         password:   "password1234"
         fullname:   "Joe Schmoe"
+        numCoursesPreferred: 2
         coursesTaken:
-            - *course6300
-            - *course6310
+            ? 6300
+            ? 6310
+        coursesPreferred:
+            - *course8803902
+            - *course7641
+            - *course7637
+            - *course6460
