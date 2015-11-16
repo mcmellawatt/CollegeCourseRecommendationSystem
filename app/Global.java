@@ -1,26 +1,32 @@
-import play.*;
-import play.libs.*;
+import com.avaje.ebean.Ebean;
+import play.Application;
+import play.GlobalSettings;
+import play.libs.Yaml;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
-import com.avaje.ebean.*;
-
-import models.*;
-
+/**
+ * Sets up our application's global settings.
+ */
 public class Global extends GlobalSettings {
 
+    private static final String INITIAL_DATA_FILE = "initial-data.yml";
+    private static final String COURSES = "courses";
+    private static final String STUDENTS = "students";
+
+    @Override
     public void onStart(Application app) {
         InitialData.insert(app);
     }
 
-    static class InitialData {
+    private static class InitialData {
+        private static void insert(Application app) {
+            Map<String,List<?>> all =
+                    (Map<String,List<?>>) Yaml.load(INITIAL_DATA_FILE);
 
-        public static void insert(Application app) {
-                Map<String,List<?>> all = (Map<String,List<?>>)Yaml.load("initial-data.yml");
-
-                Ebean.save(all.get("courses"));
-                Ebean.save(all.get("students"));
-
-            }
+            Ebean.save(all.get(COURSES));
+            Ebean.save(all.get(STUDENTS));
         }
+    }
 }
