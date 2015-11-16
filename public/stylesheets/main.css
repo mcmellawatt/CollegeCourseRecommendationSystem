@@ -45,3 +45,41 @@ h2 {
     text-align: center;
     padding-top: 12px;
 }
+
+/* actual content styles */
+
+#course-info {
+    width: 600px;
+}
+
+#student-info {
+    width: 400px;
+}
+
+.frame {
+    margin: 20px auto auto;
+    background-color: white;
+    width: 800px;
+}
+
+.frame table {
+    width: 100%;
+}
+
+.frame td.heading {
+    text-align: center;
+    font-style: italic;
+    padding: 4px 2px;
+    background-color: #cce;
+    color: #327;
+}
+
+.frame td.label {
+    font-style: italic;
+    color: #888;
+}
+
+.frame td.course-item {
+    font-size: 10pt;
+    color: maroon;
+}
