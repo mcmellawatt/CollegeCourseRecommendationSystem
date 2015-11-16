@@ -4,6 +4,7 @@
 
 # Login page
 GET     /login                      controllers.Application.login()
+POST    /dologin                    controllers.Application.doLogin()
 
 # Home page
 GET     /                           controllers.Application.index()

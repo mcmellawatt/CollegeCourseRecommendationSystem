@@ -1,8 +1,10 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import models.Course;
 import models.Student;
 import play.Logger;
+import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.courses;
@@ -25,6 +27,26 @@ public class Application extends Controller {
                 login.render()
         );
     }
+
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result doLogin() {
+        Logger.debug("doing the login thang.");
+
+        JsonNode json = request().body().asJson();
+        String name = json.findPath("name").textValue();
+        String pass = json.findPath("pass").textValue();
+
+        if (name == null) {
+            return badRequest("Missing parameter [name]");
+        }
+
+        Logger.debug("got a name [{}] and password [{}]", name, pass);
+
+        // TODO: validation of user-pass combo?
+        // TODO: redirect to user session
+        return redirect(routes.Application.courses());
+    }
+
 
     /**
      * Generates the courses page.

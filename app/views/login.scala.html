@@ -1,22 +1,40 @@
 @main("Recommender Mk.IV") {
 
+    <script type="text/javascript">
+        function submitMe() {
+            var name = $('#login-name').val(),
+                pass = $('#login-pass').val(),
+                data = {
+                    name: name,
+                    pass: pass
+                };
+
+            $.post('dologin', JSON.stringify(data), function(response) {
+                // Do something with the response
+                console.log('got a response', response);
+            }, 'html');
+
+            alert('submitted name = ' + name + ", pass = " + pass);
+        }
+    </script>
+
     <div id="login-box">
         <h3>Course Recommendation System</h3>
 
         <table>
             <tr>
                 <td class="field">
-                    <input type="text" placeholder="username">
+                    <input id="login-name" type="text" placeholder="username">
                 </td>
             </tr>
             <tr>
                 <td class="field">
-                    <input type="password" placeholder="password">
+                    <input id="login-pass" type="password" placeholder="password">
                 </td>
             </tr>
             <tr>
                 <td class="control">
-                    <input type="button" value="Login">
+                    <input type="button" value="Login" onclick="submitMe();">
                 </td>
             </tr>
         </table>
