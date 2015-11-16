@@ -32,7 +32,7 @@ public class Application extends Controller {
      * @return courses page response
      */
     public static Result index() {
-        Logger.debug("courses page accessed");
+        Logger.debug("index page accessed, redirecting...");
         return redirect(routes.Application.courses());
     }
 
