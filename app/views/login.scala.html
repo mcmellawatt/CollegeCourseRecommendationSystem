@@ -9,12 +9,9 @@
                     pass: pass
                 };
 
-            $.post('dologin', JSON.stringify(data), function(response) {
-                // Do something with the response
+            $.postJSON('dologin', data, function (response) {
                 console.log('got a response', response);
-            }, 'html');
-
-            alert('submitted name = ' + name + ", pass = " + pass);
+            });
         }
     </script>
 
