@@ -1,16 +1,25 @@
-@main("Recommender Mk.IV") {
+@main("Recommender Login") {
 
     <script type="text/javascript">
-        function submitMe() {
-            var name = $('#login-name').val(),
+        function loginError() {
+            $('#login-box').find('.error').text('*Incorrect username or password*');
+        }
+
+        function doLogin() {
+            var user = $('#login-user').val(),
                 pass = $('#login-pass').val(),
                 data = {
-                    name: name,
+                    user: user,
                     pass: pass
                 };
 
             $.postJSON('dologin', data, function (response) {
                 console.log('got a response', response);
+                if (response.goodToGo) {
+                    window.location.href = response.redirect;
+                } else {
+                    loginError();
+                }
             });
         }
     </script>
@@ -21,7 +30,7 @@
         <table>
             <tr>
                 <td class="field">
-                    <input id="login-name" type="text" placeholder="username">
+                    <input id="login-user" type="text" placeholder="username">
                 </td>
             </tr>
             <tr>
@@ -30,8 +39,11 @@
                 </td>
             </tr>
             <tr>
+                <td class="error"></td>
+            </tr>
+            <tr>
                 <td class="control">
-                    <input type="button" value="Login" onclick="submitMe();">
+                    <input type="button" value="Login" onclick="doLogin();">
                 </td>
             </tr>
         </table>

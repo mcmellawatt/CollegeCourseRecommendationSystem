@@ -1,37 +1,37 @@
 @(student: Student)
 
 @main("Student Information") {
-<div id="student-info" class="frame">
+    <div id="student-info" class="frame">
 
-    <table>
-        <tr>
-            <td colspan="2" class="heading">
-                Student Information
-            </td>
-        </tr>
-        <tr>
-            <td class="label"> Student ID: </td>
-            <td> @student.id </td>
-        </tr>
-        <tr>
-            <td class="label"> Username: </td>
-            <td> @student.username </td>
-        </tr>
-        <tr>
-            <td class="label"> Student Name: </td>
-            <td> @student.fullname </td>
-        </tr>
-
-        <tr>
-            <td colspan="2" class="heading"> Courses Taken </td>
-        </tr>
-
-        @for(course <- student.coursesTaken) {
+        <table>
             <tr>
-                <td colspan="2" class="course-item"> @course.title() </td>
+                <td colspan="2" class="heading">
+                    Student Information
+                </td>
             </tr>
-        }
+            <tr>
+                <td class="label"> Student ID: </td>
+                <td> @student.id </td>
+            </tr>
+            <tr>
+                <td class="label"> Username: </td>
+                <td> @student.username </td>
+            </tr>
+            <tr>
+                <td class="label"> Student Name: </td>
+                <td> @student.fullname </td>
+            </tr>
 
-    </table>
-</div>
+            <tr>
+                <td colspan="2" class="heading"> Courses Taken </td>
+            </tr>
+
+            @for(course <- student.coursesTaken) {
+                <tr>
+                    <td colspan="2" class="course-item"> @course.title() </td>
+                </tr>
+            }
+
+        </table>
+    </div>
 }

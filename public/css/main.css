@@ -38,7 +38,14 @@ h2 {
     color: blue;
 }
 
-#login-box .field {
+#login-box .field input {
+    width: 160px;
+}
+
+#login-box  .error {
+    height: 12px;
+    font-size: 8pt;
+    color: #844;
 }
 
 #login-box .control {
@@ -46,15 +53,6 @@ h2 {
     padding-top: 12px;
 }
 
-/* actual content styles */
-
-#course-info {
-    width: 600px;
-}
-
-#student-info {
-    width: 400px;
-}
 
 .frame {
     margin: 20px auto auto;
@@ -82,4 +80,68 @@ h2 {
 .frame td.course-item {
     font-size: 10pt;
     color: maroon;
+}
+
+/* app styles */
+
+#app-ctrl {
+    width: 100%;
+    height: 32px;
+}
+
+.ljust {
+    float: left;
+}
+
+.rjust {
+    float: right;
+}
+
+#app-ctrl .tab {
+    display: inline-block;
+    text-align: center;
+    width: 80px;
+    height: 20px;
+    background-color: goldenrod;
+    border: 1px solid black;
+    padding: 6px;
+    margin: 4px;
+}
+
+#app-ctrl .username {
+    display: inline-block;
+    font-style: italic;
+    margin-right: 30px;
+}
+
+#app-ctrl .btn {
+    display: inline-block;
+    background-color: wheat;
+    border: 1px solid slateblue;
+    padding: 6px;
+    margin: 4px;
+}
+
+#view {
+    height: 400px;
+    background-color: #cbd;
+}
+
+.footer {
+    border-top: 1px solid #cce;
+    font-size: 8pt;
+    font-style: italic;
+    background-color: #eef;
+    color: #888;
+    float: right;
+}
+
+/* actual content styles */
+
+#course-info {
+    width: 600px;
+}
+
+#student-info {
+    width: 400px;
 }

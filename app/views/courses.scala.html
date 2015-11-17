@@ -2,17 +2,17 @@
 @(courses: util.List[Course])
 
 @main("Available courses") {
-<div id="course-info" class="frame">
-    <h2>@courses.size() courses available in Spring 2016</h2>
+    <div id="course-info" class="frame">
+        <h2>@courses.size() courses available in Spring 2016</h2>
 
-    <table>
-    @for(course <- courses) {
-        <tr>
-            <td> @(if (course.core) "*" else "") </td>
-            <td> @course.tag </td>
-            <td> @course.name <span class="abbrev"> (@course.abbrev) </span></td>
-        </tr>
-    }
-    </table>
-</div>
+        <table>
+        @for(course <- courses) {
+            <tr>
+                <td> @(if (course.core) "*" else "") </td>
+                <td> @course.tag </td>
+                <td> @course.name <span class="abbrev"> (@course.abbrev) </span></td>
+            </tr>
+        }
+        </table>
+    </div>
 }

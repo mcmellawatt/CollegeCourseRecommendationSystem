@@ -2,15 +2,22 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+# Home page -- login by default
+GET     /                           controllers.Application.login()
+
 # Login page
 GET     /login                      controllers.Application.login()
 POST    /dologin                    controllers.Application.doLogin()
 
-# Home page
-GET     /                           controllers.Application.index()
+# Main Single-Page-Application (SPA)
+GET     /app                        controllers.Application.app()
 
-# Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+# ----------------------------------------------------------------------------
+# Auxiliary pages ...
 
 # Courses
 GET     /courses                    controllers.Application.courses()

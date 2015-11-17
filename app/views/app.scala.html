@@ -1,0 +1,27 @@
+@(username: String)
+
+@main("Recommender Mk.IV") {
+    <div id="recommender-app" class="frame">
+        <div id="app-ctrl">
+            <div class="ljust">
+                <div class="tab">Profile</div>
+                <div class="tab">Courses</div>
+                <div class="tab">History</div>
+            </div>
+            <div class="rjust">
+                <div class="username">@username</div>
+                <div class="btn">Logout</div>
+            </div>
+        </div>
+
+        <div id="view">
+            <p>
+                (view content here)
+            </p>
+        </div>
+
+        <div class="footer">
+            Developed by Team33 &mdash; powered by Gurobi
+        </div>
+    </div>
+}
