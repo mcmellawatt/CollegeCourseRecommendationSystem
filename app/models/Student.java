@@ -31,17 +31,16 @@ public class Student extends Model {
     @Constraints.Required
     public String fullname;
 
-    /*Since we can only have a single ManyToMany relationship, we will store
-    * courses taken as a list of course IDs*/
-    @Constraints.Required
-    public Set<String> coursesTaken = new HashSet<String>();
-
     @Constraints.Required
     @ManyToMany
     public List<Course> coursesPreferred = new ArrayList<Course>();
 
     @Constraints.Required
     public int numCoursesPreferred;
+
+    @Constraints.Required
+    @OneToOne
+    public Transcript transcript;
 
     // -- Queries
 
@@ -61,6 +60,7 @@ public class Student extends Model {
      * @param id student ID
      */
     public static Student findById(String id) {
+
         return FIND.where().eq(ID, id).findUnique();
     }
 

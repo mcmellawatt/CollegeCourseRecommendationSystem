@@ -156,6 +156,14 @@ courses:
         abbrev:     "BDHI"
         core:       No
 
+# Transcripts
+
+transcripts:
+
+    - &transcript0001 !!models.Transcript
+        id:         0001
+        creditsEarned: 42
+
 # Students
 
 students:
@@ -166,11 +174,10 @@ students:
         password:   "password1234"
         fullname:   "Joe Schmoe"
         numCoursesPreferred: 2
-        coursesTaken:
-            ? 6300
-            ? 6310
         coursesPreferred:
             - *course8803902
             - *course7641
             - *course7637
             - *course6460
+        transcript: *transcript0001
+

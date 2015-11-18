@@ -19,14 +19,6 @@
         <td> @student.fullname </td>
     </tr>
     <tr>
-        <td> Courses Taken: </td>
-    </tr>
-    @for(course <- student.coursesTaken) {
-        <tr>
-            <td>Acourse</td>
-        </tr>
-    }
-    <tr>
         <td> Courses Preferred (@student.numCoursesPreferred): </td>
     </tr>
     @for(course <- student.coursesPreferred) {

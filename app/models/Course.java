@@ -35,7 +35,7 @@ public class Course extends Model {
     public boolean core;
 
     @Constraints.Required
-    @ManyToMany(mappedBy="coursesPreferred")
+    @ManyToMany(mappedBy="coursesPreferred", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     public List<Student> studentsInterested = new ArrayList<Student>();
 
     // -- Queries

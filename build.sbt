@@ -8,4 +8,4 @@ scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq( javaJdbc , javaEbean , cache , javaWs )
 
-unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  
+unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )

@@ -25,4 +25,7 @@ GET     /courses/:id                controllers.Application.getCourse(id: String
 
 # Students
 GET     /students/:id               controllers.Application.getStudent(id: String)
+
+# Transcripts
+GET     /transcripts/:id            controllers.Application.getTranscript(id: String)
     

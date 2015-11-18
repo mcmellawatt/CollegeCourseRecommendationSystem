@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Course;
 import models.Student;
+import models.Transcript;
 import play.Logger;
 import play.cache.Cache;
 import play.mvc.BodyParser;
@@ -13,8 +14,10 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.app;
 import views.html.courses;
+import views.html.course;
 import views.html.login;
 import views.html.student;
+import views.html.transcript;
 
 /**
  * Implements our application controller.
@@ -122,6 +125,32 @@ public class Application extends Controller {
         Logger.debug("student page accessed, for student-id '{}'", id);
         return ok(
                 student.render(Student.findById(id))
+        );
+    }
+
+    /**
+     * Generates a page with information about the given course.
+     *
+     * @param id course ID
+     * @return course information page
+     */
+    public static Result getCourse(String id) {
+        Logger.debug("course page accessed, for course-id '{}'", id);
+        return ok(
+                course.render(Course.findById(id))
+        );
+    }
+
+    /**
+     * Generates a page with information about the given transcript.
+     *
+     * @param id transcript ID
+     * @return transcript information page
+     */
+    public static Result getTranscript(String id) {
+        Logger.debug("student page accessed, for transcript-id '{}'", id);
+        return ok(
+                transcript.render(Transcript.findById(id))
         );
     }
 }

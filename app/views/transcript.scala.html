@@ -1,0 +1,23 @@
+@import java.util
+@(transcript: Transcript)
+
+@import helper._
+
+@main("Transcript Summary") {
+
+    <table>
+        <tr>
+            <td> Transcript ID: </td>
+            <td> @transcript.id </td>
+        </tr>
+        <tr>
+            <td> Username: </td>
+            <td> @transcript.student.fullname </td>
+        </tr>
+        <tr>
+            <td> Credits Earned: </td>
+            <td> @transcript.creditsEarned </td>
+        </tr>
+    </table>
+
+}
