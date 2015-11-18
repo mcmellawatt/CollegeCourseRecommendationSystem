@@ -17,6 +17,8 @@ public class GurobiSolver implements Solver {
     private static final int MAX_CLASS_SIZE = 30;
 
     private static final String FMT_SC = "si_%s_ci_%s";
+    public static final String FMT_MAX_CS = "max_cs_ci_%s";
+    public static final String FMT_NI_SC = "ni_si_%s_ci_%s";
 
 
     private GRBModel model;
@@ -64,7 +66,8 @@ public class GurobiSolver implements Solver {
             setObjective();
 
             // Add Constraints
-            addMaxCourseSizeConstraint();
+            addAllMaxCourseSizeConstraints();
+            addAllCourseNotInterestedContraints();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -83,29 +86,56 @@ public class GurobiSolver implements Solver {
         }
     }
 
-    private void addMaxCourseSizeConstraint() throws GRBException {
-        for (int i = 1; i <= courseCount; i++) {
-            GRBLinExpr expr = new GRBLinExpr();
-            for (int j = 1; j <= studentCount; j++) {
-                expr.addTerm(1, scVars.get(i, j));
-            }
-            String s = String.format("max_cs_ci_%s", courses.get(i).id);
-            model.addConstr(expr, GRB.LESS_EQUAL, MAX_CLASS_SIZE, s);
+    private void addAllMaxCourseSizeConstraints() throws GRBException {
+        for (int j = 1; j <= courseCount; j++) {
+            addMaxCourseSizeConstraint(j);
         }
     }
 
-    private void add() throws GRBException {
+    private void addMaxCourseSizeConstraint(int j) throws GRBException {
+        GRBLinExpr expr = new GRBLinExpr();
+        for (int i = 1; i <= studentCount; i++) {
+            expr.addTerm(1, scVars.get(i, j));
+        }
+        String s = String.format(FMT_MAX_CS, courses.get(j).id);
+        model.addConstr(expr, GRB.LESS_EQUAL, MAX_CLASS_SIZE, s);
+    }
 
+    private void addAllCourseNotInterestedContraints() throws GRBException {
+        for (int i = 1; i <= studentCount; i++) {
+            for (int j = 1; j <= courseCount; j++) {
+                addCourseNotInterestedConstraint(i, j);
+            }
+        }
+    }
+
+    private void addCourseNotInterestedConstraint(int i, int j) throws GRBException {
+        if (!isCoursePreferred(students.get(i), courses.get(j))) {
+            GRBLinExpr expr = new GRBLinExpr();
+            expr.addTerm(1, scVars.get(i, j));
+            String s = String.format(FMT_NI_SC, students.get(i), courses.get(j).id);
+            model.addConstr(expr, GRB.LESS_EQUAL, 0, s);
+        }
     }
 
     private void setObjective() throws GRBException {
         GRBLinExpr expr = new GRBLinExpr();
         for (int i = 1; i <= studentCount; i++) {
-            for (int j = 1; j <= courseCount ; j++) {
-                expr.addTerm(1, scVars.get(i,j));
+            for (int j = 1; j <= courseCount; j++) {
+                int studentCredits = students.get(i).transcript.creditsEarned;
+                expr.addTerm(studentCredits, scVars.get(i, j));
             }
         }
         model.setObjective(expr, GRB.MAXIMIZE);
+    }
+
+    private boolean isCoursePreferred(Student s, Course c) {
+        for (Course pc : s.coursesPreferred) {
+            if (c.id.equals(pc.id)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // =====================================================================
