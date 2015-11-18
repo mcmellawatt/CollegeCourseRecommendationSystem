@@ -1,6 +1,24 @@
 @(username: String)
 
 @main("Recommender Mk.IV") {
+    <style type="text/css">
+        ul {
+            list-style-image: url('assets/img/drag-handle.png');
+            list-style-position: inside;
+        }
+        li {
+            cursor: pointer;
+            margin: 2px;
+            padding: 4px;
+            background-color: wheat ;
+            width: 90%;
+        }
+        button {
+            float: right;
+            margin-right: 60px;
+        }
+    </style>
+
     <div id="recommender-app" class="frame">
         <div id="app-ctrl">
             <div class="ljust">
@@ -18,10 +36,23 @@
             <p>
                 (view content here)
             </p>
+            <ul id="testlist">
+                <li> CS 1234 Basic Arithmetic </li>
+                <li> CS 5678 Algebra III </li>
+                <li> CS 1357 Geometry </li>
+                <li> CS 2468 Trigonometry </li>
+                <li> CS 7890 Calculus I </li>
+            </ul>
+            <p>
+                <button>Submit Query</button>
+            </p>
         </div>
 
         <div class="footer">
             Developed by Team33 &mdash; powered by Gurobi
         </div>
+        <script type="text/javascript">
+            $('#testlist').sortable();
+        </script>
     </div>
 }
