@@ -16,6 +16,7 @@ import java.util.*;
 public class Student extends Model {
 
     private static final String ID = "id";
+    private static final String USERNAME = "username";
 
     @Id
     @Constraints.Required
@@ -48,7 +49,9 @@ public class Student extends Model {
             new Model.Finder<>(String.class, Student.class);
 
     /**
-     * Returns all students.
+     * Returns all registered students.
+     *
+     * @return all students
      */
     public static List<Student> findAll() {
         return FIND.all();
@@ -58,16 +61,28 @@ public class Student extends Model {
      * Returns the student with the given ID.
      *
      * @param id student ID
+     * @return corresponding student
      */
     public static Student findById(String id) {
-
         return FIND.where().eq(ID, id).findUnique();
     }
 
+    /**
+     * Returns the student with the given username.
+     *
+     * @param user student username
+     * @return corresponding student
+     */
+    public static Student findByUserName(String user) {
+        return FIND.where().eq(USERNAME, user).findUnique();
+    }
+
+
     // --
 
+    @Override
     public String toString() {
-        return "Student{" + fullname + "}";
+        return "Student{" + id + ":" + username + "}";
     }
 
 }

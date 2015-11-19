@@ -168,6 +168,18 @@ transcripts:
         id:         0002
         creditsEarned: 12
 
+    - &transcript0003 !!models.Transcript
+        id:         0003
+        creditsEarned: 3
+
+    - &transcript0004 !!models.Transcript
+        id:         0004
+        creditsEarned: 3
+
+    - &transcript0005 !!models.Transcript
+        id:         0005
+        creditsEarned: 3
+
 # Students
 
 students:
@@ -196,4 +208,40 @@ students:
             - *course6505
             - *course8803001
         transcript: *transcript0002
+
+    - &student0003 !!models.Student
+        id:         0003
+        username:   "jesse"
+        password:   "stills"
+        fullname:   "Jesse Stills"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0003
+
+    - &student0004 !!models.Student
+        id:         0004
+        username:   "ryan"
+        password:   "mcmahon"
+        fullname:   "Ryan McMahon"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0004
+
+    - &student0005 !!models.Student
+        id:         0005
+        username:   "jp"
+        password:   "reilland"
+        fullname:   "John-Peter Reilland"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0005
 

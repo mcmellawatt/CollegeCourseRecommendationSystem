@@ -1,20 +1,11 @@
 package controllers;
 
-import java.util.HashMap;
-import java.util.Map;
+import models.Student;
 
 /**
  * Encapsulates authentication behavior.
  */
 public final class Authenticator {
-
-    private static final Map<String, String> LOGIN_DB = new HashMap<>();
-    static {
-        LOGIN_DB.put("jesse", "stills");
-        LOGIN_DB.put("jp", "reilland");
-        LOGIN_DB.put("ryan", "mcmahon");
-        LOGIN_DB.put("simon", "hunt");
-    }
 
     /**
      * Authenticates the given user name against the given password.
@@ -25,8 +16,11 @@ public final class Authenticator {
      */
     public boolean authenticate(String user, String pass) {
         if (user != null) {
-            String exp_pass = LOGIN_DB.get(user);
-            return (exp_pass != null && exp_pass.equals(pass));
+            Student student = Student.findByUserName(user);
+            if (student != null) {
+                String exp_pass = student.password;
+                return (exp_pass != null && exp_pass.equals(pass));
+            }
         }
         return false;
     }
