@@ -164,6 +164,10 @@ transcripts:
         id:         0001
         creditsEarned: 42
 
+    - &transcript0002 !!models.Transcript
+        id:         0002
+        creditsEarned: 12
+
 # Students
 
 students:
@@ -180,4 +184,16 @@ students:
             - *course7637
             - *course6460
         transcript: *transcript0001
+
+    - &student0002 !!models.Student
+        id:         0002
+        username:   "simon"
+        password:   "hunt"
+        fullname:   "Simon Hunt"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0002
 
