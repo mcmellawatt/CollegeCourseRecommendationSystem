@@ -2,22 +2,16 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.Course;
-import models.Student;
-import models.Transcript;
 import play.Logger;
 import play.cache.Cache;
 import play.mvc.BodyParser;
 import play.mvc.Result;
 import views.html.app;
-import views.html.courses;
-import views.html.course;
 import views.html.login;
-import views.html.student;
-import views.html.transcript;
 
 /**
- * Implements our application controller.
+ * Implements our application controller, responsible for handling user login
+ * and the main application view.
  */
 public class Application extends AppController {
 
@@ -76,7 +70,6 @@ public class Application extends AppController {
         return ok(response);
     }
 
-
     /**
      * Generates the main page for our single-page-application.
      *
@@ -87,62 +80,6 @@ public class Application extends AppController {
         Logger.debug("app page accessed as user [{}]", user);
         return ok(
                 app.render(user)
-        );
-    }
-
-
-
-    // ==================================================================
-    // === the methods below here should be moved to a different class ==
-
-    /**
-     * Generates the courses page, listing all the available courses.
-     *
-     * @return courses page response
-     */
-    public static Result courses() {
-        Logger.debug("courses page accessed");
-        return ok(
-                courses.render(Course.findAll())
-        );
-    }
-
-    /**
-     * Generates a page with information about the given student.
-     *
-     * @param id student ID
-     * @return student information page
-     */
-    public static Result getStudent(String id) {
-        Logger.debug("student page accessed, for student-id '{}'", id);
-        return ok(
-                student.render(Student.findById(id))
-        );
-    }
-
-    /**
-     * Generates a page with information about the given course.
-     *
-     * @param id course ID
-     * @return course information page
-     */
-    public static Result getCourse(String id) {
-        Logger.debug("course page accessed, for course-id '{}'", id);
-        return ok(
-                course.render(Course.findById(id))
-        );
-    }
-
-    /**
-     * Generates a page with information about the given transcript.
-     *
-     * @param id transcript ID
-     * @return transcript information page
-     */
-    public static Result getTranscript(String id) {
-        Logger.debug("student page accessed, for transcript-id '{}'", id);
-        return ok(
-                transcript.render(Transcript.findById(id))
         );
     }
 }

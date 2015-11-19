@@ -18,8 +18,8 @@ public final class Authenticator {
         if (user != null) {
             Student student = Student.findByUserName(user);
             if (student != null) {
-                String exp_pass = student.password;
-                return (exp_pass != null && exp_pass.equals(pass));
+                String expPass = student.password;
+                return (expPass != null && expPass.equals(pass));
             }
         }
         return false;

@@ -18,16 +18,17 @@ GET     /app                        controllers.Application.app()
 # request data for the different views
 POST    /profile                    controllers.ProfileView.view()
 
+
 # ----------------------------------------------------------------------------
 # Auxiliary pages ...
 
 # Courses
-GET     /courses                    controllers.Application.courses()
-GET     /courses/:id                controllers.Application.getCourse(id: String)
+GET     /courses                    controllers.Auxiliary.courses()
+GET     /courses/:id                controllers.Auxiliary.getCourse(id: String)
 
 # Students
-GET     /students/:id               controllers.Application.getStudent(id: String)
+GET     /students/:id               controllers.Auxiliary.getStudent(id: String)
 
 # Transcripts
-GET     /transcripts/:id            controllers.Application.getTranscript(id: String)
+GET     /transcripts/:id            controllers.Auxiliary.getTranscript(id: String)
     

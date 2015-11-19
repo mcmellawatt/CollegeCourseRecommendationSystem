@@ -2,19 +2,20 @@
 
 (function () {
 
+    // shorthand reference to core module
     function core() {
         return cs6310app.core;
     }
 
-    function render(data) {
-        console.log('render profile view with', data);
+    // render the profile view with the given response data
+    function render(resp) {
+        console.log('render profile view with', resp);
 
-        var s = data.student,
+        var p = resp.payload,
             view = core().view('profile');
 
-
-        view.append('<p>' + s.fullName + '</p>')
-            .append('<p>' + s.numCoursesPreferred + '</p>');
+        view.append('<p>' + p.fullName + '</p>')
+            .append('<p>' + p.numCoursesPreferred + '</p>');
     }
 
     // register our profile functionality

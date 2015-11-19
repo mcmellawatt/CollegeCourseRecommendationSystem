@@ -2,17 +2,21 @@
 
 (function () {
 
-    function loadView(viewid, username) {
-        console.log("Loading view", viewid, " for user ", username);
+    // adjust tab classes to "select" tab with view id 'vid'
+    // request data from the server for the given user's view
+    // render the view
+    function loadView(vid, user) {
+        console.log('Loading', vid, 'view for user', user);
         var data = {
-            user: username
+            user: user
         };
 
-        $.postJSON(viewid, data, function (response) {
-            cs6310app[response.view].render(response);
+        $.postJSON(vid, data, function (resp) {
+            cs6310app[resp.view].render(resp);
         });
     }
 
+    // return jQuery selection on the (emptied) view div, classed appropriately
     function view(vid) {
         var view = $('#view');
         view.empty();
