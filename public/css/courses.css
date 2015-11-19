@@ -1,0 +1,15 @@
+ul {
+    list-style-image: url('assets/img/drag-handle.png');
+    list-style-position: inside;
+}
+li {
+    cursor: pointer;
+    margin: 2px;
+    padding: 4px;
+    background-color: wheat ;
+    width: 90%;
+}
+button {
+    float: right;
+    margin-right: 60px;
+}

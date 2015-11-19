@@ -1,8 +1,6 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Course;
 import models.Student;
@@ -10,7 +8,6 @@ import models.Transcript;
 import play.Logger;
 import play.cache.Cache;
 import play.mvc.BodyParser;
-import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.app;
 import views.html.courses;
@@ -22,24 +19,14 @@ import views.html.transcript;
 /**
  * Implements our application controller.
  */
-public class Application extends Controller {
+public class Application extends AppController {
 
-    private static final String USER = "user";
     private static final String PASS = "pass";
     private static final String GOOD_TO_GO = "goodToGo";
     private static final String REDIRECT = "redirect";
     private static final String APP_URL = "app";
 
-    private static final ObjectMapper MAPPER = new ObjectMapper();
     private static final Authenticator AUTH = new Authenticator();
-
-    private static ObjectNode objectNode() {
-        return MAPPER.createObjectNode();
-    }
-
-    private static ArrayNode arrayNode() {
-        return MAPPER.createArrayNode();
-    }
 
 
     /**
@@ -102,6 +89,11 @@ public class Application extends Controller {
                 app.render(user)
         );
     }
+
+
+
+    // ==================================================================
+    // === the methods below here should be moved to a different class ==
 
     /**
      * Generates the courses page, listing all the available courses.
