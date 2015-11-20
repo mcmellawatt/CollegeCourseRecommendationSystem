@@ -18,10 +18,15 @@
 
     // return jQuery selection on the (emptied) view div, classed appropriately
     function view(vid) {
-        var view = $('#view');
+        var view = $('#view'),
+            tabs = $('#app-ctrl').find('.tab'),
+            tab = $('#tab-' + vid);
         view.empty();
         view.removeClass('profile courses history');
         view.addClass(vid);
+        tabs.removeClass('current');
+        tab.addClass('current');
+
         return view;
     }
 

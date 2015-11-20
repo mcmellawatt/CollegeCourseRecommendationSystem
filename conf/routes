@@ -17,6 +17,8 @@ GET     /app                        controllers.Application.app()
 
 # request data for the different views
 POST    /profile                    controllers.ProfileView.view()
+POST    /courses                    controllers.CoursesView.view()
+POST    /history                    controllers.HistoryView.view()
 
 
 # ----------------------------------------------------------------------------

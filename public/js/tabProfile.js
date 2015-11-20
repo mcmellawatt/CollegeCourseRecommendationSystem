@@ -14,7 +14,8 @@
         var p = resp.payload,
             view = core().view('profile');
 
-        view.append('<p>' + p.fullName + '</p>')
+        view.append('<h2> Profile View </h2>')
+            .append('<p>' + p.fullName + '</p>')
             .append('<p>' + p.numCoursesPreferred + '</p>');
     }
 

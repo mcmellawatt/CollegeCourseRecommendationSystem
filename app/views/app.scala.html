@@ -1,16 +1,35 @@
 @(username: String)
 
 @main("Recommender Mk.IV") {
+    <script type="text/javascript">
+        function load(vid) {
+            var user = '@username';
+            cs6310app.core.loadView(vid, user);
+        }
+        function logout() {
+            window.location.href = "login";
+        }
+    </script>
+
     <div id="recommender-app" class="frame">
         <div id="app-ctrl">
-            <div class="ljust">
-                <div class="tab">Profile</div>
-                <div class="tab">Courses</div>
-                <div class="tab">History</div>
+            <div class="tab-block">
+                <div id="tab-profile"
+                    onclick="load('profile')"
+                    class="btn tab">Profile</div>
+
+                <div id="tab-courses"
+                    onclick="load('courses')"
+                    class="btn tab">Courses</div>
+
+                <div id="tab-history"
+                    onclick="load('history')"
+                    class="btn tab">History</div>
             </div>
-            <div class="rjust">
-                <div class="username">@username</div>
-                <div class="btn">Logout</div>
+            <div class="logout-block">
+                <div class="btn logout"
+                    onclick="logout()">Logout</div>
+                <div class="username"> Logged in as <b>@username</b></div>
             </div>
         </div>
 
@@ -24,7 +43,7 @@
             Developed by Team33 &mdash; powered by Gurobi
         </div>
         <script type="text/javascript">
-            cs6310app.core.loadView('profile', '@username');
+            load('profile');
         </script>
     </div>
 }
