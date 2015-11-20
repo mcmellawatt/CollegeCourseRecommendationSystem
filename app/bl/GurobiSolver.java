@@ -17,9 +17,9 @@ public class GurobiSolver implements Solver {
     private static final int MAX_CLASS_SIZE = 30;
 
     private static final String FMT_SC = "si_%s_ci_%s";
-    public static final String FMT_MAX_CS = "max_cs_ci_%s";
-    public static final String FMT_NI_SC = "ni_si_%s_ci_%s";
-
+    private static final String FMT_MAX_CS = "max_cs_ci_%s";
+    private static final String FMT_MAX_NC = "max_nc_si_%s";
+    private static final String FMT_NI_SC = "ni_si_%s_ci_%s";
 
     private GRBModel model;
     private List<Student> students;
@@ -30,7 +30,7 @@ public class GurobiSolver implements Solver {
 
     // Gurobi matrix for students and courses for next semester.
     // This will be the solution.
-    private SCVars scVars = new SCVars(studentCount, courseCount);
+    private YVars scVars = new YVars(studentCount, courseCount);
 
     /**
      * Constructs the Gurobi solver, initializing the model,
@@ -67,7 +67,8 @@ public class GurobiSolver implements Solver {
 
             // Add Constraints
             addAllMaxCourseSizeConstraints();
-            addAllCourseNotInterestedContraints();
+            addMaxNumCoursesConstraint();
+            //addAllCourseNotInterestedConstraints();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,8 +78,8 @@ public class GurobiSolver implements Solver {
     private void generateSCVars() throws GRBException {
         String s;
         GRBVar var;
-        for (int i = 1; i <= studentCount; i++) {
-            for (int j = 1; j <= courseCount; j++) {
+        for (int i = 0; i < studentCount; i++) {
+            for (int j = 0; j < courseCount; j++) {
                 s = String.format(FMT_SC, students.get(i).id, courses.get(i).id);
                 var = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, s);
                 scVars.set(i, j, var);
@@ -87,43 +88,55 @@ public class GurobiSolver implements Solver {
     }
 
     private void addAllMaxCourseSizeConstraints() throws GRBException {
-        for (int j = 1; j <= courseCount; j++) {
+        for (int j = 0; j < courseCount; j++) {
             addMaxCourseSizeConstraint(j);
         }
     }
 
     private void addMaxCourseSizeConstraint(int j) throws GRBException {
         GRBLinExpr expr = new GRBLinExpr();
-        for (int i = 1; i <= studentCount; i++) {
+        for (int i = 0; i < studentCount; i++) {
             expr.addTerm(1, scVars.get(i, j));
         }
         String s = String.format(FMT_MAX_CS, courses.get(j).id);
         model.addConstr(expr, GRB.LESS_EQUAL, MAX_CLASS_SIZE, s);
     }
 
-    private void addAllCourseNotInterestedContraints() throws GRBException {
-        for (int i = 1; i <= studentCount; i++) {
-            for (int j = 1; j <= courseCount; j++) {
-                addCourseNotInterestedConstraint(i, j);
+    private void addMaxNumCoursesConstraint() throws GRBException {
+        for (int i = 0; i < studentCount; i++) {
+            GRBLinExpr expr = new GRBLinExpr();
+            for (int j = 0; j < courseCount; j++) {
+                expr.addTerm(1, scVars.get(i, j));
             }
+            String s = String.format(FMT_MAX_NC, students.get(i).id);
+            int num = students.get(i).numCoursesPreferred;
+            model.addConstr(expr, GRB.LESS_EQUAL, num, s);
         }
     }
 
-    private void addCourseNotInterestedConstraint(int i, int j) throws GRBException {
-        if (!isCoursePreferred(students.get(i), courses.get(j))) {
-            GRBLinExpr expr = new GRBLinExpr();
-            expr.addTerm(1, scVars.get(i, j));
-            String s = String.format(FMT_NI_SC, students.get(i), courses.get(j).id);
-            model.addConstr(expr, GRB.LESS_EQUAL, 0, s);
-        }
-    }
+//    private void addAllCourseNotInterestedConstraints() throws GRBException {
+//        for (int i = 0; i < studentCount; i++) {
+//            for (int j = 0; j < courseCount; j++) {
+//                addCourseNotInterestedConstraint(i, j);
+//            }
+//        }
+//    }
+//
+//    private void addCourseNotInterestedConstraint(int i, int j) throws GRBException {
+//        if (!isCoursePreferred(students.get(i), courses.get(j))) {
+//            GRBLinExpr expr = new GRBLinExpr();
+//            expr.addTerm(1, scVars.get(i, j));
+//            String s = String.format(FMT_NI_SC, students.get(i), courses.get(j).id);
+//            model.addConstr(expr, GRB.LESS_EQUAL, 0, s);
+//        }
+//    }
 
     private void setObjective() throws GRBException {
         GRBLinExpr expr = new GRBLinExpr();
-        for (int i = 1; i <= studentCount; i++) {
-            for (int j = 1; j <= courseCount; j++) {
-                int studentCredits = students.get(i).transcript.creditsEarned;
-                expr.addTerm(studentCredits, scVars.get(i, j));
+        for (int i = 0; i < studentCount; i++) {
+            for (int j = 0; j < courseCount; j++) {
+                double c = Modifier.getModifier(students.get(i), courses.get(j));
+                expr.addTerm(c, scVars.get(i, j));
             }
         }
         model.setObjective(expr, GRB.MAXIMIZE);
@@ -139,21 +152,50 @@ public class GurobiSolver implements Solver {
     }
 
     // =====================================================================
-    // encapsulation of the y-vars array, so that we can make it 1-indexed.​
+    // encapsulation of the y-vars array.​
 
-    private static class SCVars {
-        private final GRBVar[][] scVars;
+    private static class YVars {
+        private final GRBVar[][] yVars;
 
-        SCVars(int i, int j) {
-            scVars = new GRBVar[i][j];
+        YVars(int i, int j) {
+            yVars = new GRBVar[i][j];
         }
 
         void set(int i, int j, GRBVar var) {
-            scVars[i - 1][j - 1] = var;
+            yVars[i][j] = var;
         }
 
         GRBVar get(int i, int j) {
-            return scVars[i - 1][j - 1];
+            return yVars[i][j];
+        }
+    }
+
+    // =====================================================================
+    // modifier class used for defining coefficients in model objective.​
+
+    private static class Modifier {
+        private static final double bonus = 0.001;
+        private static final double mult = 1.0;
+        private static final double increment = 0.05;
+
+        static double getModifier(Student s, Course c) {
+            int seniority = s.transcript.creditsEarned;
+            int priority = getPriorityLevel(s, c);
+            if (priority == 0) {
+                return -1;
+            }
+            return seniority + ((seniority * bonus) * (mult - (increment * priority)));
+        }
+
+        private static int getPriorityLevel(Student s, Course c) {
+            int priority = 0;
+            for (int i = 0; i < s.coursesPreferred.size(); i++) {
+                if ((s.coursesPreferred.get(i).id).equals(c.id)) {
+                    priority = i + 1;
+                    break;
+                }
+            }
+            return priority;
         }
     }
 }
