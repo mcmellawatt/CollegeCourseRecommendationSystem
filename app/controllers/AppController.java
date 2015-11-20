@@ -19,6 +19,11 @@ public class AppController extends Controller {
     protected static final String COURSES = "courses";
     protected static final String HISTORY = "history";
 
+    protected static final String ID = "id";
+    protected static final String TAG = "tag";
+    protected static final String NAME = "name";
+    protected static final String ABBREV = "abbrev";
+    protected static final String CORE = "core";
 
     protected static final ObjectMapper MAPPER = new ObjectMapper();
 

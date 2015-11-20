@@ -1,0 +1,38 @@
+#login-box {
+    margin: 100px auto auto;
+    width: 340px;
+    height: 160px;
+    background-color: #bbf;
+    border: 2px solid #88d;
+}
+
+#login-box h3 {
+    font-style: italic;
+    width: 100%;
+    text-align: center;
+}
+
+#login-box table {
+    margin: auto;
+}
+
+#login-box .label {
+    font-style: italic;
+    font-size: 10pt;
+    color: blue;
+}
+
+#login-box .field input {
+    width: 160px;
+}
+
+#login-box  .error {
+    height: 12px;
+    font-size: 8pt;
+    color: #844;
+}
+
+#login-box .control {
+    text-align: center;
+    padding-top: 12px;
+}

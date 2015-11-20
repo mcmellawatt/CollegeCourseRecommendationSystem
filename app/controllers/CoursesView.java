@@ -1,6 +1,8 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import models.Course;
 import models.Student;
 import play.Logger;
 import play.mvc.BodyParser;
@@ -29,11 +31,25 @@ public class CoursesView extends AppController {
         // TODO: get courses data and return that
         ObjectNode payload = objectNode()
                 .put(FULL_NAME, student.fullname)
-                .put(NUM_COURSES_PREFERRED, student.numCoursesPreferred)
-                .put("foo", "bar");
+                .put(NUM_COURSES_PREFERRED, student.numCoursesPreferred);
+
+        ArrayNode courses = arrayNode();
+        for (Course c: student.coursesPreferred) {
+            courses.add(json(c));
+        }
+        payload.set(COURSES, courses);
 
         Logger.debug("courses view page accessed as user '{}'", user);
 
         return ok(createResponse(user, COURSES, payload));
+    }
+
+    private static ObjectNode json(Course c) {
+        return objectNode()
+                .put(ID, c.id)
+                .put(TAG, c.tag)
+                .put(NAME, c.name)
+                .put(ABBREV, c.abbrev)
+                .put(CORE, c.core);
     }
 }
