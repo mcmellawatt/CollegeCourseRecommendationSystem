@@ -47,7 +47,7 @@ public class Transcript extends Model {
      * @param id transcript ID
      */
     public static Transcript findById(String id) {
-        return FIND.where().eq(ID, id).findUnique();
+        return FIND.fetch("student").where().eq(ID, id).findUnique();
     }
 
     // --

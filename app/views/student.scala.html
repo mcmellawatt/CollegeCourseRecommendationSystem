@@ -19,6 +19,10 @@
         <td> @student.fullname </td>
     </tr>
     <tr>
+        <td> Credits earned: </td>
+        <td> @student.transcript.creditsEarned </td>
+    </tr>
+    <tr>
         <td> Courses Preferred (@student.numCoursesPreferred): </td>
     </tr>
     @for(course <- student.coursesPreferred) {

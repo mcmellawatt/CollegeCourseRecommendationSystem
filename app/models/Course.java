@@ -56,7 +56,7 @@ public class Course extends Model {
      * @param id course ID
      */
     public static Course findById(String id) {
-        return FIND.where().eq(ID, id).findUnique();
+        return FIND.fetch("studentsInterested").where().eq(ID, id).findUnique();
     }
 
     // --

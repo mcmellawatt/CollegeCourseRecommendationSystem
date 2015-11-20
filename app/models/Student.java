@@ -64,19 +64,18 @@ public class Student extends Model {
      * @return corresponding student
      */
     public static Student findById(String id) {
-        return FIND.where().eq(ID, id).findUnique();
+        return FIND.fetch("transcript").where().eq(ID, id).findUnique();
     }
 
     /**
      * Returns the student with the given username.
      *
      * @param user student username
-     * @return corresponding student
+     * @return corresnponding student
      */
     public static Student findByUserName(String user) {
-        return FIND.where().eq(USERNAME, user).findUnique();
+        return FIND.fetch("transcript").where().eq(USERNAME, user).findUnique();
     }
-
 
     // --
 
