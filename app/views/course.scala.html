@@ -7,20 +7,25 @@
 
     <table>
         <tr>
-            <td> Course ID: </td>
-            <td> @course.id </td>
+            <td> <b>Course ID:</b> @course.id </td>
         </tr>
         <tr>
-            <td> Name: </td>
-            <td> @course.name </td>
+            <td> <b>Name:</b> @course.name </td>
         </tr>
         <tr>
-            <td> Students Interested: </td>
+            <td> <b>Max Class Size:</b> @course.maxClassSize </td>
         </tr>
-        @for(student <- course.studentsInterested) {
+        <tr>
+            <td> <b>Number of Students Interested:</b> @course.studentsInterested.size() </td>
+        </tr>
+        <tr> <td> ----- </td> </tr>
+        <tr>
+            <td> <b>Students Interested:</b> </td>
+        </tr>
+        @for(student <- course.studentsInterested.sortBy((std) => -std.transcript.creditsEarned)) {
             <tr>
-                <td>Student ID: @student.id</td>
-                <td>Student Name: @student.fullname</td>
+                <td>Name: @student.fullname</td>
+                <td>Credits Earned (Seniority): @student.transcript.creditsEarned</td>
             </tr>
         }
 

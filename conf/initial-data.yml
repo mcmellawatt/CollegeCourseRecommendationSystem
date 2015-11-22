@@ -8,6 +8,7 @@ courses:
         name:       "Computer Vision"
         abbrev:     "CV"
         core:       Yes
+        maxClassSize: 15
 
     - &course6035 !!models.Course
         id:         6035
@@ -15,6 +16,7 @@ courses:
         name:       "Introduction to Information Security"
         abbrev:     "IIS"
         core:       No
+        maxClassSize: 18
 
     - &course6210 !!models.Course
         id:         6210
@@ -22,6 +24,7 @@ courses:
         name:       "Advanced Operating Systems"
         abbrev:     "AOS"
         core:       Yes
+        maxClassSize: 22
 
     - &course6220 !!models.Course
         id:         6220
@@ -29,13 +32,14 @@ courses:
         name:       "Intro to High-Performance Computing"
         abbrev:     "IHPC"
         core:       Yes
-
+        maxClassSize: 24
     - &course6250 !!models.Course
         id:         6250
         tag:        "CS 6250"
         name:       "Computer Networks"
         abbrev:     "CN"
         core:       Yes
+        maxClassSize: 26
 
     - &course6290 !!models.Course
         id:         6290
@@ -43,6 +47,7 @@ courses:
         name:       "High Performance Computer Architecture"
         abbrev:     "HPCA"
         core:       Yes
+        maxClassSize: 30
 
     - &course6300 !!models.Course
         id:         6300
@@ -50,6 +55,7 @@ courses:
         name:       "Software Development Process"
         abbrev:     "SDP"
         core:       Yes
+        maxClassSize: 28
 
     - &course6310 !!models.Course
         id:         6310
@@ -57,6 +63,7 @@ courses:
         name:       "Software Architecture and Design"
         abbrev:     "SAD"
         core:       Yes
+        maxClassSize: 14
 
     - &course6440 !!models.Course
         id:         6440
@@ -64,6 +71,7 @@ courses:
         name:       "Intro to Health Informatics"
         abbrev:     "IHI"
         core:       No
+        maxClassSize: 10
 
     - &course6460 !!models.Course
         id:         6460
@@ -71,6 +79,7 @@ courses:
         name:       "Educational Technology"
         abbrev:     "ET"
         core:       No
+        maxClassSize: 12
 
     - &course6475 !!models.Course
         id:         6475
@@ -78,6 +87,7 @@ courses:
         name:       "Computational Photography"
         abbrev:     "CP"
         core:       No
+        maxClassSize: 13
 
     - &course6505 !!models.Course
         id:         6505
@@ -85,6 +95,7 @@ courses:
         name:       "Computability, Complexity and Algorithms"
         abbrev:     "CCA"
         core:       Yes
+        maxClassSize: 11
 
     - &course7637 !!models.Course
         id:         7637
@@ -92,6 +103,7 @@ courses:
         name:       "Knowledge-Based Artificial Intelligence: Cognitive Systems"
         abbrev:     "KBAI"
         core:       Yes
+        maxClassSize: 16
 
     - &course7641 !!models.Course
         id:         7641
@@ -99,6 +111,7 @@ courses:
         name:       "Machine Learning"
         abbrev:     "ML"
         core:       Yes
+        maxClassSize: 29
 
     - &course7646 !!models.Course
         id:         7646
@@ -106,6 +119,7 @@ courses:
         name:       "Machine Learning for Trading"
         abbrev:     "MLT"
         core:       No
+        maxClassSize: 21
 
     - &course8803001 !!models.Course
         id:         8803001
@@ -113,6 +127,7 @@ courses:
         name:       "Artificial Intelligence for Robotics"
         abbrev:     "AIR"
         core:       No
+        maxClassSize: 23
 
     - &course8803002 !!models.Course
         id:         8803002
@@ -120,6 +135,7 @@ courses:
         name:       "Introduction to Operating Systems"
         abbrev:     "IOS"
         core:       Yes
+        maxClassSize: 26
 
     - &course8803003 !!models.Course
         id:         8803003
@@ -127,6 +143,7 @@ courses:
         name:       "Special Topics: Reinforcement Learning"
         abbrev:     "RL"
         core:       No
+        maxClassSize: 28
 
     - &course6340 !!models.Course
         id:         6340
@@ -134,6 +151,7 @@ courses:
         name:       "Software Analysis and Test"
         abbrev:     "SAT"
         core:       No
+        maxClassSize: 29
 
     - &course6400 !!models.Course
         id:         6400
@@ -141,6 +159,7 @@ courses:
         name:       "Database Systems Concepts and Design"
         abbrev:     "DSCD"
         core:       Yes
+        maxClassSize: 17
 
     - &course8803901 !!models.Course
         id:         8803901
@@ -148,6 +167,7 @@ courses:
         name:       "Special Topics: Embedded Software"
         abbrev:     "ES"
         core:       No
+        maxClassSize: 22
 
     - &course8803902 !!models.Course
         id:         8803902
@@ -155,6 +175,7 @@ courses:
         name:       "Special Topics: Big Data for Health Informatics"
         abbrev:     "BDHI"
         core:       No
+        maxClassSize: 25
 
 # Transcripts
 
@@ -162,7 +183,7 @@ transcripts:
 
     - &transcript0001 !!models.Transcript
         id:         0001
-        creditsEarned: 42
+        creditsEarned: 3
 
     - &transcript0002 !!models.Transcript
         id:         0002
@@ -170,15 +191,116 @@ transcripts:
 
     - &transcript0003 !!models.Transcript
         id:         0003
-        creditsEarned: 3
+        creditsEarned: 37
 
     - &transcript0004 !!models.Transcript
         id:         0004
-        creditsEarned: 3
+        creditsEarned: 7
 
     - &transcript0005 !!models.Transcript
         id:         0005
-        creditsEarned: 3
+        creditsEarned: 9
+
+    - &transcript0006 !!models.Transcript
+        id:         0006
+        creditsEarned: 33
+
+    - &transcript0007 !!models.Transcript
+        id:         0007
+        creditsEarned: 21
+
+    - &transcript0008 !!models.Transcript
+        id:         0008
+        creditsEarned: 45
+
+    - &transcript0009 !!models.Transcript
+        id:         0009
+        creditsEarned: 16
+
+    - &transcript0010 !!models.Transcript
+        id:         0010
+        creditsEarned: 8
+
+    - &transcript0011 !!models.Transcript
+        id:         0011
+        creditsEarned: 23
+
+    - &transcript0012 !!models.Transcript
+        id:         0012
+        creditsEarned: 15
+
+    - &transcript0013 !!models.Transcript
+        id:         0013
+        creditsEarned: 19
+
+    - &transcript0014 !!models.Transcript
+        id:         0014
+        creditsEarned: 26
+
+    - &transcript0015 !!models.Transcript
+        id:         0015
+        creditsEarned: 29
+
+    - &transcript0016 !!models.Transcript
+        id:         0016
+        creditsEarned: 7
+
+    - &transcript0017 !!models.Transcript
+        id:         0017
+        creditsEarned: 9
+
+    - &transcript0018 !!models.Transcript
+        id:         0018
+        creditsEarned: 11
+
+    - &transcript0019 !!models.Transcript
+        id:         0019
+        creditsEarned: 13
+
+    - &transcript0020 !!models.Transcript
+        id:         0020
+        creditsEarned: 26
+
+    - &transcript0021 !!models.Transcript
+        id:         0021
+        creditsEarned: 28
+
+    - &transcript0022 !!models.Transcript
+        id:         0022
+        creditsEarned: 31
+
+    - &transcript0023 !!models.Transcript
+        id:         0023
+        creditsEarned: 19
+
+    - &transcript0024 !!models.Transcript
+        id:         0024
+        creditsEarned: 9
+
+    - &transcript0025 !!models.Transcript
+        id:         0025
+        creditsEarned: 14
+
+    - &transcript0026 !!models.Transcript
+        id:         0026
+        creditsEarned: 22
+
+    - &transcript0027 !!models.Transcript
+        id:         0027
+        creditsEarned: 33
+
+    - &transcript0028 !!models.Transcript
+        id:         0028
+        creditsEarned: 21
+
+    - &transcript0029 !!models.Transcript
+        id:         0029
+        creditsEarned: 12
+
+    - &transcript0030 !!models.Transcript
+        id:         0030
+        creditsEarned: 15
+
 
 # Students
 
@@ -192,7 +314,6 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course8803902
-            - *course7641
             - *course7637
             - *course6460
         transcript: *transcript0001
@@ -244,4 +365,309 @@ students:
             - *course6505
             - *course8803001
         transcript: *transcript0005
+
+    - &student0006 !!models.Student
+        id:         0006
+        username:   "george"
+        password:   "washington"
+        fullname:   "George Washington"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course8803902
+            - *course7641
+            - *course7637
+            - *course6460
+        transcript: *transcript0006
+
+    - &student0007 !!models.Student
+        id:         0007
+        username:   "john"
+        password:   "adams"
+        fullname:   "John Adams"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0007
+
+    - &student0008 !!models.Student
+        id:         0008
+        username:   "thomas"
+        password:   "jefferson"
+        fullname:   "Thomas Jefferson"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0008
+
+    - &student0009 !!models.Student
+        id:         0009
+        username:   "james"
+        password:   "madison"
+        fullname:   "James Madison"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0009
+
+    - &student0010 !!models.Student
+        id:         0010
+        username:   "james"
+        password:   "monroe"
+        fullname:   "James Monroe"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0010
+
+    - &student0011 !!models.Student
+        id:         0011
+        username:   "john"
+        password:   "quincyadams"
+        fullname:   "John Quincy Adams"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course8803902
+            - *course7641
+            - *course7637
+            - *course6460
+        transcript: *transcript0011
+
+    - &student0012 !!models.Student
+        id:         0012
+        username:   "andrew"
+        password:   "jackson"
+        fullname:   "Andrew Jackson"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0012
+
+    - &student0013 !!models.Student
+        id:         0013
+        username:   "martin"
+        password:   "vanburen"
+        fullname:   "Martin Van Buren"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0013
+
+    - &student0014 !!models.Student
+        id:         0014
+        username:   "william"
+        password:   "henryharrison"
+        fullname:   "William Henry Harrison"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0014
+
+    - &student0015 !!models.Student
+        id:         0015
+        username:   "john"
+        password:   "tyler"
+        fullname:   "John Tyler"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0015
+
+    - &student0016 !!models.Student
+        id:         0016
+        username:   "james"
+        password:   "knoxpolk"
+        fullname:   "James Knox Polk"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0016
+
+    - &student0017 !!models.Student
+        id:         0017
+        username:   "zachary"
+        password:   "taylor"
+        fullname:   "Zachary Taylor"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course8803902
+            - *course7641
+            - *course7637
+            - *course6460
+        transcript: *transcript0017
+
+    - &student0018 !!models.Student
+        id:         0018
+        username:   "millard"
+        password:   "fillmore"
+        fullname:   "Millard Fillmore"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0018
+
+    - &student0019 !!models.Student
+        id:         0019
+        username:   "franklin"
+        password:   "pierce"
+        fullname:   "Franklin Pierce"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0019
+
+    - &student0020 !!models.Student
+        id:         0020
+        username:   "james"
+        password:   "buchanan"
+        fullname:   "James Buchanan"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0020
+
+    - &student0021 !!models.Student
+        id:         0021
+        username:   "abraham"
+        password:   "lincoln"
+        fullname:   "Abraham Lincoln"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0021
+
+    - &student0022 !!models.Student
+        id:         0022
+        username:   "andrew"
+        password:   "johnson"
+        fullname:   "Andrew Johnson"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0022
+
+    - &student0023 !!models.Student
+        id:         0023
+        username:   "ulysses"
+        password:   "sgrant"
+        fullname:   "Ulysses S Grant"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course8803902
+            - *course7641
+            - *course7637
+            - *course6460
+        transcript: *transcript0023
+
+    - &student0024 !!models.Student
+        id:         0024
+        username:   "rutherford"
+        password:   "birchardhayes"
+        fullname:   "Rutherford Birchard Hayes"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0024
+
+    - &student0025 !!models.Student
+        id:         0025
+        username:   "james"
+        password:   "abramgarfield"
+        fullname:   "James Abram Garfield"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0025
+
+    - &student0026 !!models.Student
+        id:         0026
+        username:   "chester"
+        password:   "alanarthur"
+        fullname:   "Chester Alan Arthur"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0026
+
+    - &student0027 !!models.Student
+        id:         0027
+        username:   "grover"
+        password:   "cleveland"
+        fullname:   "Grover Cleveland"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0027
+
+    - &student0028 !!models.Student
+        id:         0028
+        username:   "benjamin"
+        password:   "harrison"
+        fullname:   "Benjamin Harrison"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0028
+
+    - &student0029 !!models.Student
+        id:         0029
+        username:   "william"
+        password:   "mckinley"
+        fullname:   "William McKinley"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course8803902
+            - *course7641
+            - *course7637
+            - *course6460
+        transcript: *transcript0029
+
+    - &student0030 !!models.Student
+        id:         0030
+        username:   "theodore"
+        password:   "roosevelt"
+        fullname:   "Theodore Roosevelt"
+        numCoursesPreferred: 2
+        coursesPreferred:
+            - *course7641
+            - *course6505
+            - *course8803001
+        transcript: *transcript0030
 

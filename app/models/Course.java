@@ -35,6 +35,9 @@ public class Course extends Model {
     public boolean core;
 
     @Constraints.Required
+    public Integer maxClassSize;
+
+    @Constraints.Required
     @ManyToMany(mappedBy="coursesPreferred", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     public List<Student> studentsInterested = new ArrayList<Student>();
 
