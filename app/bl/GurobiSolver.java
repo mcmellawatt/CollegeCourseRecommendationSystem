@@ -4,6 +4,8 @@ import gurobi.*;
 import models.Course;
 import models.Student;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -54,7 +56,8 @@ public class GurobiSolver implements Solver {
 
 
     @Override
-    public void optimize() {
+    public LinkedHashMap<Student, ArrayList<Course>> solve() {
+        LinkedHashMap<Student, ArrayList<Course>> solution = null;
         try {
             // Create scVars variables;
             generateSCVars();
@@ -66,13 +69,20 @@ public class GurobiSolver implements Solver {
             setObjective();
 
             // Add Constraints
-            addAllMaxCourseSizeConstraints();
+            addMaxCourseSizeConstraints();
             addMaxNumCoursesConstraint();
-            //addAllCourseNotInterestedConstraints();
+            addAllCourseNotInterestedConstraints();
+
+            // optimize model.
+            model.optimize();
+
+            // format gurobi model solution.
+            solution = formatSolution();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return solution;
     }
 
     private void generateSCVars() throws GRBException {
@@ -87,7 +97,7 @@ public class GurobiSolver implements Solver {
         }
     }
 
-    private void addAllMaxCourseSizeConstraints() throws GRBException {
+    private void addMaxCourseSizeConstraints() throws GRBException {
         for (int j = 0; j < courseCount; j++) {
             addMaxCourseSizeConstraint(j);
         }
@@ -114,28 +124,28 @@ public class GurobiSolver implements Solver {
         }
     }
 
-//    private void addAllCourseNotInterestedConstraints() throws GRBException {
-//        for (int i = 0; i < studentCount; i++) {
-//            for (int j = 0; j < courseCount; j++) {
-//                addCourseNotInterestedConstraint(i, j);
-//            }
-//        }
-//    }
-//
-//    private void addCourseNotInterestedConstraint(int i, int j) throws GRBException {
-//        if (!isCoursePreferred(students.get(i), courses.get(j))) {
-//            GRBLinExpr expr = new GRBLinExpr();
-//            expr.addTerm(1, scVars.get(i, j));
-//            String s = String.format(FMT_NI_SC, students.get(i), courses.get(j).id);
-//            model.addConstr(expr, GRB.LESS_EQUAL, 0, s);
-//        }
-//    }
+    private void addAllCourseNotInterestedConstraints() throws GRBException {
+        for (int i = 0; i < studentCount; i++) {
+            for (int j = 0; j < courseCount; j++) {
+                addCourseNotInterestedConstraint(i, j);
+            }
+        }
+    }
+
+    private void addCourseNotInterestedConstraint(int i, int j) throws GRBException {
+        if (!isCoursePreferred(students.get(i), courses.get(j))) {
+            GRBLinExpr expr = new GRBLinExpr();
+            expr.addTerm(1, scVars.get(i, j));
+            String s = String.format(FMT_NI_SC, students.get(i), courses.get(j).id);
+            model.addConstr(expr, GRB.LESS_EQUAL, 0, s);
+        }
+    }
 
     private void setObjective() throws GRBException {
         GRBLinExpr expr = new GRBLinExpr();
         for (int i = 0; i < studentCount; i++) {
             for (int j = 0; j < courseCount; j++) {
-                double c = Modifier.getModifier(students.get(i), courses.get(j));
+                int c = students.get(i).transcript.creditsEarned;
                 expr.addTerm(c, scVars.get(i, j));
             }
         }
@@ -149,6 +159,21 @@ public class GurobiSolver implements Solver {
             }
         }
         return false;
+    }
+
+    private LinkedHashMap<Student, ArrayList<Course>> formatSolution() throws GRBException {
+        LinkedHashMap<Student, ArrayList<Course>> solution = new LinkedHashMap<>();
+        for (int i = 0; i < studentCount; i++) {
+            ArrayList<Course> recCourses = new ArrayList<>();
+            for (int j = 0; j < courseCount; j++) {
+                double value = scVars.get(i, j).get(GRB.DoubleAttr.X);
+                if (value == 1) {
+                    recCourses.add(courses.get(j));
+                }
+            }
+            solution.put(students.get(i), recCourses);
+        }
+        return solution;
     }
 
     // =====================================================================
@@ -173,7 +198,7 @@ public class GurobiSolver implements Solver {
     // =====================================================================
     // modifier class used for defining coefficients in model objective.​
 
-    private static class Modifier {
+/*    private static class Modifier {
         private static final double bonus = 0.001;
         private static final double mult = 1.0;
         private static final double increment = 0.05;
@@ -197,5 +222,5 @@ public class GurobiSolver implements Solver {
             }
             return priority;
         }
-    }
+    }*/
 }
