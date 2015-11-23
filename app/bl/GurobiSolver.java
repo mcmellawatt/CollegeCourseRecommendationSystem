@@ -22,12 +22,11 @@ public class GurobiSolver implements Solver {
     // Currently '30' is just a place holder, the actual value for
     // maxClassSize will come from some business logic class. Ideally each
     // class would have a max class size, this can be addressed later.
-    private static final int MAX_CLASS_SIZE = 30;
 
     private static final String FMT_SC = "si_%s_ci_%s";
     private static final String FMT_MAX_CS = "max_cs_ci_%s";
     private static final String FMT_MAX_NC = "max_nc_si_%s";
-    private static final String FMT_NI_SC = "ni_si_%s_ci_%s";
+    private static final String FMT_NE_SC = "ne_si_%s_ci_%s";
 
     private GRBModel model;
     private List<Student> students;
@@ -77,7 +76,7 @@ public class GurobiSolver implements Solver {
             // Add Constraints
             addMaxCourseSizeConstraints();
             addMaxNumCoursesConstraint();
-            addAllCourseNotInterestedConstraints();
+            addAllNotEligibleConstraints();
 
             // optimize model.
             model.optimize();
@@ -115,7 +114,7 @@ public class GurobiSolver implements Solver {
             expr.addTerm(1, scVars.get(i, j));
         }
         String s = String.format(FMT_MAX_CS, courses.get(j).id);
-        model.addConstr(expr, GRB.LESS_EQUAL, MAX_CLASS_SIZE, s);
+        model.addConstr(expr, GRB.LESS_EQUAL, courses.get(j).maxClassSize, s);
     }
 
     private void addMaxNumCoursesConstraint() throws GRBException {
@@ -130,19 +129,19 @@ public class GurobiSolver implements Solver {
         }
     }
 
-    private void addAllCourseNotInterestedConstraints() throws GRBException {
+    private void addAllNotEligibleConstraints() throws GRBException {
         for (int i = 0; i < studentCount; i++) {
             for (int j = 0; j < courseCount; j++) {
-                addCourseNotInterestedConstraint(i, j);
+                addNotEligibleConstraint(i, j);
             }
         }
     }
 
-    private void addCourseNotInterestedConstraint(int i, int j) throws GRBException {
-        if (!isCoursePreferred(students.get(i), courses.get(j))) {
+    private void addNotEligibleConstraint(int i, int j) throws GRBException {
+        if (!isStudentEligibleForCourse(students.get(i), courses.get(j))) {
             GRBLinExpr expr = new GRBLinExpr();
             expr.addTerm(1, scVars.get(i, j));
-            String s = String.format(FMT_NI_SC, students.get(i), courses.get(j).id);
+            String s = String.format(FMT_NE_SC, students.get(i), courses.get(j).id);
             model.addConstr(expr, GRB.LESS_EQUAL, 0, s);
         }
     }
@@ -158,9 +157,9 @@ public class GurobiSolver implements Solver {
         model.setObjective(expr, GRB.MAXIMIZE);
     }
 
-    private boolean isCoursePreferred(Student s, Course c) {
-        for (Course pc : s.coursesPreferred) {
-            if (c.id.equals(pc.id)) {
+    private boolean isStudentEligibleForCourse(Student s, Course c) {
+        for (Course ec : s.getEligibleCourses()) {
+            if (c.id.equals(ec.id)) {
                 return true;
             }
         }
