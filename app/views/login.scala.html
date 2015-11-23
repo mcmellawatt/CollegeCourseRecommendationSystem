@@ -14,7 +14,6 @@
                 };
 
             $.postJSON('dologin', data, function (response) {
-                console.log('got a response', response);
                 if (response.goodToGo) {
                     window.location.href = response.redirect;
                 } else {

@@ -14,9 +14,10 @@
         var p = resp.payload,
             view = core().view('profile');
 
-        view.append('<h2> Profile View </h2>')
-            .append('<p>' + p.fullName + '</p>')
-            .append('<p>' + p.numCoursesPreferred + '</p>');
+        view.append('<h2> Profile for ' + p.fullName + ' </h2>')
+            .append('<p> Number of preferred courses: ' + p.numCoursesPreferred + '</p>');
+
+        view.append('<p> ( more information here ) </p>');
     }
 
     // register our profile functionality

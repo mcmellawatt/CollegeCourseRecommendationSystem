@@ -106,23 +106,14 @@ h2 {
 }
 
 #view {
-    position: relative;
-    top: 38px;
-    height: 400px;
+    position: absolute;
+    top: 58px;
+    width: 800px;
     padding: 4px;
     background-color: #bbd;
     border-bottom: 2px solid #448;
     border-right: 2px solid #448;
     border-left: 2px solid #448;
-}
-
-.footer {
-    border-top: 1px solid #cce;
-    font-size: 8pt;
-    font-style: italic;
-    background-color: #eef;
-    color: #888;
-    float: right;
 }
 
 /* actual content styles */

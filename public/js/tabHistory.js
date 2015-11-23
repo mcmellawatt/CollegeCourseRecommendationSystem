@@ -15,6 +15,7 @@
             view = core().view('history');
 
         view.append('<h2> History View </h2>');
+        view.append('<p>(To be implemented)</p>');
     }
 
     // register our history functionality
