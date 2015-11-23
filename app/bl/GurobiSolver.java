@@ -1,12 +1,18 @@
 package bl;
 
-import gurobi.*;
+import gurobi.GRB;
+import gurobi.GRBEnv;
+import gurobi.GRBException;
+import gurobi.GRBLinExpr;
+import gurobi.GRBModel;
+import gurobi.GRBVar;
 import models.Course;
 import models.Student;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Our ILP Solver implementation, using the Gurobi library.
@@ -56,8 +62,8 @@ public class GurobiSolver implements Solver {
 
 
     @Override
-    public LinkedHashMap<Student, ArrayList<Course>> solve() {
-        LinkedHashMap<Student, ArrayList<Course>> solution = null;
+    public Map<Student, List<Course>> solve() {
+        Map<Student, List<Course>> solution = null;
         try {
             // Create scVars variables;
             generateSCVars();
@@ -161,8 +167,8 @@ public class GurobiSolver implements Solver {
         return false;
     }
 
-    private LinkedHashMap<Student, ArrayList<Course>> formatSolution() throws GRBException {
-        LinkedHashMap<Student, ArrayList<Course>> solution = new LinkedHashMap<>();
+    private Map<Student, List<Course>> formatSolution() throws GRBException {
+        Map<Student, List<Course>> solution = new LinkedHashMap<>();
         for (int i = 0; i < studentCount; i++) {
             ArrayList<Course> recCourses = new ArrayList<>();
             for (int j = 0; j < courseCount; j++) {
