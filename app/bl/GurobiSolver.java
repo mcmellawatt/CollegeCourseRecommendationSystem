@@ -145,7 +145,7 @@ public class GurobiSolver implements Solver {
         GRBLinExpr expr = new GRBLinExpr();
         for (int i = 0; i < studentCount; i++) {
             for (int j = 0; j < courseCount; j++) {
-                int c = students.get(i).transcript.getCreditsEarned();
+                double c = Coefficient.get(students.get(i), courses.get(j));
                 expr.addTerm(c, scVars.get(i, j));
             }
         }
@@ -198,29 +198,32 @@ public class GurobiSolver implements Solver {
     // =====================================================================
     // modifier class used for defining coefficients in model objective.​
 
-/*    private static class Modifier {
-        private static final double bonus = 0.001;
-        private static final double mult = 1.0;
-        private static final double increment = 0.05;
+    private static class Coefficient {
 
-        static double getModifier(Student s, Course c) {
-            int seniority = s.transcript.getCreditsEarned();
-            int priority = getPriorityLevel(s, c);
-            if (priority == 0) {
-                return -1;
-            }
-            return seniority + ((seniority * bonus) * (mult - (increment * priority)));
+        private static final double NUM_COURSES = Course.findAll().size();
+        private static final double NUM_CREDITS_REQ = 30;
+        private static final double pScale = .01;
+        private static final double sScale = .99;
+
+        static double get(Student s, Course c) {
+            double seniority = s.transcript.getCreditsEarned();
+            double priority = getPriorityLevel(s, c);
+            return sScale * normalizeSeniority(seniority) + pScale * priority;
         }
 
-        private static int getPriorityLevel(Student s, Course c) {
-            int priority = 0;
+        private static double normalizeSeniority(double credits) {
+            return credits * (NUM_COURSES / NUM_CREDITS_REQ);
+        }
+
+        private static double getPriorityLevel(Student s, Course c) {
+            double priority = 0;
             for (int i = 0; i < s.coursesPreferred.size(); i++) {
                 if ((s.coursesPreferred.get(i).id).equals(c.id)) {
-                    priority = i + 1;
+                    priority = NUM_COURSES - i;
                     break;
                 }
             }
             return priority;
         }
-    }*/
+    }
 }
