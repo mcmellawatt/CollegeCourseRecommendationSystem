@@ -18,6 +18,7 @@ public class AppController extends Controller {
     protected static final String PROFILE = "profile";
     protected static final String COURSES = "courses";
     protected static final String HISTORY = "history";
+    protected static final String ACK = "ack";
 
     protected static final String ID = "id";
     protected static final String TAG = "tag";
@@ -59,6 +60,30 @@ public class AppController extends Controller {
     }
 
     /**
+     * Returns the array from the request body for the given key.
+     * It is assumed that the body is formatted JSON, the key/value pair is
+     * at the root level, and the value is an array.
+     *
+     * @param key the key
+     * @return the array for the given key
+     */
+    protected static ArrayNode arrayFromRequest(String key) {
+        JsonNode json = request().body().asJson();
+        return (ArrayNode) json.withArray(key);
+    }
+
+    /**
+     * Creates a response to send back to the UI (no payload).
+     *
+     * @param user the logged-in username
+     * @param view the view name
+     * @return the aggregated response data
+     */
+    protected static ObjectNode createResponse(String user, String view) {
+        return createResponse(user, view, null);
+    }
+
+    /**
      * Creates a response to send back to the UI.
      *
      * @param user the logged-in username
@@ -71,7 +96,9 @@ public class AppController extends Controller {
         ObjectNode response = objectNode()
                 .put(USER, user)
                 .put(VIEW, view);
-        response.set(PAYLOAD, payload);
+        if (payload != null) {
+            response.set(PAYLOAD, payload);
+        }
         return response;
     }
 

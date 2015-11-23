@@ -20,8 +20,15 @@
         view.append('<p> ( more information here ) </p>');
     }
 
+    // called when our view is unloaded
+    function unload() {
+
+    }
+
+
     // register our profile functionality
     cs6310app.profile = {
-        render: render
+        render: render,
+        unload: unload
     };
 }());

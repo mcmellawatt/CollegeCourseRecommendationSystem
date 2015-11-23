@@ -18,8 +18,15 @@
         view.append('<p>(To be implemented)</p>');
     }
 
+    // called when our view is unloaded
+    function unload() {
+
+    }
+
+
     // register our history functionality
     cs6310app.history = {
-        render: render
+        render: render,
+        unload: unload
     };
 }());

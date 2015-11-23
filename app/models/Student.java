@@ -45,17 +45,33 @@ public class Student extends Model {
     @OneToOne
     public Transcript transcript;
 
-    public synchronized List<Course> getCoursesEligible() {
+    /**
+     * Returns the list of courses for which this student is currently
+     * eligible.
+     *
+     * @return
+     */
+    public synchronized List<Course> getEligibleCourses() {
         List<Course> allAvailableCourses = Course.findAll();
 
-        for (Course courseTaken : transcript.coursesTaken) {
-            allAvailableCourses.remove(courseTaken);
-        }
+//        for (Course courseTaken : transcript.coursesTaken) {
+//            allAvailableCourses.remove(courseTaken);
+//        }
+// Left commented till Ryan has seen and understood the change - please delete
+        allAvailableCourses.removeAll(transcript.coursesTaken);
 
-        for (Iterator<Course> availableCourse = allAvailableCourses.iterator(); availableCourse.hasNext();) {
-            if (!transcript.coursesTaken.containsAll(availableCourse.next().prerequisites))
-                allAvailableCourses.remove(availableCourse);
+//        for (Iterator<Course> availableCourse = allAvailableCourses.iterator(); availableCourse.hasNext();) {
+//            if (!transcript.coursesTaken.containsAll(availableCourse.next().prerequisites))
+//                allAvailableCourses.remove(availableCourse);
+//        }
+// Left commented till Ryan has seen and understood the change - please delete
+        List<Course> missingPreReqs = new ArrayList<>();
+        for (Course c : allAvailableCourses) {
+            if (!transcript.coursesTaken.containsAll(c.prerequisites)) {
+                missingPreReqs.add(c);
+            }
         }
+        allAvailableCourses.removeAll(missingPreReqs);
 
         return allAvailableCourses;
     }

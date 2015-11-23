@@ -1,12 +1,17 @@
-#courselist ul {
+#course-list ul {
     list-style-image: url('../img/drag-handle.png');
     list-style-position: inside;
 }
 
-#courselist li {
+#course-list li {
     cursor: pointer;
     margin: 2px;
     padding: 4px;
     background-color: #adf;
     width: 90%;
+}
+
+#course-list span.course-id {
+    color: red;
+    /*display: hidden*/
 }
