@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.mvc.Controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Base class for our controllers, defining some convenience constants
  * and methods.
@@ -25,6 +28,10 @@ public class AppController extends Controller {
     protected static final String NAME = "name";
     protected static final String ABBREV = "abbrev";
     protected static final String CORE = "core";
+    protected static final String COURSE_ORDER = "courseOrder";
+
+    protected static final String COMMA = ",";
+    protected static final String EMPTY = "";
 
     protected static final ObjectMapper MAPPER = new ObjectMapper();
 
@@ -100,6 +107,37 @@ public class AppController extends Controller {
             response.set(PAYLOAD, payload);
         }
         return response;
+    }
+
+    /**
+     * Produces a CSV string from a list of integers.
+     *
+     * @param ints list of integers
+     * @return CSV string
+     */
+    protected static String toCsv(List<Integer> ints) {
+        StringBuilder sb = new StringBuilder();
+        for (int i : ints) {
+            sb.append(i).append(COMMA);
+        }
+        final int len = sb.length();
+        sb.replace(len-1, len, EMPTY);
+        return sb.toString();
+    }
+
+    /**
+     * Produces a list of integers from a CSV string.
+     *
+     * @param csv the string
+     * @return a list of integers
+     */
+    protected static List<Integer> fromCsv(String csv) {
+        List<Integer> ints = new ArrayList<>();
+
+        for (String i : csv.split(COMMA)) {
+            ints.add(Integer.valueOf(i));
+        }
+        return ints;
     }
 
 }

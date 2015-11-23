@@ -1,5 +1,6 @@
 package controllers;
 
+import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -37,6 +38,10 @@ public class CoursesView extends AppController {
                 .put(FULL_NAME, student.fullname)
                 .put(NUM_COURSES_PREFERRED, student.numCoursesPreferred);
 
+        if (student.courseOrderCsv != null) {
+            payload.put(COURSE_ORDER, student.courseOrderCsv);
+        }
+
         ArrayNode courses = arrayNode();
         List<Course> eligibleCourses = student.getEligibleCourses();
 
@@ -54,17 +59,18 @@ public class CoursesView extends AppController {
     public static Result storeCourseList() {
         String user = fromRequest(USER);
         Student student = Student.findByUserName(user);
-        List<Integer> courses = courseIdsFromRequest();
-        // TODO: update the prioritized list of courses on student, and save..
+        String csv = toCsv(courseIdsFromRequest());
+
+        student.courseOrderCsv = csv;
+        Ebean.save(student);
 
         Logger.debug("storing current course order for user '{}'", user);
-        Logger.debug(" as {}", courses);
+        Logger.debug(" as {}", csv);
         return ok(createResponse(user, ACK));
 
     }
 
     private static List<Integer> courseIdsFromRequest() {
-        // TODO: pull out course ids from request body
         ArrayNode array = arrayFromRequest("courseIds");
         List<Integer> newOrder = new ArrayList<>();
         Iterator<JsonNode> iter = array.elements();

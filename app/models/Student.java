@@ -18,6 +18,7 @@ public class Student extends Model {
 
     private static final String ID = "id";
     private static final String USERNAME = "username";
+
     private static List<Course> courses = new ArrayList<>();
 
     @Id
@@ -36,7 +37,7 @@ public class Student extends Model {
 
     @Constraints.Required
     @ManyToMany
-    public List<Course> coursesPreferred = new ArrayList<Course>();
+    public List<Course> coursesPreferred = new ArrayList<>();
 
     @Constraints.Required
     public int numCoursesPreferred;
@@ -45,35 +46,28 @@ public class Student extends Model {
     @OneToOne
     public Transcript transcript;
 
+    public String courseOrderCsv;
+
     /**
      * Returns the list of courses for which this student is currently
      * eligible.
      *
-     * @return
+     * @return list of eligible courses
      */
     public synchronized List<Course> getEligibleCourses() {
-        List<Course> allAvailableCourses = Course.findAll();
+        List<Course> availableCourses = Course.findAll();
 
-//        for (Course courseTaken : transcript.coursesTaken) {
-//            allAvailableCourses.remove(courseTaken);
-//        }
-// Left commented till Ryan has seen and understood the change - please delete
-        allAvailableCourses.removeAll(transcript.coursesTaken);
+        availableCourses.removeAll(transcript.coursesTaken);
 
-//        for (Iterator<Course> availableCourse = allAvailableCourses.iterator(); availableCourse.hasNext();) {
-//            if (!transcript.coursesTaken.containsAll(availableCourse.next().prerequisites))
-//                allAvailableCourses.remove(availableCourse);
-//        }
-// Left commented till Ryan has seen and understood the change - please delete
         List<Course> missingPreReqs = new ArrayList<>();
-        for (Course c : allAvailableCourses) {
+        for (Course c : availableCourses) {
             if (!transcript.coursesTaken.containsAll(c.prerequisites)) {
                 missingPreReqs.add(c);
             }
         }
-        allAvailableCourses.removeAll(missingPreReqs);
+        availableCourses.removeAll(missingPreReqs);
 
-        return allAvailableCourses;
+        return availableCourses;
     }
 
     // -- Queries
