@@ -17,6 +17,8 @@ public class Course extends Model {
 
     private static final String ID = "id";
 
+    public static final Integer CREDITVALUE = 3;
+
     @Id
     @Constraints.Required
     @Formats.NonEmpty
@@ -37,9 +39,21 @@ public class Course extends Model {
     @Constraints.Required
     public Integer maxClassSize;
 
+    @ManyToMany
+    public List<Transcript> transcriptsIncludingCourse = new ArrayList<>();
+
+    //This is a list of courses that this course is a prerequisite for
+    @ManyToMany
+    @JoinTable(name = "courses_prerequisites", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "prerequisite_id"))
+    public List<Course> prerequisiteFor = new ArrayList<>();
+
+    //This is a list of prerequisites required to take this course
+    @ManyToMany(mappedBy="prerequisiteFor")
+    public List<Course> prerequisites = new ArrayList<>();
+
     @Constraints.Required
     @ManyToMany(mappedBy="coursesPreferred", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    public List<Student> studentsInterested = new ArrayList<Student>();
+    public List<Student> studentsInterested = new ArrayList<>();
 
     // -- Queries
 

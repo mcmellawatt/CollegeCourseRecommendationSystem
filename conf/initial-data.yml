@@ -18,6 +18,14 @@ courses:
         core:       No
         maxClassSize: 18
 
+    - &course8803002 !!models.Course
+        id:         8803002
+        tag:        "CS 8803-002"
+        name:       "Introduction to Operating Systems"
+        abbrev:     "IOS"
+        core:       Yes
+        maxClassSize: 26
+
     - &course6210 !!models.Course
         id:         6210
         tag:        "CS 6210"
@@ -25,6 +33,8 @@ courses:
         abbrev:     "AOS"
         core:       Yes
         maxClassSize: 22
+        prerequisites:
+            - *course8803002
 
     - &course6220 !!models.Course
         id:         6220
@@ -33,6 +43,7 @@ courses:
         abbrev:     "IHPC"
         core:       Yes
         maxClassSize: 24
+
     - &course6250 !!models.Course
         id:         6250
         tag:        "CS 6250"
@@ -48,6 +59,8 @@ courses:
         abbrev:     "HPCA"
         core:       Yes
         maxClassSize: 30
+        prerequisites:
+            - *course6220
 
     - &course6300 !!models.Course
         id:         6300
@@ -112,6 +125,8 @@ courses:
         abbrev:     "ML"
         core:       Yes
         maxClassSize: 29
+        prerequisites:
+            - *course6505
 
     - &course7646 !!models.Course
         id:         7646
@@ -120,6 +135,9 @@ courses:
         abbrev:     "MLT"
         core:       No
         maxClassSize: 21
+        prerequisites:
+            - *course7641
+            - *course6505
 
     - &course8803001 !!models.Course
         id:         8803001
@@ -128,14 +146,6 @@ courses:
         abbrev:     "AIR"
         core:       No
         maxClassSize: 23
-
-    - &course8803002 !!models.Course
-        id:         8803002
-        tag:        "CS 8803-002"
-        name:       "Introduction to Operating Systems"
-        abbrev:     "IOS"
-        core:       Yes
-        maxClassSize: 26
 
     - &course8803003 !!models.Course
         id:         8803003
@@ -176,6 +186,8 @@ courses:
         abbrev:     "BDHI"
         core:       No
         maxClassSize: 25
+        prerequisites:
+            - *course6440
 
 # Transcripts
 
@@ -183,124 +195,233 @@ transcripts:
 
     - &transcript0001 !!models.Transcript
         id:         0001
-        creditsEarned: 3
+        coursesTaken:
+            - *course8803002
+            - *course6505
+            - *course6475
 
     - &transcript0002 !!models.Transcript
         id:         0002
-        creditsEarned: 12
+        coursesTaken:
+            - *course6250
+            - *course6220
+            - *course6440
+            - *course6475
 
     - &transcript0003 !!models.Transcript
         id:         0003
-        creditsEarned: 37
+        coursesTaken:
+            - *course6505
+            - *course6310
+            - *course8803001
+            - *course6340
 
     - &transcript0004 !!models.Transcript
         id:         0004
-        creditsEarned: 7
+        coursesTaken:
+            - *course8803901
+            - *course6400
+            - *course8803001
+            - *course6475
 
     - &transcript0005 !!models.Transcript
         id:         0005
-        creditsEarned: 9
+        coursesTaken:
+            - *course6460
+            - *course6300
+            - *course6310
 
     - &transcript0006 !!models.Transcript
         id:         0006
-        creditsEarned: 33
+        coursesTaken:
+            - *course6505
+            - *course6310
+            - *course8803001
+            - *course6340
 
     - &transcript0007 !!models.Transcript
         id:         0007
-        creditsEarned: 21
+        coursesTaken:
+            - *course8803901
+            - *course6400
+            - *course8803001
+            - *course6475
 
     - &transcript0008 !!models.Transcript
         id:         0008
-        creditsEarned: 45
+        coursesTaken:
+            - *course6460
+            - *course6300
+            - *course6310
 
     - &transcript0009 !!models.Transcript
         id:         0009
-        creditsEarned: 16
+        coursesTaken:
+            - *course6505
+            - *course6310
+            - *course8803001
+            - *course6340
 
     - &transcript0010 !!models.Transcript
         id:         0010
-        creditsEarned: 8
+        coursesTaken:
+            - *course8803901
+            - *course6400
+            - *course8803001
+            - *course6475
 
     - &transcript0011 !!models.Transcript
         id:         0011
-        creditsEarned: 23
+        coursesTaken:
+            - *course6460
+            - *course6300
+            - *course6310
 
     - &transcript0012 !!models.Transcript
         id:         0012
-        creditsEarned: 15
+        coursesTaken:
+            - *course6505
+            - *course6310
+            - *course8803001
+            - *course6340
 
     - &transcript0013 !!models.Transcript
         id:         0013
-        creditsEarned: 19
+        coursesTaken:
+            - *course8803901
+            - *course6400
+            - *course8803001
+            - *course6475
 
     - &transcript0014 !!models.Transcript
         id:         0014
-        creditsEarned: 26
+        coursesTaken:
+            - *course6460
+            - *course6300
+            - *course6310
 
     - &transcript0015 !!models.Transcript
         id:         0015
-        creditsEarned: 29
+        coursesTaken:
+            - *course6505
+            - *course6310
+            - *course8803001
+            - *course6340
 
     - &transcript0016 !!models.Transcript
         id:         0016
-        creditsEarned: 7
+        coursesTaken:
+            - *course8803901
+            - *course6400
+            - *course8803001
+            - *course6475
 
     - &transcript0017 !!models.Transcript
         id:         0017
-        creditsEarned: 9
+        coursesTaken:
+            - *course6460
+            - *course6300
+            - *course6310
 
     - &transcript0018 !!models.Transcript
         id:         0018
-        creditsEarned: 11
+        coursesTaken:
+            - *course6505
+            - *course6310
+            - *course8803001
+            - *course6340
 
     - &transcript0019 !!models.Transcript
         id:         0019
-        creditsEarned: 13
+        coursesTaken:
+            - *course8803901
+            - *course6400
+            - *course8803001
+            - *course6475
 
     - &transcript0020 !!models.Transcript
         id:         0020
-        creditsEarned: 26
+        coursesTaken:
+            - *course6460
+            - *course6300
+            - *course6310
 
     - &transcript0021 !!models.Transcript
         id:         0021
-        creditsEarned: 28
+        coursesTaken:
+            - *course6505
+            - *course6310
+            - *course8803001
+            - *course6340
 
     - &transcript0022 !!models.Transcript
         id:         0022
-        creditsEarned: 31
+        coursesTaken:
+            - *course8803901
+            - *course6400
+            - *course8803001
+            - *course6475
 
     - &transcript0023 !!models.Transcript
         id:         0023
-        creditsEarned: 19
+        coursesTaken:
+            - *course6460
+            - *course6300
+            - *course6310
 
     - &transcript0024 !!models.Transcript
         id:         0024
-        creditsEarned: 9
+        coursesTaken:
+            - *course6505
+            - *course6310
+            - *course8803001
+            - *course6340
 
     - &transcript0025 !!models.Transcript
         id:         0025
-        creditsEarned: 14
+        coursesTaken:
+            - *course8803901
+            - *course6400
+            - *course8803001
+            - *course6475
 
     - &transcript0026 !!models.Transcript
         id:         0026
-        creditsEarned: 22
+        coursesTaken:
+            - *course6460
+            - *course6300
+            - *course6310
 
     - &transcript0027 !!models.Transcript
         id:         0027
-        creditsEarned: 33
+        coursesTaken:
+            - *course6505
+            - *course6310
+            - *course8803001
+            - *course6340
 
     - &transcript0028 !!models.Transcript
         id:         0028
-        creditsEarned: 21
+        coursesTaken:
+            - *course8803901
+            - *course6400
+            - *course8803001
+            - *course6475
 
     - &transcript0029 !!models.Transcript
         id:         0029
-        creditsEarned: 12
+        coursesTaken:
+            - *course6460
+            - *course6300
+            - *course6310
 
     - &transcript0030 !!models.Transcript
         id:         0030
-        creditsEarned: 15
-
+        coursesTaken:
+            - *course6505
+            - *course6310
+            - *course8803001
+            - *course6340
 
 # Students
 
@@ -311,11 +432,8 @@ students:
         username:   "joeschmoe"
         password:   "password1234"
         fullname:   "Joe Schmoe"
-        numCoursesPreferred: 2
+        numCoursesPreferred: 0
         coursesPreferred:
-            - *course8803902
-            - *course7637
-            - *course6460
         transcript: *transcript0001
 
     - &student0002 !!models.Student

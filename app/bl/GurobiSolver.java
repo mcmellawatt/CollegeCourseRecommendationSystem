@@ -145,7 +145,7 @@ public class GurobiSolver implements Solver {
         GRBLinExpr expr = new GRBLinExpr();
         for (int i = 0; i < studentCount; i++) {
             for (int j = 0; j < courseCount; j++) {
-                int c = students.get(i).transcript.creditsEarned;
+                int c = students.get(i).transcript.getCreditsEarned();
                 expr.addTerm(c, scVars.get(i, j));
             }
         }
@@ -204,7 +204,7 @@ public class GurobiSolver implements Solver {
         private static final double increment = 0.05;
 
         static double getModifier(Student s, Course c) {
-            int seniority = s.transcript.creditsEarned;
+            int seniority = s.transcript.getCreditsEarned();
             int priority = getPriorityLevel(s, c);
             if (priority == 0) {
                 return -1;

@@ -26,8 +26,13 @@ public class Transcript extends Model {
     @OneToOne(mappedBy="transcript")
     public Student student;
 
-    @Constraints.Required
-    public int creditsEarned;
+    @ManyToMany(mappedBy="transcriptsIncludingCourse")
+    public List<Course> coursesTaken = new ArrayList<>();
+
+    public int getCreditsEarned()
+    {
+        return coursesTaken.size() * Course.CREDITVALUE;
+    }
 
     // -- Queries
 
@@ -47,7 +52,7 @@ public class Transcript extends Model {
      * @param id transcript ID
      */
     public static Transcript findById(String id) {
-        return FIND.fetch("student").where().eq(ID, id).findUnique();
+        return FIND.fetch("student").fetch("coursesTaken").where().eq(ID, id).findUnique();
     }
 
     // --

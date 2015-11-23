@@ -16,16 +16,24 @@
             <td> <b>Max Class Size:</b> @course.maxClassSize </td>
         </tr>
         <tr>
+            <td> <b>Prerequisites:</b> </td>
+        </tr>
+        @for(prereq <- course.prerequisites) {
+            <tr>
+                <td>@prereq.name</td>
+            </tr>
+        }
+        <tr>
             <td> <b>Number of Students Interested:</b> @course.studentsInterested.size() </td>
         </tr>
         <tr> <td> ----- </td> </tr>
         <tr>
             <td> <b>Students Interested:</b> </td>
         </tr>
-        @for(student <- course.studentsInterested.sortBy((std) => -std.transcript.creditsEarned)) {
+        @for(student <- course.studentsInterested.sortBy((std) => -std.transcript.getCreditsEarned())) {
             <tr>
                 <td>Name: @student.fullname</td>
-                <td>Credits Earned (Seniority): @student.transcript.creditsEarned</td>
+                <td>Credits Earned (Seniority): @student.transcript.getCreditsEarned()</td>
             </tr>
         }
 
