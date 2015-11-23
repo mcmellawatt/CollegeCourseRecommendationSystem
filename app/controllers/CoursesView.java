@@ -8,6 +8,8 @@ import play.Logger;
 import play.mvc.BodyParser;
 import play.mvc.Result;
 
+import java.util.List;
+
 /**
  * Controller for the courses view.
  */
@@ -34,7 +36,9 @@ public class CoursesView extends AppController {
                 .put(NUM_COURSES_PREFERRED, student.numCoursesPreferred);
 
         ArrayNode courses = arrayNode();
-        for (Course c: student.coursesPreferred) {
+        List<Course> eligibleCourses = student.getCoursesEligible();
+
+        for (Course c: eligibleCourses) {
             courses.add(json(c));
         }
         payload.set(COURSES, courses);

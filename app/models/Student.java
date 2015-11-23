@@ -1,5 +1,6 @@
 package models;
 
+import org.springframework.cglib.core.CollectionUtils;
 import play.data.format.*;
 import play.data.validation.*;
 import play.db.ebean.*;
@@ -17,6 +18,7 @@ public class Student extends Model {
 
     private static final String ID = "id";
     private static final String USERNAME = "username";
+    private static List<Course> courses = new ArrayList<>();
 
     @Id
     @Constraints.Required
@@ -43,6 +45,21 @@ public class Student extends Model {
     @OneToOne
     public Transcript transcript;
 
+    public synchronized List<Course> getCoursesEligible() {
+        List<Course> allAvailableCourses = Course.findAll();
+
+        for (Course courseTaken : transcript.coursesTaken) {
+            allAvailableCourses.remove(courseTaken);
+        }
+
+        for (Iterator<Course> availableCourse = allAvailableCourses.iterator(); availableCourse.hasNext();) {
+            if (!transcript.coursesTaken.containsAll(availableCourse.next().prerequisites))
+                allAvailableCourses.remove(availableCourse);
+        }
+
+        return allAvailableCourses;
+    }
+
     // -- Queries
 
     private static final Model.Finder<String, Student> FIND =
@@ -64,6 +81,7 @@ public class Student extends Model {
      * @return corresponding student
      */
     public static Student findById(String id) {
+
         return FIND.fetch("transcript").where().eq(ID, id).findUnique();
     }
 

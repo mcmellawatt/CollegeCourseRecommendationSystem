@@ -93,4 +93,22 @@ public class Course extends Model {
         return tag + " " + name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Course course = (Course) o;
+
+        if (!id.equals(course.id)) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + id.hashCode();
+        return result;
+    }
 }

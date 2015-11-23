@@ -29,8 +29,7 @@ public class Transcript extends Model {
     @ManyToMany(mappedBy="transcriptsIncludingCourse")
     public List<Course> coursesTaken = new ArrayList<>();
 
-    public int getCreditsEarned()
-    {
+    public int getCreditsEarned() {
         return coursesTaken.size() * Course.CREDITVALUE;
     }
 
