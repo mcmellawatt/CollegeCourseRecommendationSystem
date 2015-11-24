@@ -59,13 +59,16 @@ public class CoursesView extends AppController {
     public static Result storeCourseList() {
         String user = fromRequest(USER);
         String csv = fromRequest(COURSE_ORDER_CSV);
+        String ncp = fromRequest(NUM_COURSES_PREFERRED);
         Student student = Student.findByUserName(user);
 
         student.courseOrderCsv = csv;
+        student.numCoursesPreferred = Integer.valueOf(ncp);
         Ebean.save(student);
 
         Logger.debug("storing current course order for user '{}'", user);
         Logger.debug(" as {}", csv);
+        Logger.debug(" with num courses preferred as {}", ncp);
         return ok(createResponse(user, ACK));
     }
 

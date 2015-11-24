@@ -13,6 +13,7 @@
 
         var p = resp.payload,
             csv = p.courseOrderCsv,
+            numCP = p.numCoursesPreferred,
             view = core().view('courses'),
             order = [],
             lookup = {};
@@ -27,6 +28,9 @@
         if (csv) {
             order = csv.split(',');
         }
+
+        view.append('<h2> Number of Courses Preferred:');
+        view.append('<input type="text" id="ncp" value="' + numCP + '"></h2>');
 
         view.append('<h2> Drag courses into priority order... </h2>');
         view.append('<p> ...with highest priority at the top of the list </p>');
@@ -61,6 +65,7 @@
     function unload(user) {
         console.log('UNLOADING Courses View...');
         var items = $('#course-list').find('li'),
+            ncp = $('#ncp').val(),
             ids = [];
 
         items.each(function () {
@@ -71,7 +76,8 @@
 
         var payload = {
             user: user,
-            courseOrderCsv: ids.join(',')
+            courseOrderCsv: ids.join(','),
+            numCoursesPreferred: ncp
         };
 
         $.postJSON('courses/store', payload, function (resp) {
