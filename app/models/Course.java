@@ -52,8 +52,8 @@ public class Course extends Model {
     public List<Course> prerequisites = new ArrayList<>();
 
     @Constraints.Required
-    @ManyToMany(mappedBy="preferredCourses")
-    public List<StudentRequest> studentRequests = new ArrayList<>();
+    @ManyToMany(mappedBy="coursesPreferred", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    public List<Student> studentsInterested = new ArrayList<>();
 
     // -- Queries
 
@@ -77,6 +77,11 @@ public class Course extends Model {
     }
 
     // --
+
+    @Override
+    public String toString() {
+        return "Course{" + tag + "}";
+    }
 
     /**
      * Returns the course title, a concatenation of the course tag and the

@@ -56,4 +56,8 @@ public class Transcript extends Model {
 
     // --
 
+    public String toString() {
+        return "Transcript{" + id + "}";
+    }
+
 }
