@@ -35,9 +35,8 @@ public class Student extends Model {
     @Constraints.Required
     public String fullname;
 
-    @Constraints.Required
-    @ManyToMany
-    public List<Course> coursesPreferred = new ArrayList<>();
+    @OneToMany(mappedBy = "student")
+    public List<StudentRequest> requests = new ArrayList<>();
 
     @Constraints.Required
     public int numCoursesPreferred;
@@ -92,7 +91,7 @@ public class Student extends Model {
      */
     public static Student findById(String id) {
 
-        return FIND.fetch("transcript").where().eq(ID, id).findUnique();
+        return FIND.fetch("transcript").fetch("requests").where().eq(ID, id).findUnique();
     }
 
     /**
@@ -102,14 +101,9 @@ public class Student extends Model {
      * @return corresnponding student
      */
     public static Student findByUserName(String user) {
-        return FIND.fetch("transcript").where().eq(USERNAME, user).findUnique();
+        return FIND.fetch("transcript").fetch("requests").where().eq(USERNAME, user).findUnique();
     }
 
     // --
-
-    @Override
-    public String toString() {
-        return "Student{" + id + ":" + username + "}";
-    }
 
 }
