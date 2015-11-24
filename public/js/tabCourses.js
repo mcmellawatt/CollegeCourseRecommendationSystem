@@ -41,7 +41,7 @@
         view.append(stuff.join(''));
         $('#course-list').find('ul').sortable();
 
-        view.append('<button id="sub-req-btn">Submit recommendation request</button>');
+        view.append('<button id="sub-req-btn">Submit Recommendation Request</button>');
     }
 
     // called when our view is unloaded
