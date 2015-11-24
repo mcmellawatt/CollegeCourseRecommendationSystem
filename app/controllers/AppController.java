@@ -8,6 +8,7 @@ import models.Course;
 import play.mvc.Controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,6 +24,7 @@ public class AppController extends Controller {
     protected static final String COURSES = "courses";
     protected static final String HISTORY = "history";
     protected static final String ACK = "ack";
+    protected static final String SUBMITTED = "submitted";
 
     protected static final String ID = "id";
     protected static final String TAG = "tag";
@@ -146,18 +148,13 @@ public class AppController extends Controller {
     }
 
     /**
-     * Produces a list of integers from a CSV string.
+     * Produces a list of tokens from a CSV string.
      *
      * @param csv the string
-     * @return a list of integers
+     * @return a list of tokens
      */
-    protected static List<Integer> fromCsv(String csv) {
-        List<Integer> ints = new ArrayList<>();
-
-        for (String i : csv.split(COMMA)) {
-            ints.add(Integer.valueOf(i));
-        }
-        return ints;
+    protected static List<String> fromCsv(String csv) {
+        return Arrays.asList(csv.split(COMMA));
     }
 
 }

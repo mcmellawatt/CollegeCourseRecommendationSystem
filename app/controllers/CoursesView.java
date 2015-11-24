@@ -72,4 +72,31 @@ public class CoursesView extends AppController {
         return ok(createResponse(user, ACK));
     }
 
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result submitRequest() {
+        String user = fromRequest(USER);
+        String csv = fromRequest(COURSE_ORDER_CSV);
+        String ncp = fromRequest(NUM_COURSES_PREFERRED);
+        Student student = Student.findByUserName(user);
+
+        student.numCoursesPreferred = Integer.valueOf(ncp);
+        student.coursesPreferred = courseListFromCsv(csv);
+        Ebean.save(student);
+
+        // TODO: where do we submit the request to the queue?
+
+        Logger.debug("SUBMITTING REQUEST: course order for user '{}'", user);
+        Logger.debug(" as {}", csv);
+        Logger.debug(" with num courses preferred as {}", ncp);
+        return ok(createResponse(user, SUBMITTED));
+    }
+
+    private static List<Course> courseListFromCsv(String csv) {
+        List<String> ids = fromCsv(csv);
+        List<Course> courses = new ArrayList<>();
+        for (String id: ids) {
+            courses.add(Course.findById(id));
+        }
+        return courses;
+    }
 }

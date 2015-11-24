@@ -58,12 +58,25 @@
         view.append(stuff.join(''));
         $('#course-list').find('ul').sortable();
 
-        view.append('<button id="sub-req-btn">Submit Recommendation Request</button>');
+        view.append('<button id="subreq">Submit Request</button>');
+        $('#subreq').click(function () {
+            console.log('Submitting Request...');
+            $.postJSON('courses/submit', genPayload(resp.user), function (resp) {
+                console.debug('courses/submit returned', resp);
+            });
+        });
+
     }
 
     // called when our view is unloaded
     function unload(user) {
         console.log('UNLOADING Courses View...');
+        $.postJSON('courses/store', genPayload(user), function (resp) {
+            console.debug('courses/store returned', resp);
+        });
+    }
+
+    function genPayload(user) {
         var items = $('#course-list').find('li'),
             ncp = $('#ncp').val(),
             ids = [];
@@ -74,16 +87,13 @@
             ids.push(id);
         });
 
-        var payload = {
+        return {
             user: user,
             courseOrderCsv: ids.join(','),
             numCoursesPreferred: ncp
         };
-
-        $.postJSON('courses/store', payload, function (resp) {
-            console.debug('courses/store returned', resp);
-        });
     }
+
 
     // register our courses functionality
     cs6310app.courses = {

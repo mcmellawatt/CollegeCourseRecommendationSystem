@@ -19,6 +19,7 @@ GET     /app                        controllers.Application.app()
 POST    /profile                    controllers.ProfileView.view()
 POST    /courses                    controllers.CoursesView.view()
 POST    /courses/store              controllers.CoursesView.storeCourseList()
+POST    /courses/submit             controllers.CoursesView.submitRequest()
 POST    /history                    controllers.HistoryView.view()
 
 
