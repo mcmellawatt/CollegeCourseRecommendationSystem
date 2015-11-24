@@ -29,7 +29,7 @@
         }
 
         view.append('<h2> Drag courses into priority order... </h2>');
-        view.append('<p> Your top priority courses at top of list </p>');
+        view.append('<p> ...with highest priority at the top of the list </p>');
 
         // TODO: find a better way of doing this...?
         var stuff = [];

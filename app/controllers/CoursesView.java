@@ -67,15 +67,6 @@ public class CoursesView extends AppController {
         Logger.debug("storing current course order for user '{}'", user);
         Logger.debug(" as {}", csv);
         return ok(createResponse(user, ACK));
-
     }
 
-    private static ObjectNode json(Course c) {
-        return objectNode()
-                .put(ID, c.id)
-                .put(TAG, c.tag)
-                .put(NAME, c.name)
-                .put(ABBREV, c.abbrev)
-                .put(CORE, c.core);
-    }
 }

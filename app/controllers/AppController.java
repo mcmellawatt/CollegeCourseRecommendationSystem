@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import models.Course;
 import play.mvc.Controller;
 
 import java.util.ArrayList;
@@ -107,6 +108,21 @@ public class AppController extends Controller {
             response.set(PAYLOAD, payload);
         }
         return response;
+    }
+
+    /**
+     * Produces a JSON representation of the specified course.
+     *
+     * @param course the course bean
+     * @return JSON object node representation
+     */
+    protected static ObjectNode json(Course course) {
+        return objectNode()
+                .put(ID, course.id)
+                .put(TAG, course.tag)
+                .put(NAME, course.name)
+                .put(ABBREV, course.abbrev)
+                .put(CORE, course.core);
     }
 
 

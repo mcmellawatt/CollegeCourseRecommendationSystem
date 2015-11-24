@@ -1,7 +1,10 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import models.Course;
 import models.Student;
+import models.Transcript;
 import play.Logger;
 import play.mvc.BodyParser;
 import play.mvc.Result;
@@ -13,6 +16,8 @@ public class ProfileView extends AppController {
 
     private static final String FULL_NAME = "fullName";
     private static final String NUM_COURSES_PREFERRED = "numCoursesPreferred";
+    private static final String COURSES_TAKEN = "coursesTaken";
+    private static final String CREDITS_EARNED = "creditsEarned";
 
     /**
      * Generates the data required for populating the profile view.
@@ -28,6 +33,14 @@ public class ProfileView extends AppController {
         ObjectNode payload = objectNode()
                 .put(FULL_NAME, student.fullname)
                 .put(NUM_COURSES_PREFERRED, student.numCoursesPreferred);
+
+        Transcript transcript = student.transcript;
+        ArrayNode taken = arrayNode();
+        for (Course c: transcript.coursesTaken) {
+            taken.add(json(c));
+        }
+        payload.set(COURSES_TAKEN, taken);
+        payload.put(CREDITS_EARNED, transcript.getCreditsEarned());
 
         Logger.debug("profile view page accessed as user '{}'", user);
 
