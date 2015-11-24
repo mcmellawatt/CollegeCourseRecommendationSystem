@@ -33,12 +33,12 @@ public class GurobiSolver implements Solver {
     private List<Student> students;
     private List<Course> courses;
 
-    final int studentCount = students.size();
-    final int courseCount = courses.size();
+    final int studentCount;
+    final int courseCount;
 
     // Gurobi matrix for students and courses for next semester.
     // This will be the solution.
-    private YVars scVars = new YVars(studentCount, courseCount);
+    private YVars scVars;
 
     private boolean ready = true;
 
@@ -60,6 +60,12 @@ public class GurobiSolver implements Solver {
         // Retrieve model data
         students = Student.findAll();
         courses = Course.findAll();
+
+        studentCount = students.size();
+        courseCount = courses.size();
+
+        scVars = new YVars(studentCount, courseCount);
+
     }
 
     public void initialize() {
@@ -139,7 +145,7 @@ public class GurobiSolver implements Solver {
         }
         String s = String.format(FMT_MAX_NC, students.get(i).id);
         int num = students.get(i).numCoursesPreferred;
-        model.addConstr(expr, GRB.LESS_EQUAL, num,  s);
+        model.addConstr(expr, GRB.LESS_EQUAL, num, s);
     }
 
     private void removeMaxNumOfCourseConstraint(int i) throws GRBException {
@@ -207,20 +213,24 @@ public class GurobiSolver implements Solver {
         return ready;
     }
 
-        private void updateStudentConstraints(StudentRequest sr) throws GRBException {
-            int studentNdx = 0;
-            for (int i = 0; i < studentCount; i++) {
-                if (students.get(i).id.equals(sr.student.id)) {
-                    studentNdx = i;
-                    break;
-                }
+    private void updateStudentConstraints(StudentRequest sr) throws GRBException {
+        int studentNdx = 0;
+        for (int i = 0; i < studentCount; i++) {
+            if (students.get(i).id.equals(sr.student.id)) {
+                studentNdx = i;
+                break;
             }
-            removeMaxNumOfCourseConstraint(studentNdx);
-            addMaxNumOfCoursesConstraint(studentNdx);
         }
+        removeMaxNumOfCourseConstraint(studentNdx);
+        addMaxNumOfCoursesConstraint(studentNdx);
+    }
 
     public void adjustConstraints(List list) {
 
+    }
+
+    private StudentRequest getLatestRequest(Student s) {
+        return s.studentRequest.get(s.studentRequest.size());
     }
 
     // =====================================================================
