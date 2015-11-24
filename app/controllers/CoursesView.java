@@ -1,17 +1,16 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Course;
 import models.Student;
+import models.StudentRequest;
 import play.Logger;
 import play.mvc.BodyParser;
 import play.mvc.Result;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -79,11 +78,20 @@ public class CoursesView extends AppController {
         String ncp = fromRequest(NUM_COURSES_PREFERRED);
         Student student = Student.findByUserName(user);
 
-        student.numCoursesPreferred = Integer.valueOf(ncp);
-        student.coursesPreferred = courseListFromCsv(csv);
+        final int numCrsPref = Integer.valueOf(ncp);
+        final List<Course> crsPref = courseListFromCsv(csv);
+
+        student.numCoursesPreferred = numCrsPref;
+        student.coursesPreferred = crsPref;
         Ebean.save(student);
 
-        // TODO: where do we submit the request to the queue?
+        StudentRequest sr = new StudentRequest();
+        sr.coursesPreferred = crsPref;
+        sr.numCoursesPreferred = numCrsPref;
+        sr.student = student;
+        Ebean.save(sr);
+
+        // TODO: need to submit the student request to the Queue, for the Solver
 
         Logger.debug("SUBMITTING REQUEST: course order for user '{}'", user);
         Logger.debug(" as {}", csv);
