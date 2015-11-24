@@ -1,5 +1,6 @@
 package controllers;
 
+import bl.GurobiSolver;
 import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -20,6 +21,7 @@ public class CoursesView extends AppController {
 
     private static final String FULL_NAME = "fullName";
     private static final String NUM_COURSES_PREFERRED = "numCoursesPreferred";
+    private static GurobiSolver solver;
 
     /**
      * Generates the data required for populating the courses view.
@@ -92,6 +94,20 @@ public class CoursesView extends AppController {
         Ebean.save(sr);
 
         // TODO: need to submit the student request to the Queue, for the Solver
+
+        // TODO: Remove this testblock when Queue is ready
+        // TESTBLOCK: THIS IS JUST TO TEST THE SOLVER FUNCTIONALITY BEFORE THE QUEUE IS READY
+
+        if (solver == null)
+            solver = new GurobiSolver();
+
+        List<StudentRequest> requests = new ArrayList<>();
+        requests.add(sr);
+
+        solver.adjustConstraints(requests);
+        solver.solve();
+
+        //END TESTBLOCK
 
         Logger.debug("SUBMITTING REQUEST: course order for user '{}'", user);
         Logger.debug(" as {}", csv);
