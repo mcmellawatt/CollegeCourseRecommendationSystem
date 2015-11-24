@@ -39,6 +39,9 @@ public class Student extends Model {
     @ManyToMany
     public List<Course> coursesPreferred = new ArrayList<>();
 
+    @OneToMany(mappedBy = "student")
+    public List<StudentRequest> studentRequest;
+
     @Constraints.Required
     public int numCoursesPreferred;
 
