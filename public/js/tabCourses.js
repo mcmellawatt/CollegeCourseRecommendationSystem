@@ -2,8 +2,6 @@
 
 (function () {
 
-    var courseList;
-
     // shorthand reference to core module
     function core() {
         return cs6310app.core;
@@ -14,28 +12,43 @@
         console.log('render courses view with', resp);
 
         var p = resp.payload,
-            view = core().view('courses');
+            csv = p.courseOrderCsv,
+            view = core().view('courses'),
+            order = [],
+            lookup = {};
 
-        // remember course list in our scope
-        courseList = p.courses;
+        p.courses.forEach(function (c) {
+            lookup[c.id] = c;
+            if (!csv) {
+                order.push(c.id);
+            }
+        });
+
+        if (csv) {
+            order = csv.split(',');
+        }
 
         view.append('<h2> Drag courses into priority order... </h2>');
         view.append('<p> Your top priority courses at top of list </p>');
 
-        // TODO: find a better way of doing this...
+        // TODO: find a better way of doing this...?
         var stuff = [];
         stuff.push('<div id="course-list">');
         stuff.push('<ul>');
-        p.courses.forEach(function (c) {
+
+        order.forEach(function (id) {
+            var c = lookup[id];
+
             stuff.push('<li>');
             stuff.push('<span class="course-id">');
             stuff.push(c.id);
-            stuff.push('</span>');
+            stuff.push('</span><b>');
             stuff.push(c.tag);
-            stuff.push(' ');
+            stuff.push('</b> - ');
             stuff.push(c.name);
             stuff.push('</li>');
         });
+
         stuff.push('</ul>');
         stuff.push('</div>');
         view.append(stuff.join(''));
@@ -58,7 +71,7 @@
 
         var payload = {
             user: user,
-            courseIds: ids
+            courseOrderCsv: ids.join(',')
         };
 
         $.postJSON('courses/store', payload, function (resp) {

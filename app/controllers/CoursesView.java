@@ -39,7 +39,7 @@ public class CoursesView extends AppController {
                 .put(NUM_COURSES_PREFERRED, student.numCoursesPreferred);
 
         if (student.courseOrderCsv != null) {
-            payload.put(COURSE_ORDER, student.courseOrderCsv);
+            payload.put(COURSE_ORDER_CSV, student.courseOrderCsv);
         }
 
         ArrayNode courses = arrayNode();
@@ -58,8 +58,8 @@ public class CoursesView extends AppController {
     @BodyParser.Of(BodyParser.Json.class)
     public static Result storeCourseList() {
         String user = fromRequest(USER);
+        String csv = fromRequest(COURSE_ORDER_CSV);
         Student student = Student.findByUserName(user);
-        String csv = toCsv(courseIdsFromRequest());
 
         student.courseOrderCsv = csv;
         Ebean.save(student);
@@ -68,16 +68,6 @@ public class CoursesView extends AppController {
         Logger.debug(" as {}", csv);
         return ok(createResponse(user, ACK));
 
-    }
-
-    private static List<Integer> courseIdsFromRequest() {
-        ArrayNode array = arrayFromRequest("courseIds");
-        List<Integer> newOrder = new ArrayList<>();
-        Iterator<JsonNode> iter = array.elements();
-        while (iter.hasNext()) {
-            newOrder.add(iter.next().asInt());
-        }
-        return newOrder;
     }
 
     private static ObjectNode json(Course c) {

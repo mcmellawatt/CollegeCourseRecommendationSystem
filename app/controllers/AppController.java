@@ -28,7 +28,7 @@ public class AppController extends Controller {
     protected static final String NAME = "name";
     protected static final String ABBREV = "abbrev";
     protected static final String CORE = "core";
-    protected static final String COURSE_ORDER = "courseOrder";
+    protected static final String COURSE_ORDER_CSV = "courseOrderCsv";
 
     protected static final String COMMA = ",";
     protected static final String EMPTY = "";
@@ -108,6 +108,10 @@ public class AppController extends Controller {
         }
         return response;
     }
+
+
+    //------------------------------------------------------------------
+    // TODO: delete these two methods, if we find we are not using them
 
     /**
      * Produces a CSV string from a list of integers.

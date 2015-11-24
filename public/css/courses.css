@@ -12,6 +12,5 @@
 }
 
 #course-list span.course-id {
-    color: red;
-    /*display: hidden*/
+    display: none;
 }
