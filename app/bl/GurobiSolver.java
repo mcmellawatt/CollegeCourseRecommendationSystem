@@ -8,6 +8,7 @@ import gurobi.GRBModel;
 import gurobi.GRBVar;
 import models.Course;
 import models.Student;
+import models.StudentRequest;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -39,6 +40,8 @@ public class GurobiSolver implements Solver {
     // This will be the solution.
     private YVars scVars = new YVars(studentCount, courseCount);
 
+    private boolean ready = true;
+
     /**
      * Constructs the Gurobi solver, initializing the model,
      * and retrieving the student and course lists.
@@ -59,10 +62,7 @@ public class GurobiSolver implements Solver {
         courses = Course.findAll();
     }
 
-
-    @Override
-    public Map<Student, List<Course>> solve() {
-        Map<Student, List<Course>> solution = null;
+    public void initialize() {
         try {
             // Create scVars variables;
             generateSCVars();
@@ -74,10 +74,19 @@ public class GurobiSolver implements Solver {
             setObjective();
 
             // Add Constraints
-            addMaxCourseSizeConstraints();
-            addMaxNumCoursesConstraint();
+            addAllCourseSizeConstraints();
+            addAllMaxNumOfCoursesConstraints();
             addAllNotEligibleConstraints();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Map<Student, List<Course>> solve() {
+        Map<Student, List<Course>> solution = null;
+        try {
             // optimize model.
             model.optimize();
 
@@ -102,13 +111,13 @@ public class GurobiSolver implements Solver {
         }
     }
 
-    private void addMaxCourseSizeConstraints() throws GRBException {
+    private void addAllCourseSizeConstraints() throws GRBException {
         for (int j = 0; j < courseCount; j++) {
-            addMaxCourseSizeConstraint(j);
+            addCourseSizeConstraint(j);
         }
     }
 
-    private void addMaxCourseSizeConstraint(int j) throws GRBException {
+    private void addCourseSizeConstraint(int j) throws GRBException {
         GRBLinExpr expr = new GRBLinExpr();
         for (int i = 0; i < studentCount; i++) {
             expr.addTerm(1, scVars.get(i, j));
@@ -117,23 +126,36 @@ public class GurobiSolver implements Solver {
         model.addConstr(expr, GRB.LESS_EQUAL, courses.get(j).maxClassSize, s);
     }
 
-    private void addMaxNumCoursesConstraint() throws GRBException {
+    private void addAllMaxNumOfCoursesConstraints() throws GRBException {
         for (int i = 0; i < studentCount; i++) {
-            GRBLinExpr expr = new GRBLinExpr();
-            for (int j = 0; j < courseCount; j++) {
-                expr.addTerm(1, scVars.get(i, j));
-            }
-            String s = String.format(FMT_MAX_NC, students.get(i).id);
-            int num = students.get(i).numCoursesPreferred;
-            model.addConstr(expr, GRB.LESS_EQUAL, num, s);
+            addMaxNumOfCoursesConstraint(i);
         }
+    }
+
+    private void addMaxNumOfCoursesConstraint(int i) throws GRBException {
+        GRBLinExpr expr = new GRBLinExpr();
+        for (int j = 0; j < courseCount; j++) {
+            expr.addTerm(1, scVars.get(i, j));
+        }
+        String s = String.format(FMT_MAX_NC, students.get(i).id);
+        int num = students.get(i).numCoursesPreferred;
+        model.addConstr(expr, GRB.LESS_EQUAL, num,  s);
+    }
+
+    private void removeMaxNumOfCourseConstraint(int i) throws GRBException {
+        String s = String.format(FMT_MAX_NC, students.get(i).id);
+        model.remove(model.getConstrByName(s));
     }
 
     private void addAllNotEligibleConstraints() throws GRBException {
         for (int i = 0; i < studentCount; i++) {
-            for (int j = 0; j < courseCount; j++) {
-                addNotEligibleConstraint(i, j);
-            }
+            addNotEligibleConstraints(i);
+        }
+    }
+
+    private void addNotEligibleConstraints(int i) throws GRBException {
+        for (int j = 0; j < courseCount; j++) {
+            addNotEligibleConstraint(i, j);
         }
     }
 
@@ -179,6 +201,26 @@ public class GurobiSolver implements Solver {
             solution.put(students.get(i), recCourses);
         }
         return solution;
+    }
+
+    public boolean isReady() {
+        return ready;
+    }
+
+        private void updateStudentConstraints(StudentRequest sr) throws GRBException {
+            int studentNdx = 0;
+            for (int i = 0; i < studentCount; i++) {
+                if (students.get(i).id.equals(sr.student.id)) {
+                    studentNdx = i;
+                    break;
+                }
+            }
+            removeMaxNumOfCourseConstraint(studentNdx);
+            addMaxNumOfCoursesConstraint(studentNdx);
+        }
+
+    public void adjustConstraints(List list) {
+
     }
 
     // =====================================================================
