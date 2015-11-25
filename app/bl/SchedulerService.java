@@ -1,15 +1,18 @@
 package bl;
 
+import models.StudentRequest;
 import play.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class SchedulerService {
 
-    // TODO: set period to 60 seconds, after we've tested this thing.
-    private static final long PERIOD = 5;
+    // Tunable (compile time) period for solver to run, in seconds
+    private static final long PERIOD = 30;
 
     private final ScheduledExecutorService exec =
             Executors.newSingleThreadScheduledExecutor();
@@ -33,6 +36,22 @@ public class SchedulerService {
      */
     public void stop() {
         exec.shutdown();
+    }
+
+    /**
+     * Submits a student request to the solver
+     *
+     * @param sr student request
+     */
+    public void submitRequest(StudentRequest sr) {
+        // TODO: temp code to wrap request in list.
+        //  this will be replaced by pulling requests off queue, eventually
+        List<StudentRequest> requests = new ArrayList<>(1);
+        requests.add(sr);
+
+        // TODO: temp code to invoke the solver -- should be done from periodic task
+        solver.adjustConstraints(requests);
+        solver.solve();
     }
 
 

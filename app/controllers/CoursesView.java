@@ -1,6 +1,7 @@
 package controllers;
 
 import bl.GurobiSolver;
+import bl.SchedulerService;
 import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -93,26 +94,13 @@ public class CoursesView extends AppController {
         sr.student = student;
         Ebean.save(sr);
 
-        // TODO: need to submit the student request to the Queue, for the Solver
-
-        // TODO: Remove this testblock when Queue is ready
-        // TESTBLOCK: THIS IS JUST TO TEST THE SOLVER FUNCTIONALITY BEFORE THE QUEUE IS READY
-
-        solver = new GurobiSolver();
-
-        solver.initialize();
-
-        List<StudentRequest> requests = new ArrayList<>();
-        requests.add(sr);
-
-        solver.adjustConstraints(requests);
-        solver.solve();
-
-        //END TESTBLOCK
-
         Logger.debug("SUBMITTING REQUEST: course order for user '{}'", user);
         Logger.debug(" as {}", csv);
         Logger.debug(" with num courses preferred as {}", ncp);
+
+        SchedulerService.SINGLETON.submitRequest(sr);
+
+        // TODO: return something to indicate start polling for response.
         return ok(createResponse(user, SUBMITTED));
     }
 
