@@ -19,21 +19,19 @@ public final class Global extends GlobalSettings {
     private static final String STUDENTS = "students";
     private static final String TRANSCRIPTS = "transcripts";
 
-    private final SchedulerService sched = new SchedulerService();
-
 
     @Override
     public void onStart(Application app) {
         Logger.info("Starting application");
         loadInitialData();
-        sched.start();
+        SchedulerService.SINGLETON.start();
         Logger.info("Started");
     }
 
     @Override
     public void onStop(Application app) {
         Logger.info("Stopping application");
-        sched.stop();
+        SchedulerService.SINGLETON.stop();
         Logger.info("Stopped");
     }
 

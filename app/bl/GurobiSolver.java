@@ -40,7 +40,7 @@ public class GurobiSolver implements Solver {
     // This will be the solution.
     private YVars scVars;
 
-    private boolean ready = true;
+    private volatile boolean ready = true;
 
     /**
      * Constructs the Gurobi solver, initializing the model,
@@ -68,6 +68,13 @@ public class GurobiSolver implements Solver {
 
     }
 
+    @Override
+    public boolean isReady() {
+        return ready;
+    }
+
+
+    @Override
     public void initialize() {
         try {
             // Create scVars variables;
@@ -90,7 +97,15 @@ public class GurobiSolver implements Solver {
     }
 
     @Override
+    public void adjustConstraints(List<StudentRequest> requests) {
+        // TODO: implement
+    }
+
+
+    @Override
     public Map<Student, List<Course>> solve() {
+        ready = false;
+
         Map<Student, List<Course>> solution = null;
         try {
             // optimize model.
@@ -102,8 +117,12 @@ public class GurobiSolver implements Solver {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        ready = true;
         return solution;
     }
+
+
+    // helper methods from here downwards
 
     private void generateSCVars() throws GRBException {
         String s;
@@ -209,10 +228,6 @@ public class GurobiSolver implements Solver {
         return solution;
     }
 
-    public boolean isReady() {
-        return ready;
-    }
-
     private void updateStudentConstraints(StudentRequest sr) throws GRBException {
         int studentNdx = 0;
         for (int i = 0; i < studentCount; i++) {
@@ -223,10 +238,6 @@ public class GurobiSolver implements Solver {
         }
         removeMaxNumOfCourseConstraint(studentNdx);
         addMaxNumOfCoursesConstraint(studentNdx);
-    }
-
-    public void adjustConstraints(List list) {
-
     }
 
     private StudentRequest getLatestRequest(Student s) {
