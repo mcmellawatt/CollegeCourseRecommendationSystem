@@ -65,7 +65,6 @@ public class GurobiSolver implements Solver {
         courseCount = courses.size();
 
         scVars = new YVars(studentCount, courseCount);
-
     }
 
     @Override
@@ -98,7 +97,16 @@ public class GurobiSolver implements Solver {
 
     @Override
     public void adjustConstraints(List<StudentRequest> requests) {
-        // TODO: implement
+        //update the collection of students.
+        updateStudentCollection(requests);
+
+        try {
+            // update student related constraints and objective.
+            updateAllStudentConstraints(requests);
+            setObjective();
+        } catch (GRBException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -108,7 +116,7 @@ public class GurobiSolver implements Solver {
 
         Map<Student, List<Course>> solution = null;
         try {
-            // optimize model.
+            //
             model.optimize();
 
             // format gurobi model solution.
@@ -129,12 +137,14 @@ public class GurobiSolver implements Solver {
         GRBVar var;
         for (int i = 0; i < studentCount; i++) {
             for (int j = 0; j < courseCount; j++) {
-                s = String.format(FMT_SC, students.get(i).id, courses.get(i).id);
+                s = String.format(FMT_SC, students.get(i).id, courses.get(j).id);
                 var = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, s);
                 scVars.set(i, j, var);
             }
         }
     }
+
+    // Course size constraints.
 
     private void addAllCourseSizeConstraints() throws GRBException {
         for (int j = 0; j < courseCount; j++) {
@@ -150,6 +160,8 @@ public class GurobiSolver implements Solver {
         String s = String.format(FMT_MAX_CS, courses.get(j).id);
         model.addConstr(expr, GRB.LESS_EQUAL, courses.get(j).maxClassSize, s);
     }
+
+    // Number of courses per student constraints.
 
     private void addAllMaxNumOfCoursesConstraints() throws GRBException {
         for (int i = 0; i < studentCount; i++) {
@@ -172,6 +184,8 @@ public class GurobiSolver implements Solver {
         model.remove(model.getConstrByName(s));
     }
 
+    // Not eligible for course constraints.
+
     private void addAllNotEligibleConstraints() throws GRBException {
         for (int i = 0; i < studentCount; i++) {
             addNotEligibleConstraints(i);
@@ -193,6 +207,8 @@ public class GurobiSolver implements Solver {
         }
     }
 
+    // model objective functions.
+
     private void setObjective() throws GRBException {
         GRBLinExpr expr = new GRBLinExpr();
         for (int i = 0; i < studentCount; i++) {
@@ -203,6 +219,8 @@ public class GurobiSolver implements Solver {
         }
         model.setObjective(expr, GRB.MAXIMIZE);
     }
+
+    // general helpers
 
     private boolean isStudentEligibleForCourse(Student s, Course c) {
         for (Course ec : s.getEligibleCourses()) {
@@ -228,20 +246,48 @@ public class GurobiSolver implements Solver {
         return solution;
     }
 
+//    private void tester(Map<Student, List<Course>> solution) {
+//        for (Student s : students) {
+//            System.out.println();
+//            System.out.print(s.fullname + " ");
+//            for (Course c : solution.get(s)) {
+//                System.out.print(" " + c.id + " ");
+//            }
+//        }
+//    }
+
+    private void updateAllStudentConstraints(List<StudentRequest> requests) throws GRBException {
+        for (StudentRequest sr : requests) {
+            updateStudentConstraints(sr);
+        }
+    }
+
     private void updateStudentConstraints(StudentRequest sr) throws GRBException {
-        int studentNdx = 0;
+        int ndx = findStudentIndex(sr.student);
+        removeMaxNumOfCourseConstraint(ndx);
+        addMaxNumOfCoursesConstraint(ndx);
+    }
+
+    private void updateStudentCollection(List<StudentRequest> requests) {
+        for (StudentRequest sr : requests) {
+            updateStudent(sr);
+        }
+    }
+
+    private void updateStudent(StudentRequest sr) {
+        int ndx = findStudentIndex(sr.student);
+        students.set(ndx, sr.student);
+    }
+
+    private int findStudentIndex(Student s) {
+        int studentNdx = -1;
         for (int i = 0; i < studentCount; i++) {
-            if (students.get(i).id.equals(sr.student.id)) {
+            if (students.get(i).id.equals(s.id)) {
                 studentNdx = i;
                 break;
             }
         }
-        removeMaxNumOfCourseConstraint(studentNdx);
-        addMaxNumOfCoursesConstraint(studentNdx);
-    }
-
-    private StudentRequest getLatestRequest(Student s) {
-        return s.studentRequest.get(s.studentRequest.size());
+        return studentNdx;
     }
 
     // =====================================================================
