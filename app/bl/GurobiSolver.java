@@ -90,6 +90,9 @@ public class GurobiSolver implements Solver {
             addAllMaxNumOfCoursesConstraints();
             addAllNotEligibleConstraints();
 
+            // Optimize on init to make first solve faster.
+            model.optimize();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
