@@ -1,4 +1,6 @@
+import bl.SchedulerService;
 import com.avaje.ebean.Ebean;
+import models.Student;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -6,7 +8,6 @@ import play.libs.Yaml;
 
 import java.util.List;
 import java.util.Map;
-import models.Student;
 
 /**
  * Start up and shutdown of our application.
@@ -18,7 +19,7 @@ public final class Global extends GlobalSettings {
     private static final String STUDENTS = "students";
     private static final String TRANSCRIPTS = "transcripts";
 
-    private final MyScheduler sched = new MyScheduler();
+    private final SchedulerService sched = new SchedulerService();
 
 
     @Override
@@ -32,7 +33,7 @@ public final class Global extends GlobalSettings {
     @Override
     public void onStop(Application app) {
         Logger.info("Stopping application");
-        sched.shutdown();
+        sched.stop();
         Logger.info("Stopped");
     }
 
@@ -47,18 +48,4 @@ public final class Global extends GlobalSettings {
             Ebean.save(all.get(STUDENTS));
         }
     }
-
-
-    // -------------------------------------------------------------------
-    // temp class till JP implements his... (delete this code afterwards)
-    private static class MyScheduler {
-        public void start() {
-            // init executor and start up the periodic task
-        }
-
-        public void shutdown() {
-            // shutdown the executor
-        }
-    }
-
 }
