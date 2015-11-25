@@ -98,8 +98,9 @@ public class CoursesView extends AppController {
         // TODO: Remove this testblock when Queue is ready
         // TESTBLOCK: THIS IS JUST TO TEST THE SOLVER FUNCTIONALITY BEFORE THE QUEUE IS READY
 
-        if (solver == null)
-            solver = new GurobiSolver();
+        solver = new GurobiSolver();
+
+        solver.initialize();
 
         List<StudentRequest> requests = new ArrayList<>();
         requests.add(sr);
