@@ -18,8 +18,8 @@ public final class Global extends GlobalSettings {
     private static final String STUDENTS = "students";
     private static final String TRANSCRIPTS = "transcripts";
 
-
     private final MyScheduler sched = new MyScheduler();
+
 
     @Override
     public void onStart(Application app) {
@@ -36,7 +36,6 @@ public final class Global extends GlobalSettings {
         Logger.info("Stopped");
     }
 
-
     @SuppressWarnings("unchecked")
     private void loadInitialData() {
         if (Student.findAll().isEmpty()) {
@@ -47,18 +46,18 @@ public final class Global extends GlobalSettings {
             Ebean.save(all.get(TRANSCRIPTS));
             Ebean.save(all.get(STUDENTS));
         }
-
     }
 
 
+    // -------------------------------------------------------------------
     // temp class till JP implements his... (delete this code afterwards)
     private static class MyScheduler {
-
         public void start() {
+            // init executor and start up the periodic task
         }
 
         public void shutdown() {
-
+            // shutdown the executor
         }
     }
 
