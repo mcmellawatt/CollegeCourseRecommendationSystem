@@ -28,6 +28,14 @@
         });
     }
 
+    function unloadView(user) {
+        var cv = current.view;
+        if (cv) {
+            console.log('Unloading ' + cv + ' view for user', user);
+            cs6310app[cv].unload(user);
+        }
+    }
+
     // return jQuery selection on the (emptied) view div, classed appropriately
     function view(vid) {
         var view = $('#view'),
@@ -50,6 +58,7 @@
     // register our core functionality
     cs6310app.core = {
         loadView: loadView,
+        unloadView: unloadView,
         view: view,
         currentUser: currentUser
     };

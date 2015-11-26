@@ -7,6 +7,8 @@
             cs6310app.core.loadView(vid, user);
         }
         function logout() {
+            var user = '@username';
+            cs6310app.core.unloadView(user);
             window.location.href = "login";
         }
     </script>

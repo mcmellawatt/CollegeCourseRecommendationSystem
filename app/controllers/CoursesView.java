@@ -1,8 +1,6 @@
 package controllers;
 
-import bl.GurobiSolver;
 import bl.SchedulerService;
-import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Course;
@@ -22,7 +20,7 @@ public class CoursesView extends AppController {
 
     private static final String FULL_NAME = "fullName";
     private static final String NUM_COURSES_PREFERRED = "numCoursesPreferred";
-    private static GurobiSolver solver;
+    private static final String BATCH = "batch";
 
     /**
      * Generates the data required for populating the courses view.
@@ -57,57 +55,6 @@ public class CoursesView extends AppController {
         return ok(createResponse(user, COURSES, payload));
     }
 
-    @BodyParser.Of(BodyParser.Json.class)
-    public static Result storeCourseList() {
-        String user = fromRequest(USER);
-        String csv = fromRequest(COURSE_ORDER_CSV);
-        String ncp = fromRequest(NUM_COURSES_PREFERRED);
-        Student student = Student.findByUserName(user);
-
-        student.courseOrderCsv = csv;
-        student.numCoursesPreferred = Integer.valueOf(ncp);
-        student.touch();
-        student.save();
-
-        Logger.debug("storing current course order for user '{}'", user);
-        Logger.debug(" as {}", csv);
-        Logger.debug(" with num courses preferred as {}", ncp);
-        return ok(createResponse(user, ACK));
-    }
-
-    @BodyParser.Of(BodyParser.Json.class)
-    public static Result submitRequest() {
-        String user = fromRequest(USER);
-        String csv = fromRequest(COURSE_ORDER_CSV);
-        String ncp = fromRequest(NUM_COURSES_PREFERRED);
-        Student student = Student.findByUserName(user);
-
-        final int numCrsPref = Integer.valueOf(ncp);
-        final List<Course> crsPref = courseListFromCsv(csv);
-
-        student.courseOrderCsv = csv;
-        student.numCoursesPreferred = numCrsPref;
-        student.coursesPreferred.clear();
-        student.coursesPreferred.addAll(crsPref);
-        student.touch();
-        student.save();
-
-        StudentRequest sr = new StudentRequest();
-        sr.coursesPreferred.addAll(crsPref);
-        sr.numCoursesPreferred = numCrsPref;
-        sr.student = student;
-        sr.save();
-
-        Logger.debug("SUBMITTING REQUEST: course order for user '{}'", user);
-        Logger.debug(" as {}", csv);
-        Logger.debug(" with num courses preferred as {}", ncp);
-
-        SchedulerService.SINGLETON.submitRequest(sr);
-
-        // TODO: return something to indicate start polling for response.
-        return ok(createResponse(user, SUBMITTED));
-    }
-
     private static List<Course> courseListFromCsv(String csv) {
         List<String> ids = fromCsv(csv);
         List<Course> courses = new ArrayList<>();
@@ -115,5 +62,56 @@ public class CoursesView extends AppController {
             courses.add(Course.findById(id));
         }
         return courses;
+    }
+
+    private static Student updateStudent(boolean isRequest) {
+        String user = fromRequest(USER);
+        String csv = fromRequest(COURSE_ORDER_CSV);
+        String ncp = fromRequest(NUM_COURSES_PREFERRED);
+        final int numCP = Integer.valueOf(ncp);
+
+        Student student = Student.findByUserName(user);
+        student.courseOrderCsv = csv;
+        student.numCoursesPreferred = numCP;
+
+        if (isRequest) {
+            student.coursesPreferred.clear();
+            student.coursesPreferred.addAll(courseListFromCsv(csv));
+        }
+        student.touch();
+        student.save();
+
+        String msg = isRequest ? "SUBMITTING REQUEST" : "Saving Order";
+        Logger.debug("{} for user '{}'", msg, user);
+        Logger.debug(" as {}", csv);
+        Logger.debug(" with num courses preferred as {}", ncp);
+        return student;
+    }
+
+    private static StudentRequest createRequest(Student student) {
+        StudentRequest sr = new StudentRequest();
+        sr.coursesPreferred.addAll(student.coursesPreferred);
+        sr.numCoursesPreferred = student.numCoursesPreferred;
+        sr.student = student;
+        sr.save();
+        return sr;
+    }
+
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result storeCourseList() {
+        Student student = updateStudent(false);
+        return ok(createResponse(student.username, ACK));
+    }
+
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result submitRequest() {
+        Student student = updateStudent(true);
+        StudentRequest sr = createRequest(student);
+
+        int batch = SchedulerService.SINGLETON.submitRequest(sr);
+        Logger.debug(" :: now queued up for batch {}", batch);
+
+        ObjectNode payload = objectNode().put(BATCH, batch);
+        return ok(createResponse(student.username, SUBMITTED, payload));
     }
 }

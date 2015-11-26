@@ -30,7 +30,7 @@ public class SchedulerService {
 
     private final Solver solver = new GurobiSolver();
 
-    private final AtomicInteger batchNumber = new AtomicInteger(0);
+    private final AtomicInteger batchNumber = new AtomicInteger(101);
 
     // non-instantiable (other than here)
     private SchedulerService() { }
@@ -54,12 +54,18 @@ public class SchedulerService {
     }
 
     /**
-     * Submits a student request to the solver
+     * Submits a student request to the solver, returning the batch number
+     * against which to reconcile the solution.
      *
      * @param sr student request
+     * @return the batch number
      */
-    public void submitRequest(StudentRequest sr) {
+    public int submitRequest(StudentRequest sr) {
+        // stamp the request with its batch number, and stuff it on the queue
+        final int batch = batchNumber.get();
+        sr.batchNumber = batch;
         requestQueue.add(sr);
+        return batch;
     }
 
     /**
@@ -105,11 +111,11 @@ public class SchedulerService {
 
             Logger.debug(" -- Solver ready and {} request(s) queued", nRequests);
 
-            // Need to associate requests with a solution...
-            final int batch = batchNumber.incrementAndGet();
+            // Get current batch number; bump it for next time
+            final int batch = batchNumber.getAndIncrement();
 
             // Pull requests off the queue
-            List<StudentRequest> requests = dequeue(nRequests, batch);
+            List<StudentRequest> requests = dequeue(nRequests);
 
             // Get the solver to re-adjust its view of the world
             solver.adjustConstraints(requests);
@@ -119,14 +125,11 @@ public class SchedulerService {
         }
 
 
-        // remove requests from queue, and patch each with batch number
-        private List<StudentRequest> dequeue(int nRequests, int batch) {
+        // remove requests from queue
+        private List<StudentRequest> dequeue(int nRequests) {
             List<StudentRequest> requests = new ArrayList<>(nRequests);
             for (int i = 0; i < nRequests; i++) {
-                StudentRequest sr = requestQueue.remove();
-                sr.batchNumber = batch;
-                sr.save();
-                requests.add(sr);
+                requests.add(requestQueue.remove());
             }
             Logger.debug("Dequeued {} request(s)", nRequests);
             return requests;
