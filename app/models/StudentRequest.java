@@ -1,30 +1,42 @@
 package models;
 
-import play.db.ebean.*;
-import javax.persistence.*;
-import java.util.*;
+import play.data.format.Formats;
+import play.data.validation.Constraints;
+import play.db.ebean.Model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * StudentRequest entity managed by Ebean.
  */
 @Entity
-@Table(name = "studentrequests")
-public class StudentRequest {
-
-    private static final String ID = "id";
+@Table(name = Tables.STUDENTREQUESTS)
+public class StudentRequest extends Model {
 
     @Id
+    @Constraints.Required
+    @Formats.NonEmpty
     public Integer id;
 
-    public Integer sequenceNumber;
+    // note: not required, because we patch this in and re-save later
+    public Integer batchNumber;
 
+    @Constraints.Required
     @ManyToOne
     public Student student;
 
+    @Constraints.Required
+    public Integer numCoursesPreferred;
+
+    @Constraints.Required
     @ManyToMany
     public List<Course> coursesPreferred = new ArrayList<>();
-
-    public Integer numCoursesPreferred;
 
     // -- Queries
 
@@ -33,6 +45,8 @@ public class StudentRequest {
 
     /**
      * Returns all available student requests.
+     *
+     * @return all student requests
      */
     public static List<StudentRequest> findAll() {
         return FIND.all();
@@ -41,11 +55,12 @@ public class StudentRequest {
     /**
      * Returns the student request with the given ID.
      *
-     * @param id course ID
+     * @param id request ID
+     * @return the request
      */
     public static StudentRequest findById(String id) {
-        return FIND.fetch("preferredCourses").fetch("student").where().eq(ID, id).findUnique();
+        return FIND.fetch(Fields.COURSES_PREFERRED).fetch(Fields.STUDENT)
+                .where().eq(Fields.ID, id).findUnique();
     }
 
-    // --
 }

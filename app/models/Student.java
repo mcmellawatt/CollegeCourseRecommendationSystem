@@ -1,25 +1,24 @@
 package models;
 
-import org.springframework.cglib.core.CollectionUtils;
-import play.data.format.*;
-import play.data.validation.*;
-import play.db.ebean.*;
+import play.data.format.Formats;
+import play.data.validation.Constraints;
+import play.db.ebean.Model;
 
-import javax.persistence.*;
-
-import java.util.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Student entity managed by Ebean.
  */
 @Entity
-@Table(name="students")
+@Table(name = Tables.STUDENTS)
 public class Student extends Model {
-
-    private static final String ID = "id";
-    private static final String USERNAME = "username";
-
-    private static List<Course> courses = new ArrayList<>();
 
     @Id
     @Constraints.Required
@@ -39,7 +38,7 @@ public class Student extends Model {
     @ManyToMany
     public List<Course> coursesPreferred = new ArrayList<>();
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = Fields.STUDENT)
     public List<StudentRequest> studentRequest;
 
     @Constraints.Required
@@ -95,7 +94,8 @@ public class Student extends Model {
      */
     public static Student findById(String id) {
 
-        return FIND.fetch("transcript").where().eq(ID, id).findUnique();
+        return FIND.fetch(Fields.TRANSCRIPT)
+                .where().eq(Fields.ID, id).findUnique();
     }
 
     /**
@@ -105,7 +105,8 @@ public class Student extends Model {
      * @return corresnponding student
      */
     public static Student findByUserName(String user) {
-        return FIND.fetch("transcript").where().eq(USERNAME, user).findUnique();
+        return FIND.fetch(Fields.TRANSCRIPT)
+                .where().eq(Fields.USERNAME, user).findUnique();
     }
 
     // --

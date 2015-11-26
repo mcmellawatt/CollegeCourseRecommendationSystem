@@ -1,23 +1,29 @@
 package models;
 
-import play.data.format.*;
-import play.data.validation.*;
-import play.db.ebean.*;
+import play.data.format.Formats;
+import play.data.validation.Constraints;
+import play.db.ebean.Model;
 
-import javax.persistence.*;
-
-import java.util.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Course entity managed by Ebean.
  */
 @Entity
-@Table(name="courses")
+@Table(name = Tables.COURSES)
 public class Course extends Model {
 
-    private static final String ID = "id";
-
-    public static final Integer CREDITVALUE = 3;
+    /**
+     * Number of credits each course is worth.
+     */
+    public static final Integer CREDIT_VALUE = 3;
 
     @Id
     @Constraints.Required
@@ -42,20 +48,22 @@ public class Course extends Model {
     @ManyToMany
     public List<Transcript> transcriptsIncludingCourse = new ArrayList<>();
 
-    //This is a list of courses that this course is a prerequisite for
+    // This is a list of courses that this course is a prerequisite for
     @ManyToMany
-    @JoinTable(name = "courses_prerequisites", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "prerequisite_id"))
+    @JoinTable(name = Tables.COURSES_PREREQUISITES,
+            joinColumns = @JoinColumn(name = Columns.COURSE_ID),
+            inverseJoinColumns = @JoinColumn(name = Columns.PREREQUISITE_ID))
     public List<Course> prerequisiteFor = new ArrayList<>();
 
-    //This is a list of prerequisites required to take this course
-    @ManyToMany(mappedBy="prerequisiteFor")
+    // This is a list of prerequisites required to take this course
+    @ManyToMany(mappedBy = Fields.PREREQUISITE_FOR)
     public List<Course> prerequisites = new ArrayList<>();
 
     @Constraints.Required
-    @ManyToMany(mappedBy="coursesPreferred")
+    @ManyToMany(mappedBy = Fields.COURSES_PREFERRED)
     public List<Student> studentsInterested = new ArrayList<>();
 
-    @ManyToMany(mappedBy="coursesPreferred")
+    @ManyToMany(mappedBy = Fields.COURSES_PREFERRED)
     public List<StudentRequest> studentRequest = new ArrayList<>();
 
     // -- Queries
@@ -76,15 +84,11 @@ public class Course extends Model {
      * @param id course ID
      */
     public static Course findById(String id) {
-        return FIND.fetch("studentsInterested").where().eq(ID, id).findUnique();
+        return FIND.fetch(Fields.STUDENTS_INTERESTED)
+                .where().eq(Fields.ID, id).findUnique();
     }
 
     // --
-
-    @Override
-    public String toString() {
-        return "Course{" + tag + "}";
-    }
 
     /**
      * Returns the course title, a concatenation of the course tag and the
@@ -97,15 +101,18 @@ public class Course extends Model {
     }
 
     @Override
+    public String toString() {
+        return "Course{" + tag + "}";
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
         Course course = (Course) o;
-
-        if (!id.equals(course.id)) return false;
-        return true;
+        return id.equals(course.id);
     }
 
     @Override

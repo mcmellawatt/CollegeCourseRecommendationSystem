@@ -1,13 +1,18 @@
 package bl;
 
+import com.avaje.ebean.Ebean;
+import models.Course;
+import models.StudentSolution;
+import models.Student;
 import models.StudentRequest;
 import play.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SchedulerService {
 
@@ -19,6 +24,8 @@ public class SchedulerService {
 
     private final Solver solver = new GurobiSolver();
 
+    private final AtomicInteger batchNumber = new AtomicInteger(0);
+
     // non-instantiable (other than here)
     private SchedulerService() { }
 
@@ -28,7 +35,8 @@ public class SchedulerService {
      */
     public void start() {
         solver.initialize();
-        exec.scheduleAtFixedRate(new SolveTask(solver), PERIOD, PERIOD, TimeUnit.SECONDS);
+        // TODO: Reinstate the following, once the task does something useful
+//        exec.scheduleAtFixedRate(new SolveTask(solver), PERIOD, PERIOD, SECONDS);
     }
 
     /**
@@ -44,16 +52,39 @@ public class SchedulerService {
      * @param sr student request
      */
     public void submitRequest(StudentRequest sr) {
-        // TODO: temp code to wrap request in list.
+        // This method should simply put the request on the queue
+        // But until we HAVE a queue, we'll fake it
+
+        // TODO: move all of the following code into the periodic task
+
         //  this will be replaced by pulling requests off queue, eventually
         List<StudentRequest> requests = new ArrayList<>(1);
         requests.add(sr);
 
-        // TODO: temp code to invoke the solver -- should be done from periodic task
-        solver.adjustConstraints(requests);
-        solver.solve();
-    }
+        // Need to associate requests with a solution...
+        final int batch = batchNumber.incrementAndGet();
 
+        // Patch the student record with the batch number and persist
+        sr.batchNumber = batch;
+        Ebean.save(sr);
+
+        // Get the solver to re-adjust its view of the world
+        solver.adjustConstraints(requests);
+
+        // Get a solution
+        Map<Student, List<Course>> result = solver.solve();
+
+        // Persist the solution
+        List<StudentSolution> solutionRecords = new ArrayList<>(result.size());
+        for (Map.Entry<Student, List<Course>> entry: result.entrySet()) {
+            StudentSolution solution = new StudentSolution();
+            solution.batchNumber = batch;
+            solution.student = entry.getKey();
+            solution.recommendedCourses.addAll(entry.getValue());
+            solutionRecords.add(solution);
+        }
+        Ebean.save(solutionRecords);
+    }
 
     /**
      * Singleton instance of the Scheduler Service.

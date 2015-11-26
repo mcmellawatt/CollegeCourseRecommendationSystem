@@ -1,21 +1,25 @@
 package models;
 
-import play.data.format.*;
-import play.data.validation.*;
-import play.db.ebean.*;
+import play.data.format.Formats;
+import play.data.validation.Constraints;
+import play.db.ebean.Model;
 
-import javax.persistence.*;
-
-import java.util.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Transcript entity managed by Ebean.
+ *
+ * Associates a student with the courses they have taken.
  */
 @Entity
-@Table(name="transcripts")
+@Table(name = Tables.TRANSCRIPTS)
 public class Transcript extends Model {
-
-    private static final String ID = "id";
 
     @Id
     @Constraints.Required
@@ -23,14 +27,20 @@ public class Transcript extends Model {
     public String id;
 
     @Constraints.Required
-    @OneToOne(mappedBy="transcript")
+    @OneToOne(mappedBy = Fields.TRANSCRIPT)
     public Student student;
 
-    @ManyToMany(mappedBy="transcriptsIncludingCourse")
+    @ManyToMany(mappedBy = Fields.TRANSCRIPTS_INCLUDING_COURSE)
     public List<Course> coursesTaken = new ArrayList<>();
 
+    /**
+     * Returns the number of credits earned for courses taken in this
+     * transcript.
+     *
+     * @return number of credits earned
+     */
     public int getCreditsEarned() {
-        return coursesTaken.size() * Course.CREDITVALUE;
+        return coursesTaken.size() * Course.CREDIT_VALUE;
     }
 
     // -- Queries
@@ -40,6 +50,8 @@ public class Transcript extends Model {
 
     /**
      * Returns all transcripts.
+     *
+     * @return all transcripts
      */
     public static List<Transcript> findAll() {
         return FIND.all();
@@ -49,9 +61,11 @@ public class Transcript extends Model {
      * Returns the transcript with the given ID.
      *
      * @param id transcript ID
+     * @return transcript
      */
     public static Transcript findById(String id) {
-        return FIND.fetch("student").fetch("coursesTaken").where().eq(ID, id).findUnique();
+        return FIND.fetch(Fields.STUDENT).fetch(Fields.COURSES_TAKEN)
+                .where().eq(Fields.ID, id).findUnique();
     }
 
     // --
