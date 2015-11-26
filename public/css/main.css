@@ -156,3 +156,10 @@ table.student-info tr.batch td {
     font-weight: bold;
     color: darkslateblue;
 }
+
+table.student-info tr.batch span.ts {
+    padding-left: 16px;
+    font-size: 10pt;
+    font-style: italic;
+    color: darkgray;
+}

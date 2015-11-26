@@ -1,5 +1,6 @@
 package models;
 
+import bl.TimeUtils;
 import models.names.Fields;
 import models.names.Tables;
 import play.data.format.Formats;
@@ -28,6 +29,9 @@ public class Student extends Model {
     @Constraints.Required
     @Formats.NonEmpty
     public String id;
+
+    @Constraints.Required
+    public Long tsModified = TimeUtils.now();
 
     @Constraints.Required
     public String username;
@@ -139,6 +143,21 @@ public class Student extends Model {
     @Override
     public String toString() {
         return "Student{" + id + ":" + username + "}";
+    }
+
+    /**
+     * Update the modified timestamp to now.
+     */
+    public void touch() {
+        tsModified = TimeUtils.now();
+    }
+    /**
+     * Return the record modified timestamp as a display string.
+     *
+     * @return modified timestamp
+     */
+    public String modified() {
+        return TimeUtils.toDisplayString(tsModified);
     }
 
 }

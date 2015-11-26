@@ -66,7 +66,8 @@ public class CoursesView extends AppController {
 
         student.courseOrderCsv = csv;
         student.numCoursesPreferred = Integer.valueOf(ncp);
-        Ebean.save(student);
+        student.touch();
+        student.save();
 
         Logger.debug("storing current course order for user '{}'", user);
         Logger.debug(" as {}", csv);
@@ -88,6 +89,7 @@ public class CoursesView extends AppController {
         student.numCoursesPreferred = numCrsPref;
         student.coursesPreferred.clear();
         student.coursesPreferred.addAll(crsPref);
+        student.touch();
         student.save();
 
         StudentRequest sr = new StudentRequest();

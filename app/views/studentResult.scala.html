@@ -6,16 +6,19 @@
     <div class="frame">
         <table class="student-info">
             <tr>
-                <td> <b>Student ID:</b> @student.id </td>
+                <td> Student ID: <b>@student.id</b> </td>
             </tr>
             <tr>
-                <td> <b>Username:</b> @student.username </td>
+                <td> Username: <b> @student.username </b></td>
             </tr>
             <tr>
-                <td> <b>Student Name:</b> @student.fullname </td>
+                <td> Last Modified: <b> @student.modified() </b></td>
             </tr>
             <tr>
-                <td> <b>Credits earned:</b> @student.transcript.getCreditsEarned() </td>
+                <td> Student Name: <b> @student.fullname </b></td>
+            </tr>
+            <tr>
+                <td> Credits earned: <b> @student.transcript.getCreditsEarned() </b></td>
             </tr>
 
             <tr>
@@ -32,7 +35,9 @@
             </tr>
             @for(soln <- solns) {
                 <tr class="batch">
-                    <td>batch : @soln.batchNumber</td>
+                    <td>batch : @soln.batchNumber
+                       <span class="ts">@soln.created()</span>
+                    </td>
                 </tr>
                 @for(rec <- soln.recommendedCourses) {
                     <tr class="course">

@@ -1,5 +1,6 @@
 package models;
 
+import bl.TimeUtils;
 import models.names.Fields;
 import models.names.Tables;
 import play.data.format.Formats;
@@ -25,6 +26,9 @@ public class StudentSolution extends Model {
     @Constraints.Required
     @Formats.NonEmpty
     public String id;
+
+    @Constraints.Required
+    public Long tsCreated = TimeUtils.now();
 
     @Constraints.Required
     public int batchNumber;
@@ -73,4 +77,14 @@ public class StudentSolution extends Model {
                  .where().eq(Fields.STUDENT, s).findList();
      }
 
+    // --
+
+    /**
+     * Return the record created timestamp as a display string.
+     *
+     * @return created timestamp
+     */
+    public String created() {
+        return TimeUtils.toDisplayString(tsCreated);
+    }
 }
