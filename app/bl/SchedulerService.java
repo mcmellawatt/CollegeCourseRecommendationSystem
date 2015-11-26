@@ -21,14 +21,14 @@ public class SchedulerService {
     // Tunable (compile time) period for solver to run, in seconds
     private static final long PERIOD = 30;
 
-    public static ConcurrentLinkedQueue<StudentRequest> requestQueue = new ConcurrentLinkedQueue<>();
+    private static ConcurrentLinkedQueue<StudentRequest> requestQueue = new ConcurrentLinkedQueue<>();
 
     private final ScheduledExecutorService exec =
             Executors.newSingleThreadScheduledExecutor();
 
     private final Solver solver = new GurobiSolver();
 
-    public static final AtomicInteger batchNumber = new AtomicInteger(0);
+    private static final AtomicInteger batchNumber = new AtomicInteger(0);
 
     // non-instantiable (other than here)
     private SchedulerService() { }
