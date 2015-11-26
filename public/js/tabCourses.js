@@ -32,8 +32,9 @@
         view.append('<h2> Number of Courses Preferred:');
         view.append('<input type="text" id="ncp" value="' + numCP + '"></h2>');
 
-        view.append('<h2> Drag courses into priority order... </h2>');
-        view.append('<p> ...with highest priority at the top of the list </p>');
+        view.append('<h2> Available Courses </h2>');
+        view.append('<p class="instruct"> Drag courses into priority order ' +
+            '(highest priority at the top) </p>');
 
         // TODO: find a better way of doing this...?
         var stuff = [];

@@ -84,15 +84,17 @@ public class CoursesView extends AppController {
         final int numCrsPref = Integer.valueOf(ncp);
         final List<Course> crsPref = courseListFromCsv(csv);
 
+        student.courseOrderCsv = csv;
         student.numCoursesPreferred = numCrsPref;
-        student.coursesPreferred = crsPref;
-        Ebean.save(student);
+        student.coursesPreferred.clear();
+        student.coursesPreferred.addAll(crsPref);
+        student.save();
 
         StudentRequest sr = new StudentRequest();
-        sr.coursesPreferred = crsPref;
+        sr.coursesPreferred.addAll(crsPref);
         sr.numCoursesPreferred = numCrsPref;
         sr.student = student;
-        Ebean.save(sr);
+        sr.save();
 
         Logger.debug("SUBMITTING REQUEST: course order for user '{}'", user);
         Logger.debug(" as {}", csv);
