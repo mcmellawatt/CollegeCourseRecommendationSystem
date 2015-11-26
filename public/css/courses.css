@@ -14,3 +14,10 @@
 #course-list span.course-id {
     display: none;
 }
+
+p.instruct {
+    margin: 2px 2px 20px 2px;
+    padding-left: 20px;
+    font-style: italic;
+    color: #327;
+}

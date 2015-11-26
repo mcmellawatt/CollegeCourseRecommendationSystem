@@ -22,6 +22,8 @@ import java.util.List;
 @Table(name = Tables.STUDENTS)
 public class Student extends Model {
 
+    private static final String COMMA = ",";
+
     @Id
     @Constraints.Required
     @Formats.NonEmpty
@@ -72,6 +74,27 @@ public class Student extends Model {
         availableCourses.removeAll(missingPreReqs);
 
         return availableCourses;
+    }
+
+
+    // NOTE: shouldn't really need to have this, but at the moment it seems
+    //       that clearing the preferred courses list and repopulating it,
+    //       and saving it to the DB, does not preserve the order of the list :(
+    //       At least the order is preserved in the CSV...
+    /**
+     * Returns the list of courses in the order of the CSV field.
+     *
+     * @return ordered list of courses
+     */
+    public synchronized List<Course> getCoursesOrderedByCsv() {
+        if (courseOrderCsv == null) {
+            return coursesPreferred;
+        }
+        List<Course> result = new ArrayList<>();
+        for (String cid: courseOrderCsv.split(COMMA)) {
+            result.add(Course.findById(cid));
+        }
+        return result;
     }
 
     // -- Queries
