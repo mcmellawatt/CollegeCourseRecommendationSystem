@@ -74,8 +74,8 @@ public class SchedulerService {
     private static class SolveTask implements Runnable {
 
         private final Solver solver;
-        private AtomicInteger batchNumber;
-        private ConcurrentLinkedQueue<StudentRequest> requestQueue;
+        private final AtomicInteger batchNumber;
+        private final ConcurrentLinkedQueue<StudentRequest> requestQueue;
 
         private SolveTask(Solver solver,
                           ConcurrentLinkedQueue<StudentRequest> requestQueue,
