@@ -1,5 +1,8 @@
 package models;
 
+import models.names.Columns;
+import models.names.Fields;
+import models.names.Tables;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
