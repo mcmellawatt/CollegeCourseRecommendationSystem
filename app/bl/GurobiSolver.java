@@ -9,6 +9,7 @@ import gurobi.GRBVar;
 import models.Course;
 import models.Student;
 import models.StudentRequest;
+import play.Logger;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -20,21 +21,17 @@ import java.util.Map;
  */
 public class GurobiSolver implements Solver {
 
-    // Currently '30' is just a place holder, the actual value for
-    // maxClassSize will come from some business logic class. Ideally each
-    // class would have a max class size, this can be addressed later.
-
     private static final String FMT_SC = "si_%s_ci_%s";
     private static final String FMT_MAX_CS = "max_cs_ci_%s";
     private static final String FMT_MAX_NC = "max_nc_si_%s";
     private static final String FMT_NE_SC = "ne_si_%s_ci_%s";
 
     private GRBModel model;
-    private List<Student> students;
-    private List<Course> courses;
+    private final List<Student> students;
+    private final List<Course> courses;
 
-    final int studentCount;
-    final int courseCount;
+    private final int studentCount;
+    private final int courseCount;
 
     // Gurobi matrix for students and courses for next semester.
     // This will be the solution.
@@ -75,6 +72,7 @@ public class GurobiSolver implements Solver {
 
     @Override
     public void initialize() {
+        Logger.debug("Initializing GurobiSolver...");
         try {
             // Create scVars variables;
             generateSCVars();
@@ -114,7 +112,7 @@ public class GurobiSolver implements Solver {
 
 
     @Override
-    public Map<Student, List<Course>> solve() {
+    public synchronized Map<Student, List<Course>> solve() {
         ready = false;
 
         Map<Student, List<Course>> solution = null;
@@ -249,23 +247,15 @@ public class GurobiSolver implements Solver {
         return solution;
     }
 
-//    private void tester(Map<Student, List<Course>> solution) {
-//        for (Student s : students) {
-//            System.out.println();
-//            System.out.print(s.fullname + " ");
-//            for (Course c : solution.get(s)) {
-//                System.out.print(" " + c.id + " ");
-//            }
-//        }
-//    }
-
-    private void updateAllStudentConstraints(List<StudentRequest> requests) throws GRBException {
+    private void updateAllStudentConstraints(List<StudentRequest> requests)
+            throws GRBException {
         for (StudentRequest sr : requests) {
             updateStudentConstraints(sr);
         }
     }
 
-    private void updateStudentConstraints(StudentRequest sr) throws GRBException {
+    private void updateStudentConstraints(StudentRequest sr)
+            throws GRBException {
         int ndx = findStudentIndex(sr.student);
         removeMaxNumOfCourseConstraint(ndx);
         addMaxNumOfCoursesConstraint(ndx);
@@ -319,13 +309,13 @@ public class GurobiSolver implements Solver {
 
         private static final double NUM_COURSES = Course.findAll().size();
         private static final double NUM_CREDITS_REQ = 30;
-        private static final double pScale = .01;
-        private static final double sScale = .99;
+        private static final double P_SCALE = .01;
+        private static final double S_SCALE = .99;
 
         static double get(Student s, Course c) {
             double seniority = s.transcript.getCreditsEarned();
             double priority = getPriorityLevel(s, c);
-            return sScale * normalizeSeniority(seniority) + pScale * priority;
+            return S_SCALE * normalizeSeniority(seniority) + P_SCALE * priority;
         }
 
         private static double normalizeSeniority(double credits) {

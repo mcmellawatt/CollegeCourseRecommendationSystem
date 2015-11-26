@@ -10,6 +10,7 @@ import play.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -21,7 +22,7 @@ public class SchedulerService {
     // Tunable (compile time) period for solver to run, in seconds
     private static final long PERIOD = 30;
 
-    private final ConcurrentLinkedQueue<StudentRequest> requestQueue =
+    private final Queue<StudentRequest> requestQueue =
             new ConcurrentLinkedQueue<>();
 
     private final ScheduledExecutorService exec =
@@ -39,6 +40,7 @@ public class SchedulerService {
      */
     public void start() {
         solver.initialize();
+        Logger.debug("Starting up periodic task ({}s period)", PERIOD);
         exec.scheduleAtFixedRate(new SolveTask(solver, requestQueue, batchNumber),
                 PERIOD, PERIOD, TimeUnit.SECONDS);
     }
@@ -47,6 +49,7 @@ public class SchedulerService {
      * Stops the scheduler service.
      */
     public void stop() {
+        Logger.debug("Shutting down task executor");
         exec.shutdown();
     }
 
@@ -75,10 +78,10 @@ public class SchedulerService {
 
         private final Solver solver;
         private final AtomicInteger batchNumber;
-        private final ConcurrentLinkedQueue<StudentRequest> requestQueue;
+        private final Queue<StudentRequest> requestQueue;
 
         private SolveTask(Solver solver,
-                          ConcurrentLinkedQueue<StudentRequest> requestQueue,
+                          Queue<StudentRequest> requestQueue,
                           AtomicInteger batchNumber) {
             this.solver = solver;
             this.requestQueue = requestQueue;
@@ -87,42 +90,71 @@ public class SchedulerService {
 
         @Override
         public void run() {
-            int queuedRequestCount;
+            Logger.debug("Scheduled Task run - checking for work...");
 
-            Logger.debug("Scheduled Task run.");
-            if (solver.isReady() && requestQueue.size() > 0) {
-                Logger.debug("Solver ready and requests queued, running...");
-                // Need to associate requests with a solution...
-                final int batch = batchNumber.incrementAndGet();
-                StudentRequest sr;
-                List<StudentRequest> requests = new ArrayList<>(1);
-                queuedRequestCount = requestQueue.size();
-
-                for (int i = 0; i < queuedRequestCount; i++) {
-                    // Patch the student record with the batch number and persist
-                    sr = requestQueue.remove();
-                    sr.batchNumber = batch;
-                    Ebean.save(sr);
-                    requests.add(sr);
-                }
-
-                // Get the solver to re-adjust its view of the world
-                solver.adjustConstraints(requests);
-
-                // Get a solution
-                Map<Student, List<Course>> result = solver.solve();
-
-                // Persist the solution
-                List<StudentSolution> solutionRecords = new ArrayList<>(result.size());
-                for (Map.Entry<Student, List<Course>> entry: result.entrySet()) {
-                    StudentSolution solution = new StudentSolution();
-                    solution.batchNumber = batch;
-                    solution.student = entry.getKey();
-                    solution.recommendedCourses.addAll(entry.getValue());
-                    solutionRecords.add(solution);
-                }
-                Ebean.save(solutionRecords);
+            if (!solver.isReady()) {
+                Logger.debug(" -- Solver not ready");
+                return;
             }
+
+            final int nRequests = requestQueue.size();
+            if (nRequests == 0) {
+                Logger.debug(" -- No requests queued");
+                return;
+            }
+
+            Logger.debug(" -- Solver ready and {} request(s) queued", nRequests);
+
+            // Need to associate requests with a solution...
+            final int batch = batchNumber.incrementAndGet();
+
+            // Pull requests off the queue
+            List<StudentRequest> requests = dequeue(nRequests, batch);
+
+            // Get the solver to re-adjust its view of the world
+            solver.adjustConstraints(requests);
+
+            // Get a solution and persist it
+            persistSolution(solver.solve(), batch);
+        }
+
+
+        // remove requests from queue, and patch each with batch number
+        private List<StudentRequest> dequeue(int nRequests, int batch) {
+            List<StudentRequest> requests = new ArrayList<>(nRequests);
+            for (int i = 0; i < nRequests; i++) {
+                StudentRequest sr = requestQueue.remove();
+                sr.batchNumber = batch;
+                sr.save();
+                requests.add(sr);
+            }
+            Logger.debug("Dequeued {} request(s)", nRequests);
+            return requests;
+        }
+
+        // create and persist solution records
+        private void persistSolution(Map<Student, List<Course>> results,
+                                     int batch) {
+            if (results.isEmpty()) {
+                Logger.debug("No solution results for batch {}", batch);
+                return;
+            }
+
+            // create solution records
+            final int nSolns = results.size();
+            List<StudentSolution> solutionRecords = new ArrayList<>(nSolns);
+            for (Map.Entry<Student, List<Course>> entry: results.entrySet()) {
+                StudentSolution solution = new StudentSolution();
+                solution.batchNumber = batch;
+                solution.student = entry.getKey();
+                solution.recommendedCourses.addAll(entry.getValue());
+                solutionRecords.add(solution);
+            }
+
+            // persist them
+            Logger.debug("Persisting {} solution record(s) (batch {})",
+                    nSolns, batch);
+            Ebean.save(solutionRecords);
         }
     }
 }
