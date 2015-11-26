@@ -62,7 +62,15 @@ public class StudentSolution extends Model {
                 .where().eq(Fields.ID, id).findUnique();
     }
 
-    // TODO: find all solutions for a given student
-    // public static List<StudentSolution> findByStudent(Student s) { ... }
+    /**
+     * Returns the set of solutions for a given student.
+     *
+     * @param s student
+     * @return solutions for that student
+     */
+     public static List<StudentSolution> findByStudent(Student s) {
+         return FIND.fetch(Fields.RECOMMENDED_COURSES).fetch(Fields.STUDENT)
+                 .where().eq(Fields.STUDENT, s).findList();
+     }
 
 }

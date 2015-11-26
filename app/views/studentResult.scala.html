@@ -1,0 +1,46 @@
+@import java.util
+@(student: Student, solns: util.List[StudentSolution])
+
+@main("Student Summary") {
+
+    <div class="frame">
+        <table class="student-info">
+            <tr>
+                <td> <b>Student ID:</b> @student.id </td>
+            </tr>
+            <tr>
+                <td> <b>Username:</b> @student.username </td>
+            </tr>
+            <tr>
+                <td> <b>Student Name:</b> @student.fullname </td>
+            </tr>
+            <tr>
+                <td> <b>Credits earned:</b> @student.transcript.getCreditsEarned() </td>
+            </tr>
+
+            <tr>
+                <td> Courses Preferred (@student.numCoursesPreferred): </td>
+            </tr>
+            @for(course <- student.coursesPreferred) {
+                <tr class="course">
+                    <td>@course.title()</td>
+                </tr>
+            }
+
+            <tr>
+                <td> Solutions: </td>
+            </tr>
+            @for(soln <- solns) {
+                <tr class="batch">
+                    <td>batch : @soln.batchNumber</td>
+                </tr>
+                @for(rec <- soln.recommendedCourses) {
+                    <tr class="course">
+                        <td> @rec.title() </td>
+                    </tr>
+                }
+            }
+
+        </table>
+    </div>
+}

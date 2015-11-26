@@ -143,3 +143,16 @@ button {
 #student-info {
     width: 400px;
 }
+
+table.student-info tr.course td {
+    padding-left: 32px;
+    font-size: 10pt;
+    color: darkslateblue;
+}
+
+table.student-info tr.batch td {
+    padding-left: 16px;
+    font-size: 10pt;
+    font-weight: bold;
+    color: darkslateblue;
+}

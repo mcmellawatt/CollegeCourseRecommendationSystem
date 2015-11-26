@@ -2,13 +2,17 @@ package controllers;
 
 import models.Course;
 import models.Student;
+import models.StudentSolution;
 import models.Transcript;
 import play.Logger;
 import play.mvc.Result;
 import views.html.course;
 import views.html.courses;
 import views.html.student;
+import views.html.studentResult;
 import views.html.transcript;
+
+import java.util.List;
 
 /**
  * An auxiliary controller as somewhere to place prototype code, not part
@@ -38,6 +42,22 @@ public class Auxiliary extends AppController {
         Logger.debug("student page accessed, for student-id '{}'", id);
         return ok(
                 student.render(Student.findById(id))
+        );
+    }
+
+    /**
+     * Generates a page with information about the given student's results
+     *
+     * @param username student user name
+     * @return student information page
+     */
+    public static Result getStudentResult(String username) {
+        Logger.debug("student result page accessed, for username '{}'", username);
+        Student s = Student.findByUserName(username);
+        List<StudentSolution> solns = StudentSolution.findByStudent(s);
+
+        return ok(
+                studentResult.render(s, solns)
         );
     }
 

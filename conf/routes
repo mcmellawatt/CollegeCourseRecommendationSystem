@@ -32,6 +32,7 @@ GET     /courses/:id                controllers.Auxiliary.getCourse(id: String)
 
 # Students
 GET     /students/:id               controllers.Auxiliary.getStudent(id: String)
+GET     /students/soln/:user        controllers.Auxiliary.getStudentResult(user: String)
 
 # Transcripts
 GET     /transcripts/:id            controllers.Auxiliary.getTranscript(id: String)
