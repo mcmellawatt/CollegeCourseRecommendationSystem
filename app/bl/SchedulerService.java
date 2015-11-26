@@ -21,7 +21,8 @@ public class SchedulerService {
     // Tunable (compile time) period for solver to run, in seconds
     private static final long PERIOD = 30;
 
-    private static ConcurrentLinkedQueue<StudentRequest> requestQueue = new ConcurrentLinkedQueue<>();
+    private static ConcurrentLinkedQueue<StudentRequest> requestQueue =
+            new ConcurrentLinkedQueue<>();
 
     private final ScheduledExecutorService exec =
             Executors.newSingleThreadScheduledExecutor();
