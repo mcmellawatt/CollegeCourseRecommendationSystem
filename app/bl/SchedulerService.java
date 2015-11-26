@@ -21,7 +21,7 @@ public class SchedulerService {
     // Tunable (compile time) period for solver to run, in seconds
     private static final long PERIOD = 30;
 
-    private static ConcurrentLinkedQueue<StudentRequest> requestQueue =
+    private ConcurrentLinkedQueue<StudentRequest> requestQueue =
             new ConcurrentLinkedQueue<>();
 
     private final ScheduledExecutorService exec =
@@ -29,7 +29,7 @@ public class SchedulerService {
 
     private final Solver solver = new GurobiSolver();
 
-    private static final AtomicInteger batchNumber = new AtomicInteger(0);
+    private final AtomicInteger batchNumber = new AtomicInteger(0);
 
     // non-instantiable (other than here)
     private SchedulerService() { }
@@ -39,7 +39,7 @@ public class SchedulerService {
      */
     public void start() {
         solver.initialize();
-        exec.scheduleAtFixedRate(new SolveTask(solver), PERIOD, PERIOD, TimeUnit.SECONDS);
+        exec.scheduleAtFixedRate(new SolveTask(solver, requestQueue, batchNumber), PERIOD, PERIOD, TimeUnit.SECONDS);
     }
 
     /**
@@ -73,9 +73,15 @@ public class SchedulerService {
     private static class SolveTask implements Runnable {
 
         private final Solver solver;
+        private AtomicInteger batchNumber;
+        private ConcurrentLinkedQueue<StudentRequest> requestQueue;
 
-        private SolveTask(Solver solver) {
+        private SolveTask(Solver solver,
+                          ConcurrentLinkedQueue<StudentRequest> requestQueue,
+                          AtomicInteger batchNumber) {
             this.solver = solver;
+            this.requestQueue = requestQueue;
+            this.batchNumber = batchNumber;
         }
 
         @Override
@@ -86,7 +92,7 @@ public class SchedulerService {
             if (solver.isReady() && requestQueue.size() > 0) {
                 Logger.debug("Solver ready and requests queued, running...");
                 // Need to associate requests with a solution...
-                final int batch = SchedulerService.batchNumber.incrementAndGet();
+                final int batch = batchNumber.incrementAndGet();
                 StudentRequest sr;
                 List<StudentRequest> requests = new ArrayList<>(1);
                 queuedRequestCount = requestQueue.size();
