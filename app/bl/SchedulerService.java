@@ -21,7 +21,7 @@ public class SchedulerService {
     // Tunable (compile time) period for solver to run, in seconds
     private static final long PERIOD = 30;
 
-    private ConcurrentLinkedQueue<StudentRequest> requestQueue =
+    private final ConcurrentLinkedQueue<StudentRequest> requestQueue =
             new ConcurrentLinkedQueue<>();
 
     private final ScheduledExecutorService exec =
@@ -39,7 +39,8 @@ public class SchedulerService {
      */
     public void start() {
         solver.initialize();
-        exec.scheduleAtFixedRate(new SolveTask(solver, requestQueue, batchNumber), PERIOD, PERIOD, TimeUnit.SECONDS);
+        exec.scheduleAtFixedRate(new SolveTask(solver, requestQueue, batchNumber),
+                PERIOD, PERIOD, TimeUnit.SECONDS);
     }
 
     /**
