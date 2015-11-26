@@ -81,8 +81,9 @@ public class SchedulerService {
         public void run() {
             int queuedRequestCount;
 
-            Logger.debug("scheduled task run.");
-            if (solver.isReady()) {
+            Logger.debug("Scheduled Task run.");
+            if (solver.isReady() && requestQueue.size() > 0) {
+                Logger.debug("Solver ready and requests queued, running...");
                 // Need to associate requests with a solution...
                 final int batch = SchedulerService.batchNumber.incrementAndGet();
                 StudentRequest sr;
