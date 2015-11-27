@@ -124,12 +124,6 @@ h2 {
     padding: 8px 4px;
 }
 
-#view input {
-    font-size: 16pt;
-    width: 30px;
-    margin-left: 40px;
-}
-
 button {
     cursor: pointer;
 }

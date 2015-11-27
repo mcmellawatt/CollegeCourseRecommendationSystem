@@ -35,12 +35,8 @@ public class ProfileView extends AppController {
                 .put(NUM_COURSES_PREFERRED, student.numCoursesPreferred);
 
         Transcript transcript = student.transcript;
-        ArrayNode taken = arrayNode();
-        for (Course c: transcript.coursesTaken) {
-            taken.add(json(c));
-        }
-        payload.set(COURSES_TAKEN, taken);
         payload.put(CREDITS_EARNED, transcript.getCreditsEarned());
+        payload.set(COURSES_TAKEN, json(transcript.coursesTaken));
 
         Logger.debug("profile view page accessed as user '{}'", user);
 

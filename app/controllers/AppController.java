@@ -25,6 +25,7 @@ public class AppController extends Controller {
     protected static final String HISTORY = "history";
     protected static final String ACK = "ack";
     protected static final String SUBMITTED = "submitted";
+    protected static final String RESULTS = "results";
 
     protected static final String ID = "id";
     protected static final String TAG = "tag";
@@ -56,17 +57,32 @@ public class AppController extends Controller {
         return MAPPER.createArrayNode();
     }
 
+    private static JsonNode nodeFromRequest(String key) {
+        return request().body().asJson().findPath(key);
+    }
+
     /**
      * Returns the value from the request body for the given key.
      * It is assumed that the body is formatted JSON, the key/value pair is
      * at the root level, and the value is a string.
      *
      * @param key the key
-     * @return the value for the given key
+     * @return the string value for the given key
      */
     protected static String fromRequest(String key) {
-        JsonNode json = request().body().asJson();
-        return json.findPath(key).textValue();
+        return nodeFromRequest(key).textValue();
+    }
+
+    /**
+     * Returns the value from the request body for the given key.
+     * It is assumed that the body is formatted JSON, the key/value pair is
+     * at the root level, and the value is an integer.
+     *
+     * @param key the key
+     * @return the integer value for the given key
+     */
+    protected static int fromRequestInt(String key) {
+        return nodeFromRequest(key).asInt();
     }
 
     /**
@@ -127,24 +143,18 @@ public class AppController extends Controller {
                 .put(CORE, course.core);
     }
 
-
-    //------------------------------------------------------------------
-    // TODO: delete these two methods, if we find we are not using them
-
     /**
-     * Produces a CSV string from a list of integers.
+     * Produces a JSON representation of a list of courses.
      *
-     * @param ints list of integers
-     * @return CSV string
+     * @param courses the courses
+     * @return JSON array node representation
      */
-    protected static String toCsv(List<Integer> ints) {
-        StringBuilder sb = new StringBuilder();
-        for (int i : ints) {
-            sb.append(i).append(COMMA);
+    protected static ArrayNode json(List<Course> courses) {
+        ArrayNode array = arrayNode();
+        for (Course c: courses) {
+            array.add(json(c));
         }
-        final int len = sb.length();
-        sb.replace(len-1, len, EMPTY);
-        return sb.toString();
+        return array;
     }
 
     /**
@@ -155,6 +165,15 @@ public class AppController extends Controller {
      */
     protected static List<String> fromCsv(String csv) {
         return Arrays.asList(csv.split(COMMA));
+    }
+
+    protected static List<Course> courseListFromCsv(String csv) {
+        List<String> ids = fromCsv(csv);
+        List<Course> courses = new ArrayList<>();
+        for (String id: ids) {
+            courses.add(Course.findById(id));
+        }
+        return courses;
     }
 
 }

@@ -69,12 +69,25 @@ public class StudentSolution extends Model {
     /**
      * Returns the set of solutions for a given student.
      *
-     * @param s student
+     * @param student student
      * @return solutions for that student
      */
-     public static List<StudentSolution> findByStudent(Student s) {
+     public static List<StudentSolution> findByStudent(Student student) {
          return FIND.fetch(Fields.RECOMMENDED_COURSES).fetch(Fields.STUDENT)
-                 .where().eq(Fields.STUDENT, s).findList();
+                 .where().eq(Fields.STUDENT, student).findList();
+     }
+
+    /**
+     * Returns the solution for a given student and batch number.
+     *
+     * @param student student
+     * @param batch batch number
+     * @return matching solution for that student, if any
+     */
+     public static StudentSolution findByStudent(Student student, int batch) {
+         return FIND.fetch(Fields.RECOMMENDED_COURSES).fetch(Fields.STUDENT)
+                 .where().eq(Fields.STUDENT, student)
+                         .eq(Fields.BATCH_NUMBER, batch).findUnique();
      }
 
     // --

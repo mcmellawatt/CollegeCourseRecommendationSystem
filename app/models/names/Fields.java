@@ -15,5 +15,6 @@ public class Fields {
     public static final String STUDENTS_INTERESTED = "studentsInterested";
     public static final String PREREQUISITE_FOR = "prerequisiteFor";
     public static final String RECOMMENDED_COURSES = "recommendedCourses";
+    public static final String BATCH_NUMBER = "batchNumber";
 
 }

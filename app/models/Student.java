@@ -58,6 +58,8 @@ public class Student extends Model {
 
     public String courseOrderCsv;
 
+    public int waitingForBatch = 0;
+
     /**
      * Returns the list of courses for which this student is currently
      * eligible.
