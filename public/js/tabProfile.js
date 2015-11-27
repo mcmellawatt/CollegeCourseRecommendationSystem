@@ -12,40 +12,41 @@
         console.log('render profile view with', resp);
 
         var p = resp.payload,
+            s = p.student,
+            t = p.transcript,
             view = core().view('profile');
 
-        view.append('<h2> Profile for ' + p.fullName + ' </h2>');
+        view.append('<h2> Profile for ' + s.fullName + ' </h2>');
 
-        var t = [];
-        t.push('<h3>Courses Taken</h3><table>');
-        p.coursesTaken.forEach(function (c) {
-            t.push('<tr><td>');
+        var html = [];
+        html.push('<h3>Courses Taken</h3><table>');
+        t.coursesTaken.forEach(function (c) {
+            html.push('<tr><td>');
             if (c.core) {
-                t.push('*');
+                html.push('*');
             }
-            t.push('</td><td><b>');
-            t.push(c.tag);
-            t.push('</b></td><td>');
-            t.push(c.name);
-            t.push('<span class="abbrev"> (');
-            t.push(c.abbrev);
-            t.push(') </span></td></tr>');
+            html.push('</td><td><b>');
+            html.push(c.tag);
+            html.push('</b></td><td>');
+            html.push(c.name);
+            html.push('<span class="abbrev"> (');
+            html.push(c.abbrev);
+            html.push(') </span></td></tr>');
         });
-        t.push('</table>');
-        view.append(t.join(''));
+        html.push('</table>');
+        view.append(html.join(''));
 
-        t = ['<p>'];
-        t.push('Credits Earned: <b>');
-        t.push(p.creditsEarned);
-        t.push('</b></p>');
-        view.append(t.join(''));
+        html = ['<p>'];
+        html.push('Credits Earned: <b>');
+        html.push(t.creditsEarned);
+        html.push('</b></p>');
+        view.append(html.join(''));
     }
 
     // called when our view is unloaded
     function unload() {
-
+        // we don't have anything to do here
     }
-
 
     // register our profile functionality
     cs6310app.profile = {

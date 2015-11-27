@@ -21,7 +21,7 @@
 
         $.postJSON(vid, data, function (resp) {
             var cv = current.view,
-                rv = resp.view;
+                rv = resp.responseType;
             if (cv && cv !== rv) {
                 cs6310app[cv].unload(user);
             }

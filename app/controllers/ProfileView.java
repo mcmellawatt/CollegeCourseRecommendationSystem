@@ -1,23 +1,18 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.Course;
 import models.Student;
-import models.Transcript;
 import play.Logger;
 import play.mvc.BodyParser;
 import play.mvc.Result;
+
+import static controllers.JsonCodec.*;
+import static controllers.Tags.*;
 
 /**
  * Controller for the profile view.
  */
 public class ProfileView extends AppController {
-
-    private static final String FULL_NAME = "fullName";
-    private static final String NUM_COURSES_PREFERRED = "numCoursesPreferred";
-    private static final String COURSES_TAKEN = "coursesTaken";
-    private static final String CREDITS_EARNED = "creditsEarned";
 
     /**
      * Generates the data required for populating the profile view.
@@ -30,16 +25,9 @@ public class ProfileView extends AppController {
     public static Result view() {
         String user = fromRequest(USER);
         Student student = Student.findByUserName(user);
-        ObjectNode payload = objectNode()
-                .put(FULL_NAME, student.fullname)
-                .put(NUM_COURSES_PREFERRED, student.numCoursesPreferred);
-
-        Transcript transcript = student.transcript;
-        payload.put(CREDITS_EARNED, transcript.getCreditsEarned());
-        payload.set(COURSES_TAKEN, json(transcript.coursesTaken));
-
         Logger.debug("profile view page accessed as user '{}'", user);
 
+        ObjectNode payload = jsonProfileViewPayload(student, student.transcript);
         return ok(createResponse(user, PROFILE, payload));
     }
 }

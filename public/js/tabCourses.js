@@ -100,9 +100,11 @@
 
         var ru = resp.user,
             rp = resp.payload,
-            csv = rp.courseOrderCsv,
-            editable = !rp.batch,
-            numCP = rp.numCoursesPreferred,
+            s = rp.student,
+            crs = rp.courses,
+            csv = s.courseOrderCsv,
+            editable = !s.batch,
+            numCP = s.numCoursesPreferred,
             view = core().view('courses'),
             order = [],
             lookup = {},
@@ -112,7 +114,7 @@
         saveOrder = editable;
 
         // stuff courses into a hash lookup
-        rp.courses.forEach(function (c) {
+        crs.forEach(function (c) {
             lookup[c.id] = c;
             if (!csv) {
                 order.push(c.id);
@@ -131,28 +133,26 @@
         view.append('<h2 id="crshdr"> Available Courses: </h2>');
         view.append('<p id="imsg" class="instruct">' + imsg + '</p>');
 
-        // TODO: find a better way of doing this...?
-        var stuff = [];
-        stuff.push('<div id="course-list">');
-        stuff.push('<ul>');
+        var html = [];
+        html.push('<div id="course-list">');
+        html.push('<ul>');
 
         order.forEach(function (id) {
             var c = lookup[id];
 
-            stuff.push('<li>');
-            stuff.push('<span class="course-id">');
-            stuff.push(c.id);
-            stuff.push('</span><b>');
-            stuff.push(c.tag);
-            stuff.push('</b> - ');
-            stuff.push(c.name);
-            stuff.push('</li>');
+            html.push('<li>');
+            html.push('<span class="course-id">');
+            html.push(c.id);
+            html.push('</span><b>');
+            html.push(c.tag);
+            html.push('</b> - ');
+            html.push(c.name);
+            html.push('</li>');
         });
 
-        stuff.push('</ul>');
-        stuff.push('</div>');
-        view.append(stuff.join(''));
-
+        html.push('</ul>');
+        html.push('</div>');
+        view.append(html.join(''));
 
         view.append('<input type="button" id="subreq">');
 
@@ -167,7 +167,7 @@
 
         enableEditing(editable);
         if (!editable) {
-            pollForResult(ru, rp.batch);
+            pollForResult(ru, s.batch);
         }
     }
 

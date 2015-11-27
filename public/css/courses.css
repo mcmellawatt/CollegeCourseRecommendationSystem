@@ -50,3 +50,6 @@ p.instruct {
     margin-left: 40px;
 }
 
+#subreq {
+    cursor: pointer;
+}

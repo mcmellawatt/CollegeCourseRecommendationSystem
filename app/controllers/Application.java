@@ -1,6 +1,5 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.Logger;
 import play.cache.Cache;
@@ -9,19 +8,16 @@ import play.mvc.Result;
 import views.html.app;
 import views.html.login;
 
+import static controllers.JsonCodec.*;
+import static controllers.Tags.*;
+
 /**
  * Implements our application controller, responsible for handling user login
  * and the main application view.
  */
 public class Application extends AppController {
 
-    private static final String PASS = "pass";
-    private static final String GOOD_TO_GO = "goodToGo";
-    private static final String REDIRECT = "redirect";
-    private static final String APP_URL = "app";
-
     private static final Authenticator AUTH = new Authenticator();
-
 
     /**
      * Generates the login page.
@@ -30,56 +26,52 @@ public class Application extends AppController {
      */
     public static Result login() {
         Logger.debug("login page accessed");
-        return ok(
-                login.render()
-        );
+        return ok(login.render());
     }
 
     /**
-     * Handles login request, returning a JSON response object, telling the
-     * client what page to load next.
+     * Handles a login request, returning a JSON response object,
+     * defining the next page to load, or (on an invalid login), indicating
+     * that the login failed.
      *
      * @return login response
      */
     @BodyParser.Of(BodyParser.Json.class)
     public static Result doLogin() {
-        JsonNode json = request().body().asJson();
-        String user = json.findPath(USER).textValue();
-        String pass = json.findPath(PASS).textValue();
-
+        String user = fromRequest(USER);
+        String pass = fromRequest(PASS);
         Logger.debug("got username [{}] and password [{}]", user, pass);
 
-        ObjectNode response = objectNode()
-                .put(USER, user);
+        boolean loginOk = AUTH.authenticate(user, pass);
+        ObjectNode response = jsonLoginResponse(user, loginOk);
 
-        if (AUTH.authenticate(user, pass)) {
+        if (loginOk) {
             Logger.info("Login for user [{}]", user);
 
+            // add our destination URL
+            response.put(REDIRECT, LoginUrls.APP);
+
+            // TODO: intercept admin user and redirect to LoginUrls.ADMIN
+
+            // TODO: is this needed? (Perhaps pass the user in body of "app" post?)
             // remember who the user is
             Cache.set(USER, user);
 
-            // tell the login page that we are good to proceed
-            response.put(GOOD_TO_GO, true)
-                    .put(REDIRECT, APP_URL);
-
         } else {
             Logger.warn("Login FAILED for user [{}]", user);
-            response.put(GOOD_TO_GO, false);
         }
 
         return ok(response);
     }
 
     /**
-     * Generates the main page for our single-page-application.
+     * Generates the main page for the student application.
      *
      * @return application page content
      */
     public static Result app() {
         String user = Cache.get(USER).toString();
         Logger.debug("app page accessed as user [{}]", user);
-        return ok(
-                app.render(user)
-        );
+        return ok(app.render(user));
     }
 }

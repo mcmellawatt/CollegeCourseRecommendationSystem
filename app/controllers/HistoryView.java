@@ -1,17 +1,20 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Student;
+import models.StudentSolution;
 import play.Logger;
 import play.mvc.BodyParser;
 import play.mvc.Result;
+
+import java.util.List;
+
+import static controllers.JsonCodec.*;
+import static controllers.Tags.*;
 
 /**
  * Controller for the history view.
  */
 public class HistoryView extends AppController {
-
-    private static final String FULL_NAME = "fullName";
 
     /**
      * Generates the data required for populating the history view.
@@ -24,14 +27,11 @@ public class HistoryView extends AppController {
     public static Result view() {
         String user = fromRequest(USER);
         Student student = Student.findByUserName(user);
-
-        // TODO: get history data and return that
-        ObjectNode payload = objectNode()
-                .put(FULL_NAME, student.fullname)
-                .put("goo", "zoo");
-
         Logger.debug("history view page accessed as user '{}'", user);
 
-        return ok(createResponse(user, HISTORY, payload));
+        List<StudentSolution> solns = StudentSolution.findByStudent(student);
+        return ok(createResponse(user, HISTORY,
+                                 jsonHistoryViewPayload(student, solns)));
     }
+
 }
