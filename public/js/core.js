@@ -20,11 +20,13 @@
         };
 
         $.postJSON(vid, data, function (resp) {
-            if (current.view) {
-                cs6310app[current.view].unload(user);
+            var cv = current.view,
+                rv = resp.view;
+            if (cv && cv !== rv) {
+                cs6310app[cv].unload(user);
             }
-            current.view = resp.view;
-            cs6310app[current.view].render(resp);
+            current.view = rv;
+            cs6310app[rv].render(resp);
         });
     }
 

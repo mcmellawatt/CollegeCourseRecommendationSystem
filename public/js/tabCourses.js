@@ -4,7 +4,8 @@
 
     var imsgEdit = 'Drag courses into priority order (highest at top)',
         imsgNoEdit = 'Request submitted... awaiting results...',
-        pollTask;
+        pollTask,
+        saveOrder = true;
 
     // shorthand reference to core module
     function core() {
@@ -85,6 +86,9 @@
             core().loadView('courses', user);
         }
 
+        // we're subverting the list of available courses, so we don't want
+        // the save-order functionality to kick in...
+        saveOrder = false;
         console.debug('UPDATED');
     }
 
@@ -94,21 +98,21 @@
     function render(resp) {
         console.log('render courses view with', resp);
 
-        var u = resp.user,
-            p = resp.payload,
-            csv = p.courseOrderCsv,
-            editable = !p.batch,
-            numCP = p.numCoursesPreferred,
+        var ru = resp.user,
+            rp = resp.payload,
+            csv = rp.courseOrderCsv,
+            editable = !rp.batch,
+            numCP = rp.numCoursesPreferred,
             view = core().view('courses'),
             order = [],
             lookup = {},
             imsg = editable ? imsgEdit : imsgNoEdit;
 
         view.toggleClass('editable', editable);
-
+        saveOrder = editable;
 
         // stuff courses into a hash lookup
-        p.courses.forEach(function (c) {
+        rp.courses.forEach(function (c) {
             lookup[c.id] = c;
             if (!csv) {
                 order.push(c.id);
@@ -154,25 +158,27 @@
 
         $('#subreq').click(function () {
             console.log('Submitting Request...');
-            $.postJSON('courses/submit', genStorePayload(u), function (resp) {
+            $.postJSON('courses/submit', genStorePayload(ru), function (resp) {
                 console.debug('courses/submit returned', resp);
                 enableEditing(false);
-                pollForResult(u, resp.payload.batch);
+                pollForResult(ru, resp.payload.batch);
             });
         });
 
         enableEditing(editable);
         if (!editable) {
-            pollForResult(u, p.batch);
+            pollForResult(ru, rp.batch);
         }
     }
 
     // called when our view is unloaded
     function unload(user) {
         console.log('UNLOADING Courses View...');
-        $.postJSON('courses/store', genStorePayload(user), function (resp) {
-            console.debug('courses/store returned', resp);
-        });
+        if (saveOrder) {
+            $.postJSON('courses/store', genStorePayload(user), function (resp) {
+                console.debug('courses/store returned', resp);
+            });
+        }
         cancelPollTask();
     }
 
