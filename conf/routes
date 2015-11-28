@@ -14,6 +14,7 @@ POST    /dologin                    controllers.Application.doLogin()
 
 # Main Single-Page-Application (SPA)
 GET     /app                        controllers.Application.app()
+GET     /admin                      controllers.Application.admin()
 
 # request data for the different views
 POST    /profile                    controllers.ProfileView.view()

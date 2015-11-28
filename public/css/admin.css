@@ -1,0 +1,24 @@
+
+#recommender-admin {
+    background-color: wheat;
+}
+
+#recommender-admin .title {
+    display: inline-block;
+    color: #66a;
+    font-size: 14pt;
+    font-weight: bold;
+    font-style: italic;
+}
+
+#recommender-admin #app-ctrl {
+    position: absolute;
+    top: 4px;
+    width: 800px;
+    padding: 4px;
+    border-bottom: 2px solid #448;
+}
+
+#recommender-admin #view {
+    border: 0
+}

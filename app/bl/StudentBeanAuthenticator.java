@@ -8,8 +8,17 @@ import models.Student;
  */
 public final class StudentBeanAuthenticator implements Authenticator {
 
+    private static final String ADMIN = "admin";
+
     @Override
     public boolean authenticate(String user, String pass) {
+        // special hook for admin user.
+        // yeah - bad practice hard coding poor password, but
+        //  this is for demonstration purposes only
+        if (ADMIN.equals(user) && ADMIN.equals(pass)) {
+            return true;
+        }
+
         if (user != null) {
             Student student = Student.findByUserName(user);
             if (student != null) {

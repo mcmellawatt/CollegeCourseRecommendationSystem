@@ -7,6 +7,7 @@ import play.Logger;
 import play.cache.Cache;
 import play.mvc.BodyParser;
 import play.mvc.Result;
+import views.html.admin;
 import views.html.app;
 import views.html.login;
 
@@ -22,6 +23,8 @@ public class Application extends AppController {
     // NOTE: we could use an alternate authenticator implementation by
     //       instantiating the appropriate concrete class.
     private static final Authenticator AUTH = new StudentBeanAuthenticator();
+
+    private static final String ADMIN = "admin";
 
     /**
      * Generates the login page.
@@ -52,19 +55,15 @@ public class Application extends AppController {
         if (loginOk) {
             Logger.info("Login for user [{}]", user);
 
-            // add our destination URL
-            response.put(REDIRECT, LoginUrls.APP);
+            String url = ADMIN.equals(user) ? LoginUrls.ADMIN : LoginUrls.APP;
+            response.put(REDIRECT, url);
 
-            // TODO: intercept admin user and redirect to LoginUrls.ADMIN
-
-            // TODO: is this needed? (Perhaps pass the user in body of "app" post?)
             // remember who the user is
             Cache.set(USER, user);
 
         } else {
             Logger.warn("Login FAILED for user [{}]", user);
         }
-
         return ok(response);
     }
 
@@ -77,5 +76,16 @@ public class Application extends AppController {
         String user = Cache.get(USER).toString();
         Logger.debug("app page accessed as user [{}]", user);
         return ok(app.render(user));
+    }
+
+    /**
+     * Generates the administrator's view.
+     *
+     * @return admin page content
+     */
+    public static Result admin() {
+        String user = Cache.get(USER).toString();
+        Logger.debug("ADMIN page accessed as user [{}]", user);
+        return ok(admin.render(user));
     }
 }

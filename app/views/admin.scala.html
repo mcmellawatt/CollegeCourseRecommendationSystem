@@ -1,0 +1,28 @@
+@(username: String)
+
+@main("Recommender Mk.IV") {
+    <script type="text/javascript">
+            function logout() {
+                window.location.href = "login";
+            }
+    </script>
+
+    <div id="recommender-admin" class="frame">
+        <div id="app-ctrl">
+            <div class="title">Recommender Administrative View</div>
+            <div class="logout-block">
+                <div class="btn logout"
+                    onclick="logout()">Logout</div>
+                <div class="username"> Logged in as <b>@username</b></div>
+            </div>
+        </div>
+
+        <div id="view">
+            <ul>
+                <li>
+                    <a href="courses">List all Courses</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+}
