@@ -20,5 +20,9 @@
 }
 
 #recommender-admin #view {
-    border: 0
+    border: 0;
+}
+
+#recommender-admin #view li {
+    padding: 4px;
 }
