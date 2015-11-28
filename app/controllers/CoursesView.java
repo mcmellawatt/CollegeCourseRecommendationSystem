@@ -79,7 +79,7 @@ public class CoursesView extends AppController {
         int batch = SchedulerService.SINGLETON.submitRequest(sr);
         student.waitingForBatch = batch;
         student.save();
-        Logger.debug(" :: now queued up for batch {}", batch);
+        Logger.debug(" --now queued up for batch {}", batch);
 
         ObjectNode payload = jsonBatchPayload(batch);
         return ok(createResponse(student.username, SUBMITTED, payload));

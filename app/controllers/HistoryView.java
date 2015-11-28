@@ -1,6 +1,5 @@
 package controllers;
 
-import models.Course;
 import models.Student;
 import models.StudentSolution;
 import play.Logger;
@@ -35,29 +34,6 @@ public class HistoryView extends AppController {
 
         List<StudentSolution> solutions =
                 filterSolutions(StudentSolution.findByStudent(student));
-
-/*
-        // TODO: TEMP HACK...
-        if (user.equals("simon") && !solutions.isEmpty()) {
-
-            StudentSolution xx = solutions.get(0);
-            StudentSolution copy = new StudentSolution();
-            copy.derived = true;
-            copy.numCoursesPreferred = xx.numCoursesPreferred;
-            copy.batchNumber = 999;
-            copy.student = xx.student;
-
-            List<Course> alternate = new ArrayList<>();
-            alternate.add(Course.findById("6505"));
-            alternate.add(Course.findById("6210"));
-
-            copy.recommendedCourses = alternate;
-
-            // insert the copy at the head of the list
-            solutions.add(0, copy);
-        }
-        // TODO: END HACK
-*/
 
         return ok(createResponse(user, HISTORY,
                                  jsonHistoryViewPayload(student, solutions)));
