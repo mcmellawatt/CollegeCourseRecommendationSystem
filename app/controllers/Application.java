@@ -17,7 +17,7 @@ import static controllers.Tags.*;
  */
 public class Application extends AppController {
 
-    private static final Authenticator AUTH = new Authenticator();
+    private static final StudentBeanAuthenticator AUTH = new StudentBeanAuthenticator();
 
     /**
      * Generates the login page.

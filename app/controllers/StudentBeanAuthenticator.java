@@ -3,9 +3,10 @@ package controllers;
 import models.Student;
 
 /**
- * Encapsulates authentication behavior.
+ * An authentication implementation that uses username/password data from the
+ * student records.
  */
-public final class Authenticator {
+public final class StudentBeanAuthenticator {
 
     /**
      * Authenticates the given user name against the given password.
