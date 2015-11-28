@@ -38,6 +38,9 @@ public class StudentSolution extends Model {
     public Student student;
 
     @Constraints.Required
+    public int numCoursesPreferred;
+
+    @Constraints.Required
     @ManyToMany
     public List<Course> recommendedCourses = new ArrayList<>();
 

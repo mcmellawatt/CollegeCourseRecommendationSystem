@@ -150,6 +150,7 @@ public class SchedulerService {
                 StudentSolution solution = new StudentSolution();
                 solution.batchNumber = batch;
                 solution.student = entry.getKey();
+                solution.numCoursesPreferred = solution.student.numCoursesPreferred;
                 solution.recommendedCourses.addAll(entry.getValue());
                 solutionRecords.add(solution);
             }

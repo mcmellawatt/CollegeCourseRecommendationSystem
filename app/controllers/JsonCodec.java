@@ -156,9 +156,10 @@ public class JsonCodec {
      */
     static ObjectNode json(StudentSolution solution) {
         ObjectNode node = objectNode()
-                .put(BATCH, solution.batchNumber);
-
-        // TODO: finish this implementation
+                .put(BATCH, solution.batchNumber)
+                .put(TIMESTAMP, solution.created())
+                .put(NUM_COURSES_PREFERRED, solution.numCoursesPreferred);
+        node.set(RECOMMENDED, jsonCourseList(solution.recommendedCourses));
         return node;
     }
 

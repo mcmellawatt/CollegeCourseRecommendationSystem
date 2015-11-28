@@ -1,0 +1,25 @@
+
+table.history-info {
+    background-color: #cce;
+}
+
+table.history-info tr.ts td {
+    padding: 6px 2px 0 16px;
+    font-size: 10pt;
+    font-style: italic;
+    color: #447;
+    border-top: 1px solid #777;
+}
+
+table.history-info tr.npref td {
+    padding-left: 32px;
+    font-size: 10pt;
+    font-style: italic;
+    color: green;
+}
+
+table.history-info tr.course td {
+    padding-left: 48px;
+    font-size: 10pt;
+    color: darkslateblue;
+}

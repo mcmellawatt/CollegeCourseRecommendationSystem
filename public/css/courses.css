@@ -21,10 +21,6 @@ p.instruct {
 }
 
 #view #course-list ul li.result {
-    /*margin: 2px;*/
-    /*padding: 4px;*/
-    /*width: 90%;*/
-
     background-color: #eef;
     color: black;
 }
