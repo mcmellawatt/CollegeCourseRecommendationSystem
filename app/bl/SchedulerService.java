@@ -8,9 +8,11 @@ import models.StudentRequest;
 import play.Logger;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -121,7 +123,16 @@ public class SchedulerService {
             solver.adjustConstraints(requests);
 
             // Get a solution and persist it
-            persistSolution(solver.solve(), batch);
+            persistSolution(batch, deriveRequestors(requests), solver.solve());
+        }
+
+        // derive the set of students who have a request in the given batch
+        private Set<Student> deriveRequestors(List<StudentRequest> requests) {
+            Set<Student> requestors = new HashSet<>();
+            for (StudentRequest sr : requests) {
+                requestors.add(sr.student);
+            }
+            return requestors;
         }
 
 
@@ -136,10 +147,10 @@ public class SchedulerService {
         }
 
         // create and persist solution records
-        private void persistSolution(Map<Student, List<Course>> results,
-                                     int batch) {
+        private void persistSolution(int batch, Set<Student> requestors,
+                                     Map<Student, List<Course>> results) {
             if (results.isEmpty()) {
-                Logger.debug("No solution results for batch {}", batch);
+                Logger.warn("No solution results for batch {}", batch);
                 return;
             }
 
@@ -147,10 +158,13 @@ public class SchedulerService {
             final int nSolns = results.size();
             List<StudentSolution> solutionRecords = new ArrayList<>(nSolns);
             for (Map.Entry<Student, List<Course>> entry: results.entrySet()) {
+                Student student = entry.getKey();
                 StudentSolution solution = new StudentSolution();
+
                 solution.batchNumber = batch;
-                solution.student = entry.getKey();
-                solution.numCoursesPreferred = solution.student.numCoursesPreferred;
+                solution.student = student;
+                solution.numCoursesPreferred = student.numCoursesPreferred;
+                solution.derived = !requestors.contains(student);
                 solution.recommendedCourses.addAll(entry.getValue());
                 solutionRecords.add(solution);
             }

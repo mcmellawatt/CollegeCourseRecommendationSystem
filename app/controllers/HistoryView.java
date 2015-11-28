@@ -1,11 +1,15 @@
 package controllers;
 
+import models.Course;
 import models.Student;
 import models.StudentSolution;
 import play.Logger;
 import play.mvc.BodyParser;
 import play.mvc.Result;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static controllers.JsonCodec.*;
@@ -29,9 +33,72 @@ public class HistoryView extends AppController {
         Student student = Student.findByUserName(user);
         Logger.debug("history view page accessed as user '{}'", user);
 
-        List<StudentSolution> solns = StudentSolution.findByStudent(student);
+        List<StudentSolution> solutions =
+                filterSolutions(StudentSolution.findByStudent(student));
+
+/*
+        // TODO: TEMP HACK...
+        if (user.equals("simon") && !solutions.isEmpty()) {
+
+            StudentSolution xx = solutions.get(0);
+            StudentSolution copy = new StudentSolution();
+            copy.derived = true;
+            copy.numCoursesPreferred = xx.numCoursesPreferred;
+            copy.batchNumber = 999;
+            copy.student = xx.student;
+
+            List<Course> alternate = new ArrayList<>();
+            alternate.add(Course.findById("6505"));
+            alternate.add(Course.findById("6210"));
+
+            copy.recommendedCourses = alternate;
+
+            // insert the copy at the head of the list
+            solutions.add(0, copy);
+        }
+        // TODO: END HACK
+*/
+
         return ok(createResponse(user, HISTORY,
-                                 jsonHistoryViewPayload(student, solns)));
+                                 jsonHistoryViewPayload(student, solutions)));
+    }
+
+    private static List<StudentSolution> filterSolutions(List<StudentSolution> ssRaw) {
+        /*
+            (1) Sort the solutions into chronological order
+            (2) Find the first non-derived solution, add it to the list
+            (3) For every subsequent solution:
+                (a) if non-derived, add it to the list
+                (b) if derived and not same solution as previous, add to list
+            (4) Reverse the list (to reverse-chronological order)
+         */
+
+        final int nRaw = ssRaw.size();
+        StudentSolution[] array = ssRaw.toArray(new StudentSolution[nRaw]);
+        Arrays.sort(array);
+
+        List<StudentSolution> filtered = new ArrayList<>();
+        StudentSolution previous = null;
+        int index = 0;
+
+        while (index < nRaw && previous == null) {
+            StudentSolution solution = array[index++];
+            if (!solution.derived) {
+                filtered.add(solution);
+                previous = solution;
+            }
+        }
+
+        while (index < nRaw) {
+            StudentSolution solution = array[index++];
+            if (!solution.derived || (!solution.sameSolution(previous))) {
+                filtered.add(solution);
+                previous = solution;
+            }
+        }
+
+        Collections.reverse(filtered);
+        return filtered;
     }
 
 }

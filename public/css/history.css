@@ -3,6 +3,15 @@ table.history-info {
     background-color: #cce;
 }
 
+table.history-info tr.derived {
+    background-color: #ebb;
+}
+
+table.history-info tr.ts.derived td {
+    color: #a00;
+    font-weight: bold;
+}
+
 table.history-info tr.ts td {
     padding: 6px 2px 0 16px;
     font-size: 10pt;

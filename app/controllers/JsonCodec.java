@@ -158,6 +158,7 @@ public class JsonCodec {
         ObjectNode node = objectNode()
                 .put(BATCH, solution.batchNumber)
                 .put(TIMESTAMP, solution.created())
+                .put(DERIVED, solution.derived)
                 .put(NUM_COURSES_PREFERRED, solution.numCoursesPreferred);
         node.set(RECOMMENDED, jsonCourseList(solution.recommendedCourses));
         return node;

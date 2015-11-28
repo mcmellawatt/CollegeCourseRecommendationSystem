@@ -30,6 +30,7 @@ public class Tags {
 
     protected static final String TIMESTAMP = "timestamp";
     protected static final String BATCH = "batch";
+    protected static final String DERIVED = "derived";
     protected static final String RECOMMENDED = "recommended";
 
     protected static final String ID = "id";

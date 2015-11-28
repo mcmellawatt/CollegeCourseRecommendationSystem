@@ -23,8 +23,6 @@
         if (!nsol) {
             view.append('<p>(No Recommendations)</p>');
         } else {
-            view.append('<p>' + nsol + ' Recommendation' + ss + ':</p>');
-
             var html = [];
             html.push('<table class="history-info">');
             solns.forEach(function (sol) {
@@ -35,32 +33,26 @@
     }
 
     function genSolutionRow(html, sol) {
-        html.push('<tr class="ts">');
-        html.push('<td>');
-        html.push(sol.timestamp);
-        html.push('</td>');
-        html.push('</tr>');
 
-        html.push('<tr class="npref">');
-        html.push('<td>');
-        html.push('# Courses Preferred: <b>');
-        html.push(sol.numCoursesPreferred);
-        html.push('</b>');
-        html.push('</td>');
-        html.push('</tr>');
+        var drvd = sol.derived,
+            ts = sol.timestamp,
+            clsDerived = drvd ? ' derived' : '',
+            time = drvd ? ts + ' (derived)' : ts;
 
-        html.push('<tr class="npref">');
-        html.push('<td>');
-        html.push('Recommended Courses:');
-        html.push('</td>');
-        html.push('</tr>');
 
+        function mkRow(cls, value) {
+            html.push('<tr class="');
+            html.push(cls + clsDerived);
+            html.push('"><td>');
+            html.push(value);
+            html.push('</td></tr>');
+        }
+
+        mkRow('ts', time);
+        mkRow('npref', '# Courses Preferred: <b>' + sol.numCoursesPreferred + '</b>');
+        mkRow('npref', 'Recommended Courses:');
         sol.recommended.forEach(function (rec) {
-            html.push('<tr class="course">');
-            html.push('<td>');
-            html.push('<b>' + rec.tag + '</b> ' + rec.name);
-            html.push('</td>');
-            html.push('</tr>');
+            mkRow('course', '<b>' + rec.tag + '</b> ' + rec.name);
         });
     }
 

@@ -20,7 +20,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = Tables.STUDENTSOLUTIONS)
-public class StudentSolution extends Model {
+public class StudentSolution extends Model
+        implements Comparable<StudentSolution> {
 
     /**
      * Internal ID.
@@ -129,5 +130,34 @@ public class StudentSolution extends Model {
      */
     public String created() {
         return TimeUtils.toDisplayString(tsCreated);
+    }
+
+    /**
+     * Returns true if the specified solution has the same student,
+     * number of courses preferred and recommended courses list, as this
+     * solution.
+     *
+     * @param other solution to compare against
+     * @return true if these solutions are equivalent, false otherwise
+     */
+    public boolean sameSolution(StudentSolution other) {
+        if (other == null) return false;
+        return student.equals(other.student) &&
+                numCoursesPreferred == other.numCoursesPreferred &&
+                recommendedCourses.equals(other.recommendedCourses);
+    }
+
+    /**
+     * Comparable implemented to return solutions in reverse chronological
+     * order.
+     *
+     * @param o other to compare to
+     * @return positive, zero, negative as this is bigger, same, smaller than other
+     */
+    @Override
+    public int compareTo(StudentSolution o) {
+        Long me = tsCreated;
+        Long you = o.tsCreated;
+        return me.compareTo(you);
     }
 }
