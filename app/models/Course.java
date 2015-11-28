@@ -28,44 +28,77 @@ public class Course extends Model {
      */
     public static final Integer CREDIT_VALUE = 3;
 
+    /**
+     * Internal ID.
+     */
     @Id
     @Constraints.Required
     @Formats.NonEmpty
     public String id;
 
+    /**
+     * Course tag (for example, "CS 6310").
+     */
     @Constraints.Required
     public String tag;
 
+    /**
+     * Course name (for example, "Software Architecture and Design").
+     */
     @Constraints.Required
     public String name;
 
+    /**
+     * Course abbreviation (for example, "SAD").
+     */
     @Constraints.Required
     public String abbrev;
 
+    /**
+     * Whether the course is a foundational (core) course.
+     */
     @Constraints.Required
     public boolean core;
 
+    /**
+     * Maximum class size for this course.
+     */
     @Constraints.Required
     public Integer maxClassSize;
 
+    /**
+     * Student transcripts that include this course.
+     */
     @ManyToMany
     public List<Transcript> transcriptsIncludingCourse = new ArrayList<>();
 
-    // This is a list of courses that this course is a prerequisite for
+    /**
+     * The courses for which this course is a prerequisite.
+     */
     @ManyToMany
     @JoinTable(name = Tables.COURSES_PREREQUISITES,
             joinColumns = @JoinColumn(name = Columns.COURSE_ID),
             inverseJoinColumns = @JoinColumn(name = Columns.PREREQUISITE_ID))
     public List<Course> prerequisiteFor = new ArrayList<>();
 
-    // This is a list of prerequisites required to take this course
+    /**
+     * The courses that are prerequisites for this course. That is, you have
+     * to have already taken the courses listed here, before being allowed
+     * to take this course.
+     */
     @ManyToMany(mappedBy = Fields.PREREQUISITE_FOR)
     public List<Course> prerequisites = new ArrayList<>();
 
+    /**
+     * The students interested in taking this course.
+     */
     @Constraints.Required
     @ManyToMany(mappedBy = Fields.COURSES_PREFERRED)
     public List<Student> studentsInterested = new ArrayList<>();
 
+    /**
+     * The student requests that this course is referenced from.
+     */
     @ManyToMany(mappedBy = Fields.COURSES_PREFERRED)
     public List<StudentRequest> studentRequest = new ArrayList<>();
 

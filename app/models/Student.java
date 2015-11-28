@@ -25,39 +25,74 @@ public class Student extends Model {
 
     private static final String COMMA = ",";
 
+    /**
+     * Internal ID.
+     */
     @Id
     @Constraints.Required
     @Formats.NonEmpty
     public String id;
 
+    /**
+     * Time at which this student record was last modified.
+     */
     @Constraints.Required
     public Long tsModified = TimeUtils.now();
 
+    /**
+     * Student login username.
+     */
     @Constraints.Required
     public String username;
 
+    /**
+     * Student login password.
+     */
     @Constraints.Required
     public String password;
 
+    /**
+     * Student's full name.
+     */
     @Constraints.Required
     public String fullname;
 
+    /**
+     * List of preferred courses that this student wishes to take
+     */
     @Constraints.Required
     @ManyToMany
     public List<Course> coursesPreferred = new ArrayList<>();
 
+    /**
+     * List of requests made by this student (for a recommendation).
+     */
     @OneToMany(mappedBy = Fields.STUDENT)
     public List<StudentRequest> studentRequest;
 
+    /**
+     * Current number of courses preferred by this student.
+     */
     @Constraints.Required
     public int numCoursesPreferred;
 
+    /**
+     * Student's transcript (from which we can get courses taken).
+     */
     @Constraints.Required
     @OneToOne
     public Transcript transcript;
 
+    /**
+     * Internal record of the priority order of courses, as selected by
+     * the student.
+     */
     public String courseOrderCsv;
 
+    /**
+     * Internal flag indicating whether the student has submitted a
+     * recommendation request and is awaiting the solution.
+     */
     public int waitingForBatch = 0;
 
     /**
@@ -148,13 +183,14 @@ public class Student extends Model {
     }
 
     /**
-     * Update the modified timestamp to now.
+     * Updates the modified timestamp for this student record to now.
      */
     public void touch() {
         tsModified = TimeUtils.now();
     }
+
     /**
-     * Return the record modified timestamp as a display string.
+     * Return the record-modified timestamp as a display string.
      *
      * @return modified timestamp
      */

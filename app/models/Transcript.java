@@ -23,15 +23,24 @@ import java.util.List;
 @Table(name = Tables.TRANSCRIPTS)
 public class Transcript extends Model {
 
+    /**
+     * Internal ID.
+     */
     @Id
     @Constraints.Required
     @Formats.NonEmpty
     public String id;
 
+    /**
+     * The student who owns this transcript.
+     */
     @Constraints.Required
     @OneToOne(mappedBy = Fields.TRANSCRIPT)
     public Student student;
 
+    /**
+     * The list of courses that the student has already taken.
+     */
     @ManyToMany(mappedBy = Fields.TRANSCRIPTS_INCLUDING_COURSE)
     public List<Course> coursesTaken = new ArrayList<>();
 

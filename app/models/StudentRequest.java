@@ -22,24 +22,42 @@ import java.util.List;
 @Table(name = Tables.STUDENTREQUESTS)
 public class StudentRequest extends Model {
 
+    /**
+     * Internal ID.
+     */
     @Id
     @Constraints.Required
     @Formats.NonEmpty
     public Integer id;
 
+    /**
+     * Timestamp when record was created.
+     */
     @Constraints.Required
     public Long tsCreated = TimeUtils.now();
 
-    // note: not required, because we patch this in and re-save later
-    public Integer batchNumber;
+    /**
+     * The solver batch to which this record was submitted.
+     */
+    @Constraints.Required
+    public int batchNumber;
 
+    /**
+     * The student who owns this request.
+     */
     @Constraints.Required
     @ManyToOne
     public Student student;
 
+    /**
+     * The number of courses the student prefers (at the time of the request).
+     */
     @Constraints.Required
     public Integer numCoursesPreferred;
 
+    /**
+     * The courses preferred by the student (in priority order).
+     */
     @Constraints.Required
     @ManyToMany
     public List<Course> coursesPreferred = new ArrayList<>();

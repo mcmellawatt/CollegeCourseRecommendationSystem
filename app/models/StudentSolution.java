@@ -22,24 +22,51 @@ import java.util.List;
 @Table(name = Tables.STUDENTSOLUTIONS)
 public class StudentSolution extends Model {
 
+    /**
+     * Internal ID.
+     */
     @Id
     @Constraints.Required
     @Formats.NonEmpty
     public String id;
 
+    /**
+     * Timestamp when record was created.
+     */
     @Constraints.Required
     public Long tsCreated = TimeUtils.now();
 
+    /**
+     * Solver batch number.
+     */
     @Constraints.Required
     public int batchNumber;
 
+    /**
+     * The student who owns this solution.
+     */
     @Constraints.Required
     @ManyToOne
     public Student student;
 
+    /**
+     * The number of courses the student prefers (at the time of the request).
+     */
     @Constraints.Required
     public int numCoursesPreferred;
 
+    /**
+     * True if this record was not explicitly requested by the student. That
+     * is, if the record was generated as the result of _other_ student(s)
+     * submitting requests.
+     */
+    @Constraints.Required
+    public boolean derived;
+
+    /**
+     * The courses that the solver recommends for this student, based on
+     * entered preferences.
+     */
     @Constraints.Required
     @ManyToMany
     public List<Course> recommendedCourses = new ArrayList<>();
