@@ -7,6 +7,10 @@ table.history-info tr.derived {
     background-color: #ebb;
 }
 
+table.history-info tr.current {
+    background-color: #eee;
+}
+
 table.history-info tr.ts.derived td {
     color: #a00;
     font-weight: bold;

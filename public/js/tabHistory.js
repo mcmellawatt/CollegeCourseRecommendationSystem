@@ -25,24 +25,23 @@
         } else {
             var html = [];
             html.push('<table class="history-info">');
-            solns.forEach(function (sol) {
-                genSolutionRow(html, sol);
+            solns.forEach(function (sol, index) {
+                genSolutionRow(html, sol, index===0);
             });
             view.append(html.join(''));
         }
     }
 
-    function genSolutionRow(html, sol) {
-
-        var drvd = sol.derived,
+    function genSolutionRow(html, sol, first) {
+        var d = sol.derived,
             ts = sol.timestamp,
-            clsDerived = drvd ? ' derived' : '',
-            time = drvd ? ts + ' (derived)' : ts;
-
+            clsDerived = d ? ' derived' : '',
+            time = d ? ts + ' (derived)' : ts,
+            clsCurrent = first ? ' current' : '';
 
         function mkRow(cls, value) {
             html.push('<tr class="');
-            html.push(cls + clsDerived);
+            html.push(cls + clsDerived + clsCurrent);
             html.push('"><td>');
             html.push(value);
             html.push('</td></tr>');

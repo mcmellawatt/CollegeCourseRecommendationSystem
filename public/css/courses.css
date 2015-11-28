@@ -40,10 +40,16 @@ p.instruct {
     color: #777;
 }
 
-#view #ncp {
+#view div#ncp input {
     font-size: 16pt;
     width: 30px;
     margin-left: 40px;
+}
+
+#view div#ncp h3 {
+    font-size: 16pt;
+    margin: 0 0 0 40px;
+    padding: 3px 2px;
 }
 
 #subreq {

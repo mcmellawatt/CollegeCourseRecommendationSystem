@@ -74,6 +74,7 @@ public class HistoryView extends AppController {
         }
 
         Collections.reverse(filtered);
+        Logger.debug("  solutions: {} raw, {} filtered", nRaw, filtered.size());
         return filtered;
     }
 

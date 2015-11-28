@@ -5,11 +5,18 @@
     var imsgEdit = 'Drag courses into priority order (highest at top)',
         imsgNoEdit = 'Request submitted... awaiting results...',
         pollTask,
+        cachedNcp,
         saveOrder = true;
 
     // shorthand reference to core module
     function core() {
         return cs6310app.core;
+    }
+
+    // make number-of-preferred-courses widget
+    function mkNcp(b) {
+        return b ? '<input type="text" value="' + cachedNcp + '">'
+                 : '<h3>' + cachedNcp + '</h3>';
     }
 
     function enableEditing(b) {
@@ -27,7 +34,10 @@
 
         $('#view').toggleClass('editable', b);
         imsg.html(msgtxt);
-        ncp.prop('disabled', !b);
+
+        ncp.empty();
+        ncp.append(mkNcp(b));
+
         btn.prop('disabled', !b);
         btn.val(btntxt);
     }
@@ -104,11 +114,12 @@
             crs = rp.courses,
             csv = s.courseOrderCsv,
             editable = !s.batch,
-            numCP = s.numCoursesPreferred,
             view = core().view('courses'),
             order = [],
             lookup = {},
             imsg = editable ? imsgEdit : imsgNoEdit;
+
+        cachedNcp = s.numCoursesPreferred;
 
         view.toggleClass('editable', editable);
         saveOrder = editable;
@@ -128,12 +139,17 @@
 
         // construct the view
         view.append('<h2> Number of Courses Preferred: </h2>');
-        view.append('<input id="ncp" type="text" value="' + numCP + '">');
+
+        var html = [];
+        html.push('<div id="ncp">');
+        html.push(mkNcp(editable));
+        html.push('</div>');
+        view.append(html.join(''));
 
         view.append('<h2 id="crshdr"> Available Courses: </h2>');
         view.append('<p id="imsg" class="instruct">' + imsg + '</p>');
 
-        var html = [];
+        html = [];
         html.push('<div id="course-list">');
         html.push('<ul>');
 
@@ -145,7 +161,7 @@
             html.push(c.id);
             html.push('</span><b>');
             html.push(c.tag);
-            html.push('</b> - ');
+            html.push('</b> ');
             html.push(c.name);
             html.push('</li>');
         });
@@ -158,11 +174,12 @@
 
         $('#subreq').click(function () {
             console.log('Submitting Request...');
+            cachedNcp = $('#ncp').find('input').val();
             $.postJSON('courses/submit', genStorePayload(ru), function (resp) {
                 console.debug('courses/submit returned', resp);
-                enableEditing(false);
                 pollForResult(ru, resp.payload.batch);
             });
+            enableEditing(false);
         });
 
         enableEditing(editable);
@@ -191,7 +208,6 @@
 
     function genStorePayload(user) {
         var items = $('#course-list').find('li'),
-            ncp = $('#ncp').val(),
             ids = [];
 
         items.each(function () {
@@ -203,7 +219,7 @@
         return {
             user: user,
             courseOrderCsv: ids.join(','),
-            numCoursesPreferred: ncp
+            numCoursesPreferred: cachedNcp
         };
     }
 

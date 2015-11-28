@@ -35,8 +35,7 @@ public class CoursesView extends AppController {
     private static Student updateStudent(boolean isRequest) {
         String user = fromRequest(USER);
         String csv = fromRequest(COURSE_ORDER_CSV);
-        String ncp = fromRequest(NUM_COURSES_PREFERRED);
-        final int numCP = Integer.valueOf(ncp);
+        int numCP = fromRequestInt(NUM_COURSES_PREFERRED);
 
         Student student = Student.findByUserName(user);
         student.courseOrderCsv = csv;
@@ -52,7 +51,7 @@ public class CoursesView extends AppController {
         String msg = isRequest ? "SUBMITTING REQUEST" : "Saving Order";
         Logger.debug("{} for user '{}'", msg, user);
         Logger.debug(" as {}", csv);
-        Logger.debug(" with num courses preferred as {}", ncp);
+        Logger.debug(" with num courses preferred as {}", numCP);
         return student;
     }
 
