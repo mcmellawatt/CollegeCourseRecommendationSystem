@@ -1,5 +1,7 @@
 package controllers;
 
+import bl.Authenticator;
+import bl.StudentBeanAuthenticator;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.Logger;
 import play.cache.Cache;
@@ -17,7 +19,9 @@ import static controllers.Tags.*;
  */
 public class Application extends AppController {
 
-    private static final StudentBeanAuthenticator AUTH = new StudentBeanAuthenticator();
+    // NOTE: we could use an alternate authenticator implementation by
+    //       instantiating the appropriate concrete class.
+    private static final Authenticator AUTH = new StudentBeanAuthenticator();
 
     /**
      * Generates the login page.

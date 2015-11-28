@@ -1,20 +1,14 @@
-package controllers;
+package bl;
 
 import models.Student;
 
 /**
- * An authentication implementation that uses username/password data from the
- * student records.
+ * An authentication implementation that uses username/password data
+ * embedded in the student records.
  */
-public final class StudentBeanAuthenticator {
+public final class StudentBeanAuthenticator implements Authenticator {
 
-    /**
-     * Authenticates the given user name against the given password.
-     *
-     * @param user username
-     * @param pass password
-     * @return true if the combination is authenticated; false otherwise
-     */
+    @Override
     public boolean authenticate(String user, String pass) {
         if (user != null) {
             Student student = Student.findByUserName(user);
