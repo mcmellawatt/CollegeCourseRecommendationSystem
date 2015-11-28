@@ -17,21 +17,13 @@
             view = core().view('profile');
 
         view.append('<h2> Profile for ' + s.fullName + ' </h2>');
+        view.append('<h3>Courses Taken</h3>');
 
-        var html = [];
-        html.push('<h3>Courses Taken</h3><table>');
+        var html = ['<table>'];
         t.coursesTaken.forEach(function (c) {
-            html.push('<tr><td>');
-            if (c.core) {
-                html.push('*');
-            }
-            html.push('</td><td><b>');
-            html.push(c.tag);
-            html.push('</b></td><td>');
-            html.push(c.name);
-            html.push('<span class="abbrev"> (');
-            html.push(c.abbrev);
-            html.push(') </span></td></tr>');
+            html.push('<tr class="course"><td>');
+            html.push(core().htmlCourse(c));
+            html.push('</td></tr>');
         });
         html.push('</table>');
         view.append(html.join(''));
@@ -41,6 +33,9 @@
         html.push(t.creditsEarned);
         html.push('</b></p>');
         view.append(html.join(''));
+
+        view.append('<p class="footnote">Foundational courses marked with' +
+                    '<span class="bigger">*</span></p>');
     }
 
     // called when our view is unloaded

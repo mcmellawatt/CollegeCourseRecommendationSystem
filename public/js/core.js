@@ -57,11 +57,26 @@
         return current.user;
     }
 
+    // format the HTML for a course
+    function htmlCourse(c) {
+       var html = [];
+        if (c.core) {
+            html.push('<span class="star">*</span>');
+        }
+        html.push('<span class="tag">');
+        html.push(c.tag);
+        html.push('</span><span class="name">');
+        html.push(c.name);
+        html.push('</span>');
+        return html.join('');
+    }
+
     // register our core functionality
     cs6310app.core = {
         loadView: loadView,
         unloadView: unloadView,
         view: view,
-        currentUser: currentUser
+        currentUser: currentUser,
+        htmlCourse: htmlCourse
     };
 }());

@@ -85,7 +85,7 @@
 
         ul.empty();
         rec.forEach(function (r) {
-            ul.append('<li class="result">' + r.tag + ' ' + r.name + '</li>');
+            ul.append('<li class="result course">' + core().htmlCourse(r) + '</li>');
         });
 
         btn.prop('disabled', false);
@@ -154,15 +154,14 @@
         html.push('<ul>');
 
         order.forEach(function (id) {
-            var c = lookup[id];
+            var c = lookup[id],
+                hc = core().htmlCourse(c);
 
-            html.push('<li>');
+            html.push('<li class="course">');
             html.push('<span class="course-id">');
             html.push(c.id);
-            html.push('</span><b>');
-            html.push(c.tag);
-            html.push('</b> ');
-            html.push(c.name);
+            html.push('</span>');
+            html.push(hc);
             html.push('</li>');
         });
 

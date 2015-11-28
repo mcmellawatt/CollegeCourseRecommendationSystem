@@ -1,0 +1,20 @@
+
+#view.profile table {
+    padding-left: 20px;
+}
+
+#view.profile h3 {
+    padding: 0 4px;
+}
+
+#view.profile .footnote {
+    margin: 0;
+    padding: 20px 8px;
+    font-size: 10pt;
+    font-style: italic;
+    color: #777;
+}
+
+#view.profile .bigger {
+    font-size: 150%;
+}

@@ -157,3 +157,17 @@ table.student-info tr.batch span.ts {
     font-style: italic;
     color: darkgray;
 }
+
+.course span.star {
+    padding: 0 2px;
+}
+
+.course span.tag {
+    padding: 0 6px 0 2px;
+    font-weight: bold;
+}
+
+.course span.name {
+    color: black;
+}
+

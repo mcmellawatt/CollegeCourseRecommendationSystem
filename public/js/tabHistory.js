@@ -51,7 +51,7 @@
         mkRow('npref', '# Courses Preferred: <b>' + sol.numCoursesPreferred + '</b>');
         mkRow('npref', 'Recommended Courses:');
         sol.recommended.forEach(function (rec) {
-            mkRow('course', '<b>' + rec.tag + '</b> ' + rec.name);
+            mkRow('course', core().htmlCourse(rec));
         });
     }
 
