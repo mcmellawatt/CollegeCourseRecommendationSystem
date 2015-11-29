@@ -535,7 +535,7 @@ students:
 
     - &student0010 !!models.Student
         id:         0010
-        username:   "james"
+        username:   "james2"
         password:   "monroe"
         fullname:   "James Monroe"
         numCoursesPreferred: 2
@@ -547,7 +547,7 @@ students:
 
     - &student0011 !!models.Student
         id:         0011
-        username:   "john"
+        username:   "john2"
         password:   "quincyadams"
         fullname:   "John Quincy Adams"
         numCoursesPreferred: 2
@@ -596,7 +596,7 @@ students:
 
     - &student0015 !!models.Student
         id:         0015
-        username:   "john"
+        username:   "john3"
         password:   "tyler"
         fullname:   "John Tyler"
         numCoursesPreferred: 2
@@ -608,7 +608,7 @@ students:
 
     - &student0016 !!models.Student
         id:         0016
-        username:   "james"
+        username:   "james3"
         password:   "knoxpolk"
         fullname:   "James Knox Polk"
         numCoursesPreferred: 2
@@ -657,7 +657,7 @@ students:
 
     - &student0020 !!models.Student
         id:         0020
-        username:   "james"
+        username:   "james4"
         password:   "buchanan"
         fullname:   "James Buchanan"
         numCoursesPreferred: 2
@@ -681,7 +681,7 @@ students:
 
     - &student0022 !!models.Student
         id:         0022
-        username:   "andrew"
+        username:   "andrew2"
         password:   "johnson"
         fullname:   "Andrew Johnson"
         numCoursesPreferred: 2
@@ -718,7 +718,7 @@ students:
 
     - &student0025 !!models.Student
         id:         0025
-        username:   "james"
+        username:   "james5"
         password:   "abramgarfield"
         fullname:   "James Abram Garfield"
         numCoursesPreferred: 2
@@ -766,7 +766,7 @@ students:
 
     - &student0029 !!models.Student
         id:         0029
-        username:   "william"
+        username:   "william2"
         password:   "mckinley"
         fullname:   "William McKinley"
         numCoursesPreferred: 2
