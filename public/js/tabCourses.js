@@ -102,8 +102,6 @@
         console.debug('UPDATED');
     }
 
-
-
     // render the courses view with the given response data
     function render(resp) {
         console.log('render courses view with', resp);

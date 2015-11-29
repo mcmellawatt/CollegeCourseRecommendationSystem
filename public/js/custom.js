@@ -1,6 +1,6 @@
+/* Our customization of jQuery, to add a postJSON() function */
 
 (function () {
-    /* Our customization of jQuery, to add a postJSON() function */
     jQuery.extend({
         postJSON: function(url, data, callback) {
             return jQuery.ajax({

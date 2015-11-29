@@ -2,12 +2,17 @@ package controllers;
 
 import bl.SchedulerService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import models.Course;
 import models.Student;
 import models.StudentRequest;
 import models.StudentSolution;
 import play.Logger;
 import play.mvc.BodyParser;
 import play.mvc.Result;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static controllers.JsonCodec.*;
 import static controllers.Tags.*;
@@ -16,6 +21,17 @@ import static controllers.Tags.*;
  * Controller for the courses view.
  */
 public class CoursesView extends AppController {
+
+    private static final String COMMA = ",";
+
+    private static List<Course> courseListFromCsv(String csv) {
+        List<String> ids = Arrays.asList(csv.split(COMMA));
+        List<Course> courses = new ArrayList<>();
+        for (String id: ids) {
+            courses.add(Course.findById(id));
+        }
+        return courses;
+    }
 
     /**
      * Generates the data required for populating the courses view.
@@ -64,12 +80,23 @@ public class CoursesView extends AppController {
         return sr;
     }
 
+    /**
+     * Updates the student record with the prioritized list of courses.
+     *
+     * @return stored acknowledgement
+     */
     @BodyParser.Of(BodyParser.Json.class)
     public static Result storeCourseList() {
         Student student = updateStudent(false);
         return ok(createResponse(student.username, ACK));
     }
 
+    /**
+     * Updates the student record with prioritized list of courses, and
+     * submits a recommendation request to the scheduler, for processing.
+     *
+     * @return submitted acknowledgement
+     */
     @BodyParser.Of(BodyParser.Json.class)
     public static Result submitRequest() {
         Student student = updateStudent(true);
@@ -84,6 +111,13 @@ public class CoursesView extends AppController {
         return ok(createResponse(student.username, SUBMITTED, payload));
     }
 
+    /**
+     * Polls to see if the solution for which the student is waiting has been
+     * persisted to the database yet. If it has, the results are returned to
+     * the UI to be displayed.
+     *
+     * @return results nack, or ack with solution details
+     */
     @BodyParser.Of(BodyParser.Json.class)
     public static Result pollRequest() {
         String user = fromRequest(USER);
@@ -97,8 +131,6 @@ public class CoursesView extends AppController {
             student.save();
             return ok(createResponse(user, RESULTS, jsonSolutionResult(soln)));
         }
-
         return ok(createResponse(user, RESULTS));
     }
-
 }

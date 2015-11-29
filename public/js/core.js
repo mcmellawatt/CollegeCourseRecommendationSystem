@@ -1,4 +1,4 @@
-/* javascript for application */
+/* javascript for application core functionality */
 
 (function () {
 

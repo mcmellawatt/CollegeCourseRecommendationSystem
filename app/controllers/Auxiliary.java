@@ -27,9 +27,7 @@ public class Auxiliary extends AppController {
      */
     public static Result courses() {
         Logger.debug("courses page accessed");
-        return ok(
-                courses.render(Course.findAll())
-        );
+        return ok(courses.render(Course.findAll()));
     }
 
     /**
@@ -40,9 +38,7 @@ public class Auxiliary extends AppController {
      */
     public static Result getStudent(String id) {
         Logger.debug("student page accessed, for student-id '{}'", id);
-        return ok(
-                student.render(Student.findById(id))
-        );
+        return ok(student.render(Student.findById(id)));
     }
 
     /**
@@ -55,10 +51,7 @@ public class Auxiliary extends AppController {
         Logger.debug("student result page accessed, for username '{}'", username);
         Student s = Student.findByUserName(username);
         List<StudentSolution> solns = StudentSolution.findByStudent(s);
-
-        return ok(
-                studentResult.render(s, solns)
-        );
+        return ok(studentResult.render(s, solns));
     }
 
     /**
@@ -69,9 +62,7 @@ public class Auxiliary extends AppController {
      */
     public static Result getCourse(String id) {
         Logger.debug("course page accessed, for course-id '{}'", id);
-        return ok(
-                course.render(Course.findById(id))
-        );
+        return ok(course.render(Course.findById(id)));
     }
 
     /**
@@ -82,8 +73,6 @@ public class Auxiliary extends AppController {
      */
     public static Result getTranscript(String id) {
         Logger.debug("student page accessed, for transcript-id '{}'", id);
-        return ok(
-                transcript.render(Transcript.findById(id))
-        );
+        return ok(transcript.render(Transcript.findById(id)));
     }
 }

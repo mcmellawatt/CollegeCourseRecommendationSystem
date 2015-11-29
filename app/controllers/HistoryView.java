@@ -67,7 +67,7 @@ public class HistoryView extends AppController {
 
         while (index < nRaw) {
             StudentSolution solution = array[index++];
-            if (!solution.derived || (!solution.sameSolution(previous))) {
+            if (!solution.derived || !solution.sameSolution(previous)) {
                 filtered.add(solution);
                 previous = solution;
             }
