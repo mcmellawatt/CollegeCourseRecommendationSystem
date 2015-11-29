@@ -5,6 +5,14 @@
             function logout() {
                 window.location.href = "login";
             }
+            function getCourse(){
+                window.location = "courses/" +
+                    document.getElementById('courseidtxtbox').value;
+                }
+            function getStudent(){
+                window.location = "students/" +
+                    document.getElementById('studentidtxtbox').value;
+                }
     </script>
 
     <div id="recommender-admin" class="frame">
@@ -23,7 +31,14 @@
                     <a href="courses">List all Courses</a>
                 </li>
                 <li>
-                    <a href="xxx">Find Student Record</a>
+                    Get Course Summary:
+                    <input type="text" value="" id="courseidtxtbox" />
+                    <input type="button" value="Get" onmousedown="getCourse();" />
+                </li>
+                <li>
+                    Get Student Summary:
+                    <input type="text" value="" id="studentidtxtbox" />
+                    <input type="button" value="Get" onmousedown="getStudent();" />
                 </li>
                 <li>
                     <a href="xxx">Operate in Shadow Mode</a>

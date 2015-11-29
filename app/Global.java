@@ -19,7 +19,6 @@ public final class Global extends GlobalSettings {
     private static final String STUDENTS = "students";
     private static final String TRANSCRIPTS = "transcripts";
 
-
     @Override
     public void onStart(Application app) {
         Logger.info("Starting application");
