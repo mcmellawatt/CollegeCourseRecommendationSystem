@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class SchedulerService {
 
     // Tunable (compile time) period for solver to run, in seconds
-    private static final long PERIOD = 15;
+    private static final long PERIOD = 10;
 
     private final Queue<StudentRequest> requestQueue =
             new ConcurrentLinkedQueue<>();
