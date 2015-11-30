@@ -316,7 +316,8 @@ public class GurobiSolver implements Solver {
         static double get(Student s, Course c) {
             double seniority = s.transcript.getCreditsEarned();
             double priority = getPriorityLevel(s, c);
-            return S_SCALE * normalizeSeniority(seniority) + ((P_SCALE * priority) * MODIFIER * seniority);
+            return S_SCALE * normalizeSeniority(seniority)
+                    + ((P_SCALE * priority) * MODIFIER * seniority);
         }
 
         private static double normalizeSeniority(double credits) {
