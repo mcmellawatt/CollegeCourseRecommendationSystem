@@ -311,11 +311,12 @@ public class GurobiSolver implements Solver {
         private static final double NUM_CREDITS_REQ = 30;
         private static final double P_SCALE = .01;
         private static final double S_SCALE = .99;
+        private static final double MODIFIER = .001;
 
         static double get(Student s, Course c) {
             double seniority = s.transcript.getCreditsEarned();
             double priority = getPriorityLevel(s, c);
-            return S_SCALE * normalizeSeniority(seniority) + P_SCALE * priority;
+            return S_SCALE * normalizeSeniority(seniority) + ((P_SCALE * priority) * MODIFIER * seniority);
         }
 
         private static double normalizeSeniority(double credits) {
