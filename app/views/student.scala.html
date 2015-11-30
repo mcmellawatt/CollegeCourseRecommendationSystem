@@ -21,7 +21,7 @@
     <tr>
         <td> Courses Preferred (@student.numCoursesPreferred): </td>
     </tr>
-    @for(course <- student.coursesPreferred) {
+    @for(course <- student.getCoursesOrderedByCsv()) {
         <tr>
             <td>@course.name</td>
         </tr>

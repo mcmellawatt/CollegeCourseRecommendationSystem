@@ -128,13 +128,16 @@ public class Student extends Model {
      * @return ordered list of courses
      */
     public synchronized List<Course> getCoursesOrderedByCsv() {
-        if (courseOrderCsv == null) {
-            return coursesPreferred;
-        }
         List<Course> result = new ArrayList<>();
-        for (String cid: courseOrderCsv.split(COMMA)) {
-            result.add(Course.findById(cid));
+
+        if (courseOrderCsv != null ) {
+            String[] orderedCourses = courseOrderCsv.split(COMMA);
+
+            for (String cid : orderedCourses) {
+                result.add(Course.findById(cid));
+            }
         }
+
         return result;
     }
 

@@ -203,76 +203,70 @@ transcripts:
     - &transcript0002 !!models.Transcript
         id:         0002
         coursesTaken:
-            - *course6250
-            - *course6220
-            - *course6440
+            - *course8803002
+            - *course6505
             - *course6475
 
     - &transcript0003 !!models.Transcript
         id:         0003
         coursesTaken:
+            - *course8803002
             - *course6505
-            - *course6310
-            - *course8803001
-            - *course6340
+            - *course6475
 
     - &transcript0004 !!models.Transcript
         id:         0004
         coursesTaken:
-            - *course8803901
-            - *course6400
-            - *course8803001
+            - *course8803002
+            - *course6505
             - *course6475
 
     - &transcript0005 !!models.Transcript
         id:         0005
         coursesTaken:
-            - *course6460
-            - *course6300
-            - *course6310
+            - *course8803002
+            - *course6505
+            - *course6475
 
     - &transcript0006 !!models.Transcript
         id:         0006
         coursesTaken:
+            - *course8803002
             - *course6505
-            - *course6310
-            - *course8803001
-            - *course6340
+            - *course6475
 
     - &transcript0007 !!models.Transcript
         id:         0007
         coursesTaken:
-            - *course8803901
-            - *course6400
-            - *course8803001
+            - *course8803002
+            - *course6505
             - *course6475
 
     - &transcript0008 !!models.Transcript
         id:         0008
         coursesTaken:
-            - *course6460
-            - *course6300
-            - *course6310
+            - *course8803002
+            - *course6505
+            - *course6475
 
     - &transcript0009 !!models.Transcript
         id:         0009
         coursesTaken:
+            - *course8803002
             - *course6505
-            - *course6310
-            - *course8803001
-            - *course6340
+            - *course6475
 
     - &transcript0010 !!models.Transcript
         id:         0010
         coursesTaken:
-            - *course8803901
-            - *course6400
-            - *course8803001
+            - *course8803002
+            - *course6505
             - *course6475
 
     - &transcript0011 !!models.Transcript
         id:         0011
         coursesTaken:
+            - *course6505
             - *course6460
             - *course6300
             - *course6310
@@ -281,21 +275,22 @@ transcripts:
         id:         0012
         coursesTaken:
             - *course6505
+            - *course6460
+            - *course6300
             - *course6310
-            - *course8803001
-            - *course6340
 
     - &transcript0013 !!models.Transcript
         id:         0013
         coursesTaken:
-            - *course8803901
-            - *course6400
-            - *course8803001
-            - *course6475
+            - *course6505
+            - *course6460
+            - *course6300
+            - *course6310
 
     - &transcript0014 !!models.Transcript
         id:         0014
         coursesTaken:
+            - *course6505
             - *course6460
             - *course6300
             - *course6310
@@ -304,21 +299,22 @@ transcripts:
         id:         0015
         coursesTaken:
             - *course6505
+            - *course6460
+            - *course6300
             - *course6310
-            - *course8803001
-            - *course6340
 
     - &transcript0016 !!models.Transcript
         id:         0016
         coursesTaken:
-            - *course8803901
-            - *course6400
-            - *course8803001
-            - *course6475
+            - *course6505
+            - *course6460
+            - *course6300
+            - *course6310
 
     - &transcript0017 !!models.Transcript
         id:         0017
         coursesTaken:
+            - *course6505
             - *course6460
             - *course6300
             - *course6310
@@ -327,21 +323,22 @@ transcripts:
         id:         0018
         coursesTaken:
             - *course6505
+            - *course6460
+            - *course6300
             - *course6310
-            - *course8803001
-            - *course6340
 
     - &transcript0019 !!models.Transcript
         id:         0019
         coursesTaken:
-            - *course8803901
-            - *course6400
-            - *course8803001
-            - *course6475
+            - *course6505
+            - *course6460
+            - *course6300
+            - *course6310
 
     - &transcript0020 !!models.Transcript
         id:         0020
         coursesTaken:
+            - *course6505
             - *course6460
             - *course6300
             - *course6310
@@ -350,13 +347,15 @@ transcripts:
         id:         0021
         coursesTaken:
             - *course6505
-            - *course6310
+            - *course8803901
+            - *course6400
             - *course8803001
-            - *course6340
+            - *course6475
 
     - &transcript0022 !!models.Transcript
         id:         0022
         coursesTaken:
+            - *course6505
             - *course8803901
             - *course6400
             - *course8803001
@@ -365,21 +364,25 @@ transcripts:
     - &transcript0023 !!models.Transcript
         id:         0023
         coursesTaken:
-            - *course6460
-            - *course6300
-            - *course6310
+            - *course6505
+            - *course8803901
+            - *course6400
+            - *course8803001
+            - *course6475
 
     - &transcript0024 !!models.Transcript
         id:         0024
         coursesTaken:
-            - *course6505
-            - *course6310
-            - *course8803001
-            - *course6340
+             - *course6505
+             - *course8803901
+             - *course6400
+             - *course8803001
+             - *course6475
 
     - &transcript0025 !!models.Transcript
         id:         0025
         coursesTaken:
+            - *course6505
             - *course8803901
             - *course6400
             - *course8803001
@@ -388,21 +391,25 @@ transcripts:
     - &transcript0026 !!models.Transcript
         id:         0026
         coursesTaken:
-            - *course6460
-            - *course6300
-            - *course6310
+            - *course6505
+            - *course8803901
+            - *course6400
+            - *course8803001
+            - *course6475
 
     - &transcript0027 !!models.Transcript
         id:         0027
         coursesTaken:
             - *course6505
-            - *course6310
+            - *course8803901
+            - *course6400
             - *course8803001
-            - *course6340
+            - *course6475
 
     - &transcript0028 !!models.Transcript
         id:         0028
         coursesTaken:
+            - *course6505
             - *course8803901
             - *course6400
             - *course8803001
@@ -411,17 +418,29 @@ transcripts:
     - &transcript0029 !!models.Transcript
         id:         0029
         coursesTaken:
-            - *course6460
-            - *course6300
-            - *course6310
+            - *course6505
+            - *course8803901
+            - *course6400
+            - *course8803001
+            - *course6475
 
     - &transcript0030 !!models.Transcript
         id:         0030
         coursesTaken:
             - *course6505
-            - *course6310
+            - *course8803901
+            - *course6400
             - *course8803001
-            - *course6340
+            - *course6475
+
+    - &transcript0031 !!models.Transcript
+        id:         0031
+        coursesTaken:
+            - *course6505
+            - *course8803901
+            - *course6400
+            - *course8803001
+            - *course6475
 
 # Students
 
@@ -433,7 +452,7 @@ students:
         password:   "password1234"
         fullname:   "Joe Schmoe"
         numCoursesPreferred: 0
-        coursesPreferred:
+        courseOrderCsv: "7641,8803001,6035,6210,7637,6220,6476,6300,6250,6310,6460,6440,8803003,6340,6400,8803901"
         transcript: *transcript0001
 
     - &student0002 !!models.Student
@@ -444,8 +463,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
             - *course8803001
+        courseOrderCsv: "7641,8803001,6035,6210,7637,6220,6476,6300,6250,6310,6460,6440,8803003,6340,6400,8803901"
         transcript: *transcript0002
 
     - &student0003 !!models.Student
@@ -456,8 +475,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
             - *course8803001
+        courseOrderCsv: "7641,8803001,6035,6210,7637,6220,6476,6300,6250,6310,6460,6440,8803003,6340,6400,8803901"
         transcript: *transcript0003
 
     - &student0004 !!models.Student
@@ -468,8 +487,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
             - *course8803001
+        courseOrderCsv: "7641,8803001,6035,6210,7637,6220,6476,6300,6250,6310,6460,6440,8803003,6340,6400,8803901"
         transcript: *transcript0004
 
     - &student0005 !!models.Student
@@ -480,8 +499,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
             - *course8803001
+        courseOrderCsv: "7641,8803001,6035,6210,7637,6220,6476,6300,6250,6310,6460,6440,8803003,6340,6400,8803901"
         transcript: *transcript0005
 
     - &student0006 !!models.Student
@@ -491,10 +510,9 @@ students:
         fullname:   "George Washington"
         numCoursesPreferred: 2
         coursesPreferred:
-            - *course8803902
             - *course7641
-            - *course7637
-            - *course6460
+            - *course8803001
+        courseOrderCsv: "7641,8803001,6035,6210,7637,6220,6476,6300,6250,6310,6460,6440,8803003,6340,6400,8803901"
         transcript: *transcript0006
 
     - &student0007 !!models.Student
@@ -505,8 +523,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
             - *course8803001
+        courseOrderCsv: "7641,8803001,6035,6210,7637,6220,6476,6300,6250,6310,6460,6440,8803003,6340,6400,8803901"
         transcript: *transcript0007
 
     - &student0008 !!models.Student
@@ -517,8 +535,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
             - *course8803001
+        courseOrderCsv: "7641,8803001,6035,6210,7637,6220,6476,6300,6250,6310,6460,6440,8803003,6340,6400,8803901"
         transcript: *transcript0008
 
     - &student0009 !!models.Student
@@ -529,8 +547,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
             - *course8803001
+        courseOrderCsv: "7641,8803001,6035,6210,7637,6220,6476,6300,6250,6310,6460,6440,8803003,6340,6400,8803901"
         transcript: *transcript0009
 
     - &student0010 !!models.Student
@@ -541,8 +559,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
             - *course8803001
+        courseOrderCsv: "7641,8803001,6035,6210,7637,6220,6476,6300,6250,6310,6460,6440,8803003,6340,6400,8803901"
         transcript: *transcript0010
 
     - &student0011 !!models.Student
@@ -552,10 +570,9 @@ students:
         fullname:   "John Quincy Adams"
         numCoursesPreferred: 2
         coursesPreferred:
-            - *course8803902
             - *course7641
-            - *course7637
-            - *course6460
+            - *course6035
+        courseOrderCsv: "7641,6035,6210,7637,8803003,8803001,6220,6400,6476,8803002,8803901,6250,6475,6440,6340"
         transcript: *transcript0011
 
     - &student0012 !!models.Student
@@ -566,8 +583,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
-            - *course8803001
+            - *course6035
+        courseOrderCsv: "7641,6035,6210,7637,8803003,8803001,6220,6400,6476,8803002,8803901,6250,6475,6440,6340"
         transcript: *transcript0012
 
     - &student0013 !!models.Student
@@ -578,8 +595,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
-            - *course8803001
+            - *course6035
+        courseOrderCsv: "7641,6035,6210,7637,8803003,8803001,6220,6400,6476,8803002,8803901,6250,6475,6440,6340"
         transcript: *transcript0013
 
     - &student0014 !!models.Student
@@ -590,8 +607,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
-            - *course8803001
+            - *course6035
+        courseOrderCsv: "7641,6035,6210,7637,8803003,8803001,6220,6400,6476,8803002,8803901,6250,6475,6440,6340"
         transcript: *transcript0014
 
     - &student0015 !!models.Student
@@ -602,8 +619,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
-            - *course8803001
+            - *course6035
+        courseOrderCsv: "7641,6035,6210,7637,8803003,8803001,6220,6400,6476,8803002,8803901,6250,6475,6440,6340"
         transcript: *transcript0015
 
     - &student0016 !!models.Student
@@ -614,8 +631,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
-            - *course8803001
+            - *course6035
+        courseOrderCsv: "7641,6035,6210,7637,8803003,8803001,6220,6400,6476,8803002,8803901,6250,6475,6440,6340"
         transcript: *transcript0016
 
     - &student0017 !!models.Student
@@ -625,10 +642,9 @@ students:
         fullname:   "Zachary Taylor"
         numCoursesPreferred: 2
         coursesPreferred:
-            - *course8803902
             - *course7641
-            - *course7637
-            - *course6460
+            - *course6035
+        courseOrderCsv: "7641,6035,6210,7637,8803003,8803001,6220,6400,6476,8803002,8803901,6250,6475,6440,6340"
         transcript: *transcript0017
 
     - &student0018 !!models.Student
@@ -639,8 +655,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
-            - *course8803001
+            - *course6035
+        courseOrderCsv: "7641,6035,6210,7637,8803003,8803001,6220,6400,6476,8803002,8803901,6250,6475,6440,6340"
         transcript: *transcript0018
 
     - &student0019 !!models.Student
@@ -651,8 +667,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
-            - *course8803001
+            - *course6035
+        courseOrderCsv: "7641,6035,6210,7637,8803003,8803001,6220,6400,6476,8803002,8803901,6250,6475,6440,6340"
         transcript: *transcript0019
 
     - &student0020 !!models.Student
@@ -663,8 +679,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
-            - *course8803001
+            - *course6035
+        courseOrderCsv: "7641,6035,6210,7637,8803003,8803001,6220,6400,6476,8803002,8803901,6250,6475,6440,6340"
         transcript: *transcript0020
 
     - &student0021 !!models.Student
@@ -675,8 +691,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
-            - *course8803001
+            - *course6300
+        courseOrderCsv: "7641,6300,6035,7637,8803003,6460,6310,6220,6476,8803002,6250,6440,6340"
         transcript: *transcript0021
 
     - &student0022 !!models.Student
@@ -687,8 +703,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
-            - *course8803001
+            - *course6300
+        courseOrderCsv: "7641,6300,6035,7637,8803003,6460,6310,6220,6476,8803002,6250,6440,6340"
         transcript: *transcript0022
 
     - &student0023 !!models.Student
@@ -698,10 +714,9 @@ students:
         fullname:   "Ulysses S Grant"
         numCoursesPreferred: 2
         coursesPreferred:
-            - *course8803902
             - *course7641
-            - *course7637
-            - *course6460
+            - *course6300
+        courseOrderCsv: "7641,6300,6035,7637,8803003,6460,6310,6220,6476,8803002,6250,6440,6340"
         transcript: *transcript0023
 
     - &student0024 !!models.Student
@@ -712,8 +727,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
-            - *course8803001
+            - *course6300
+        courseOrderCsv: "7641,6300,6035,7637,8803003,6460,6310,6220,6476,8803002,6250,6440,6340"
         transcript: *transcript0024
 
     - &student0025 !!models.Student
@@ -724,8 +739,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
-            - *course8803001
+            - *course6300
+        courseOrderCsv: "7641,6300,6035,7637,8803003,6460,6310,6220,6476,8803002,6250,6440,6340"
         transcript: *transcript0025
 
     - &student0026 !!models.Student
@@ -736,8 +751,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
-            - *course8803001
+            - *course6300
+        courseOrderCsv: "7641,6300,6035,7637,8803003,6460,6310,6220,6476,8803002,6250,6440,6340"
         transcript: *transcript0026
 
     - &student0027 !!models.Student
@@ -748,8 +763,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
-            - *course8803001
+            - *course6300
+        courseOrderCsv: "7641,6300,6035,7637,8803003,6460,6310,6220,6476,8803002,6250,6440,6340"
         transcript: *transcript0027
 
     - &student0028 !!models.Student
@@ -760,8 +775,8 @@ students:
         numCoursesPreferred: 2
         coursesPreferred:
             - *course7641
-            - *course6505
-            - *course8803001
+            - *course6300
+        courseOrderCsv: "7641,6300,6035,7637,8803003,6460,6310,6220,6476,8803002,6250,6440,6340"
         transcript: *transcript0028
 
     - &student0029 !!models.Student
@@ -771,10 +786,9 @@ students:
         fullname:   "William McKinley"
         numCoursesPreferred: 2
         coursesPreferred:
-            - *course8803902
             - *course7641
-            - *course7637
-            - *course6460
+            - *course6300
+        courseOrderCsv: "7641,6300,6035,7637,8803003,6460,6310,6220,6476,8803002,6250,6440,6340"
         transcript: *transcript0029
 
     - &student0030 !!models.Student
@@ -782,10 +796,18 @@ students:
         username:   "theodore"
         password:   "roosevelt"
         fullname:   "Theodore Roosevelt"
-        numCoursesPreferred: 2
+        numCoursesPreferred: 1
         coursesPreferred:
             - *course7641
-            - *course6505
-            - *course8803001
+            - *course6300
+        courseOrderCsv: "6300,7641,6035,7637,8803003,6460,6310,6220,6476,8803002,6250,6440,6340"
         transcript: *transcript0030
 
+    - &student0031 !!models.Student
+        id:         0031
+        username:   "peter"
+        password:   "piper"
+        fullname:   "Peter Piper"
+        numCoursesPreferred: 0
+        courseOrderCsv: "7641,6300,6035,7637,8803003,6460,6310,6220,6476,8803002,6250,6440,6340"
+        transcript: *transcript0031

@@ -324,8 +324,10 @@ public class GurobiSolver implements Solver {
 
         private static double getPriorityLevel(Student s, Course c) {
             double priority = 0;
-            for (int i = 0; i < s.coursesPreferred.size(); i++) {
-                if ((s.coursesPreferred.get(i).id).equals(c.id)) {
+            List<Course> sortedCoursesByPreference = s.getCoursesOrderedByCsv();
+
+            for (int i = 0; i < sortedCoursesByPreference.size(); i++) {
+                if ((sortedCoursesByPreference.get(i).id).equals(c.id)) {
                     priority = NUM_COURSES - i;
                     break;
                 }
