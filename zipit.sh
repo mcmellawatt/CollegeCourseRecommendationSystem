@@ -1,7 +1,7 @@
 #!/bin/bash
 echo == ZIPIT ==
 
-TAR=Project4CourseRecommender.zip.gz
+TAR=Project4CourseRecommender.tar.gz
 
 rm -f ../$TAR
 
