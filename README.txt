@@ -1,3 +1,9 @@
+The Course Recommendation application uses a layered, client-server architecture built on 
+the Play framework to deliver optimized recommendations to students based on availability and other constraints.  It is 
+based on the design in the included PDF "Team33_Project3-final.pdf" and represents a combination of each team members' 
+individual designs.  The application uses Play framework, Gurobi optimizer, and Ebeans with an 
+in-memory H2 SQL database to demonstrate the concept, which could be replaced with a full fledged SQL database in a production setting.
+
 Assumptions
 -----------
 The following assumes that the machine is running Ubuntu x64, Java 7,
